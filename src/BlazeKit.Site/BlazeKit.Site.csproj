@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>.blazekit</CompilerGeneratedFilesOutputPath>
+    <RootNamespace>BlazeKit.Site</RootNamespace>
+    <!--<RunAOTCompilation>true</RunAOTCompilation>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include=".blazekit/generated/**/*.cs"></Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\getting-started.md" />
+    <None Remove="Assets\layouts.md" />
+    <None Remove="Assets\reactivity.md" />
+    <None Remove="Assets\routing.md" />
+    <None Remove="Assets\todos.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\getting-started.md" />
+    <EmbeddedResource Include="Assets\reactivity.md" />
+    <EmbeddedResource Include="Assets\layouts.md" />
+    <EmbeddedResource Include="Assets\todos.md" />
+    <EmbeddedResource Include="Assets\routing.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\scripts\highlight.min.js" />
+    <None Include="wwwroot\scripts\languages\csharp.min.js" />
+    <None Include="wwwroot\scripts\languages\javascript.min.js" />
+    <None Include="wwwroot\scripts\languages\xml.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.33.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.10" PrivateAssets="all" />
+    <PackageReference Include="Yaapii.Atoms" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<ProjectReference Include="..\..\src\BlazeKit.Deployment.Vercel\BlazeKit.Deployment.Vercel.csproj" />-->
+    <ProjectReference Include="..\..\src\BlazeKit.Core\BlazeKit.Core.csproj" />
+    <ProjectReference Include="..\..\src\BlazeKit.Reactive\BlazeKit.Reactive.csproj" />
+    <ProjectReference Include="..\..\src\BlazeKit\BlazeKit.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\BlazeKit.Deployment.Vercel\BlazeKit.Deployment.Vercel.csproj" />
+  </ItemGroup>
+  <Target Name="DeployToVercel" AfterTargets="Publish">
+    <Exec Command="echo Prepare Deployment for Vercel..." />
+    <PropertyGroup>
+      <RepoRoot>$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('.gitignore', '$(MSBuildThisFileDirectory)'))))</RepoRoot>
+      <VercelOutput>$(RepoRoot)/.vercel/</VercelOutput>
+    </PropertyGroup>
+    <Exec Command="echo Repository Root: $(RepoRoot)"></Exec>
+    <RemoveDir Directories="$(RepoRoot)/.vercel"></RemoveDir>
+    <ItemGroup>
+      <VercelOutputApiVersion Include="{ &quot;version&quot;: 3 }" />
+      <FilesToCopy Include="$([MSBuild]::EnsureTrailingSlash('$(PublishDir)'))wwwroot\**\*.*" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(VercelOutput)config.json" Lines="@(VercelOutputApiVersion)" Overwrite="true"></WriteLinesToFile>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(VercelOutput)output/static/%(RecursiveDir)" />
+    <Exec Command="echo Deployment for Vercel finished" />
+  </Target>
+</Project>

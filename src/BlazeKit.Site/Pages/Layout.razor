@@ -1,0 +1,42 @@
+@using BlazeKit.Core.Routing;
+@inherits LayoutComponentBase
+@code {
+
+    public Layout()
+    {
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+   
+}
+<PageTitle>BlazeKit</PageTitle>
+<header>
+    <hgroup>
+        <h1 class="logo-wrapper"><span class="logo-panel"><img src="images/blazekit-logo.svg" class="logo" /></span>BlazeKit</h1>
+        <h2>A Meta-Framework for Blazor .NET</h2>
+    </hgroup>
+    <nav>
+        <ul>
+            <li><a href="/">🏠 Home</a></li>
+            <li><a href="/create-a-project">🏃 Getting Started</a></li>
+            <li><a href="/reactivity">⚡ Reactivity</a></li>
+            <li><a href="/routing">🪧 Routing</a></li>
+            <li><a href="/layouts">🖼️ Advanced Layouts</a></li>
+        </ul>
+    </nav>
+    <hr />
+</header>
+<main>
+    @Body
+</main>
+<footer>
+    Made with ❤️ by <a href="https://github.com/koeeenig" target="_blank">koeeenig</a>
+</footer>
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

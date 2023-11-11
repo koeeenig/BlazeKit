@@ -1,0 +1,103 @@
+@using BlazeKit.Core.Routing;
+@using BlazeKit.Reactive;
+@using BlazeKit.Reactive.Blazor;
+@using BlazeKit.Reactive.Signals;
+@using System.ComponentModel;
+@using Yaapii.Atoms.IO;
+@using Yaapii.Atoms.Text;
+@code {
+    private ISignal<int> counter;
+    private ISignal<int> doubled;
+    private Effect<int> sideEffect;
+    private bool started = false;
+
+    [Inject]
+    public Navigating IsNavigating { get; set; }
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    private int booms;
+    public Page()
+    {
+        booms = 0;
+        counter = new State<int>(0, this);
+        doubled =
+            new Derived<int, int>(
+                counter,
+                () => counter.Value * 2,
+                this
+            );
+        sideEffect =
+            new Effect<int>(() =>
+                {
+                    if(counter.Value > 0 && counter.Value % 2 == 0)
+                    {
+                        booms++;
+                    }
+                },
+                counter
+            );
+    }
+
+    public void StartBackgroundTask()
+    {
+        if(!started)
+        {
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    counter.Value++;
+                    await Task.Delay(1000);
+                }
+            });
+            started = true;
+        }
+    }
+
+    private MarkupString AsHtml(string code)
+    {
+        return new MarkupString(code);
+    }
+}
+<article>
+    <p>Counter: @counter.Value</p>
+    <p>Doubled Counter: @doubled.Value</p>
+    <p>Triggered <strong>Is Even</strong>-Side Effects <code>(counter.Value % 2 == 0)</code>: @booms</p>
+
+    @* Display the Value *@
+    <a href="#" role="button" @onclick="() => counter.Value++" @onclick:preventDefault="true">Increment</a>
+    <a href="#" role="button" @onclick="() => counter.Value--" @onclick:preventDefault="true">Decrement</a>
+    <a href="#" role="button" @onclick="StartBackgroundTask" @onclick:preventDefault="true" disabled="@started">Update Counter in Background Task</a>
+</article>
+<h4>Code Example</h4>
+<pre>
+<code class="language-cshtml-razor">
+@@code {
+    // Create a Signal
+    @AsHtml("ISignal<int> counter = new BlzState<int>(0, this)").Value
+    @AsHtml(@"// Create a derived State
+    ISignal<int> doubled =
+        new BlzComputed<int, int>(
+            counter,
+            () => counter.Value * 2,
+            this
+        );").Value
+    @AsHtml(@"// Create an Effect
+    new Effect<int>(() => {
+            if(counter.Value > 0 && counter.Value % 5 == 0)
+            {
+                booms++;
+            }
+        },
+        counter
+    );").Value
+}
+
+@AsHtml("<p>@counter.Value</p>").Value
+@AsHtml("<p>Doubled Counter: @doubled.Value</p>").Value
+@AsHtml(@"<p>Triggered Side Effects <code>(counter.Value % 5 == 0)</code>: @booms</p>").Value
+@AsHtml("<button @onclick=\"() => counter.Value++\">Increment</button>").Value
+@AsHtml("<button @onclick=\"() => counter.Value--\">Decrement</button>").Value
+</code>
+</pre>

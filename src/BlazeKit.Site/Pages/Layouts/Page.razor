@@ -1,0 +1,20 @@
+@using BlazeKit.Reactive;
+@using BlazeKit.Reactive.Blazor;
+@using BlazeKit.Reactive.Signals;
+@using Yaapii.Atoms.IO;
+@using Yaapii.Atoms.Text;
+@code {
+
+    public string MarkdownContent { get; set; }
+
+    public Page()
+    {
+        MarkdownContent =
+            new TextOf(
+                new ResourceOf("Assets/layouts.md", this.GetType())
+            ).AsString();
+    }
+}
+<PageTitle>BlazeKit - 🖼️ Advanced Layouts</PageTitle>
+<h2>🖼️ Advanced Layouts</h2>
+<Markdown Text="@MarkdownContent"></Markdown>

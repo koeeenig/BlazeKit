@@ -1,0 +1,3 @@
+@using Yaapii.Atoms.IO;
+@using Yaapii.Atoms.Text;
+<Markdown Text="@(new TextOf(new ResourceOf("Assets/reactivity.md", this.GetType())).AsString())"></Markdown>

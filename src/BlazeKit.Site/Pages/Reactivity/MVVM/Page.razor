@@ -1,0 +1,82 @@
+@code {
+    public VMCounter ViewModel { get; set; }
+
+    public Page()
+    {
+        ViewModel = new VMCounter(this);
+    }
+
+    private MarkupString AsHtml(string code)
+    {
+        return new MarkupString(code);
+    }
+}
+
+
+<p>You can even use the good old MVVM pattern if you like 👍</p>
+<article>
+    <p>Counter: @ViewModel.Counter.Value</p>
+    <a href="#" role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Increment()">Increment</a>
+    <a href="#" role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Decrement()">Decrement</a>
+    <a href="#" role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.StartBackgroundTask()" disabled="@ViewModel.Started">Update Counter in Background Task</a>
+</article>
+<h3>Code Example</h3>
+<pre>
+    <code class="language-cshtml-razor">
+    @@code {
+        public VMCounter ViewModel { get; set; }
+
+        public Page()
+        {
+            ViewModel = new VMCounter(this);
+        }
+    }
+    </code>
+    </pre>
+<pre>
+<code class="language-csharp">
+        @AsHtml(@"
+public class VMCounter
+{
+    public ISignal<int> Counter { get; set; }
+    public bool Started { get; private set; }
+
+    public VMCounter(IReactiveComponent component)
+    {
+        this.Counter = new BlzState<int>(0, component);
+    }
+
+    /// <summary>
+    /// Increments the counter
+    /// </summary>
+    public void Increment()
+    {
+        this.Counter.Value++;
+    }
+    /// <summary>
+    /// Decrements the counter
+    /// </summary>
+    public void Decrement()
+    {
+        this.Counter.Value--;
+    }
+
+    public void StartBackgroundTask()
+    {
+        if (!Started)
+        {
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    Counter.Value++;
+                    await Task.Delay(1000);
+                }
+            });
+            Started = true;
+        }
+    }
+}
+").Value
+    </code>
+</pre>
