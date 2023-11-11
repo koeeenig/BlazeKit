@@ -1,4 +1,4 @@
-# BlazeKit - A MEta-Framework for Blazor .NET
+# BlazeKit - A Meta-Framework for Blazor .NET
 
 **⚠️ BlazeKit is work in progress**
 
