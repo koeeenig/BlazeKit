@@ -4,7 +4,7 @@
   "outputDirectory": ".vercel/output/static",
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/.*",
       "destination": "/index.html",
       "permanent": true
     }
