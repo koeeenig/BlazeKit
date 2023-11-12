@@ -11,11 +11,6 @@
     private Effect<int> sideEffect;
     private bool started = false;
 
-    [Inject]
-    public Navigating IsNavigating { get; set; }
-    [Inject]
-    public IJSRuntime JSRuntime { get; set; }
-
     private int booms;
     public Page()
     {
