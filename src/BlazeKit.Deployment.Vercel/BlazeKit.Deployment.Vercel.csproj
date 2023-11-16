@@ -9,5 +9,7 @@
 
   <ItemGroup>
     <Content Include="build/*" PackagePath="build"></Content>
+    <None Include="../../README.md" Pack="true" PackagePath="\"></None>
+    <Content Include="icon.png" PackagePath="."></Content>
   </ItemGroup>
 </Project>
