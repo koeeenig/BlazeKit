@@ -2,6 +2,9 @@
     public VMCounter ViewModel { get; set; }
 
     public Page()
+    { }
+
+    override protected void OnInitialized()
     {
         ViewModel = new VMCounter(this);
     }
@@ -11,10 +14,11 @@
         return new MarkupString(code);
     }
 }
-<h1>MVVM</h1>
-<p>You can even use a MVVM pattern if you like 👍</p>
+<h1>Model View ViewModel</h1>
+<p>You can even use an MVVM pattern if you like 👍</p>
 <article>
     <p>Counter: @ViewModel.Counter.Value</p>
+    <p>Doubled: @ViewModel.Doubled.Value</p>
     <button role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Increment()">Increment</button>
     <button role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Decrement()">Decrement</button>
 </article>
@@ -23,8 +27,8 @@
     <code class="language-cshtml-razor">
     @@code {
         public VMCounter ViewModel { get; set; }
-
-        public Page()
+       
+        override protected void OnInitialized()
         {
             ViewModel = new VMCounter(this);
         }
@@ -36,12 +40,14 @@
         @AsHtml(@"
 public class VMCounter
 {
-    public ISignal<int> Counter { get; set; }
-    public bool Started { get; private set; }
+    public ISignal<int> Counter { get; private set; }
+    public ISignal<int> Doubled { get; private set; }
+
 
     public VMCounter(IReactiveComponent component)
     {
-        this.Counter = new State<int>(0, component);
+         this.Counter = State.New(0, component);
+         this.Doubled = Derived.New(() => this.Counter.Value * 2, component);
     }
 
     /// <summary>
@@ -57,22 +63,6 @@ public class VMCounter
     public void Decrement()
     {
         this.Counter.Value--;
-    }
-
-    public void StartBackgroundTask()
-    {
-        if (!Started)
-        {
-            Task.Run(async () =>
-            {
-                while (true)
-                {
-                    Counter.Value++;
-                    await Task.Delay(1000);
-                }
-            });
-            Started = true;
-        }
     }
 }
 ").Value

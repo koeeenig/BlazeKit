@@ -6,11 +6,14 @@ namespace BlazeKit.Site.Pages.Reactivity.MVVM
 {
     public sealed class VMCounter
     {
-        public ISignal<int> Counter { get; set; }
-        public bool Started { get; private set; }
+        public ISignal<int> Counter { get; private set; }
+
+        public ISignal<int> Doubled { get; private set; }
+
         public VMCounter(IReactiveComponent component)
         {
-            this.Counter = new State<int>(0, component);
+            this.Counter = State.New(0, component);
+            this.Doubled = Derived.New(() => this.Counter.Value * 2, component);
         }
 
         /// <summary>
@@ -26,22 +29,6 @@ namespace BlazeKit.Site.Pages.Reactivity.MVVM
         public void Decrement()
         {
             this.Counter.Value--;
-        }
-
-        public void StartBackgroundTask()
-        {
-            if (!Started)
-            {
-                Task.Run(async () =>
-                {
-                    while (true)
-                    {
-                        Counter.Value++;
-                        await Task.Delay(1000);
-                    }
-                });
-                Started = true;
-            }
         }
     }
 }
