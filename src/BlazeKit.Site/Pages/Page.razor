@@ -12,18 +12,16 @@
     <li>🖼️ File-based Layouts</li>
     <li>🪄 Auto-Generated Route Parameters</li>
 </ul>
-<p>Why BlazeKit anyway?!? Is the Blazor Framework itself not enough to build web apps? It certainly is and the Team at Microsoft has done a awesome job with Blazor.</p>
-<p>In my day job i write a lot of C# code and also many Blazor applications when ever a UI is required since Blazor can be used for Desktop apps as well.</p>
-<p>However, in my spear time i keep an eye on the JavaScript/TypeScript ecosystem and the growing trend of so called Meta-Frameworks to build web apps. I used <a href="https://kit.svelte.dev/" target="_blank">SvelteKit</a> in a side project and fell in love with the file-based routing and the reactivity implemented by Svelte.</p>
-<p>Back in my day job, i missed these simple features in Blazor. So i sad down and thought how i could address these features in the Blazor ecosystem.</p>
+<blockquote class="callout">
+<div>💡</div>
+    <div>BlazeKit is unopinionated about the Blazor Hosting Model. BlazeKit works with either <strong>Blazor Server</strong>,<strong>Blazor WebAssembly</strong> or the new <strong>Blazor Server-Side Rendering</strong> Model.</div>
+</blockquote>
 
-<p>And here it is ... <strong>BlazeKit</strong> ✨</p>
+<p>Want to get started with BlazeKit? Head over to <a href="/create-a-project">Getting Started</a> to create your first Blazekit app.</p>
 
-<strong>Are more features coming to BlazeKit?</strong>
-<p>I am certainly like to keep working on BlazeKit since i see some oppertunities with the release of .NET 8. Yes, i am looking at you Server-Side-Rendering.</p>
-<p>However, the next phase will be focused on the deployment of a Blazor app. There are many Hosting providers like Azure, Vercel, Cloudflare, Netlify just to name a few.
-These Hosting Platforms integrate super nicely with meta-frameworks based on the JS/TS ecosystem and provide a realy good developer expirience.</p>
-<p>The goal: Deploy a Blazor app by adding a NuGet Package for the specififc platform. 🚀</p>
+
+@* But Why section *@
+<Markdown Text="@(new TextOf(new ResourceOf("Assets/but-why.md", this.GetType())).AsString())" />
 
 <p>This is a short list with potential features</p>
 <ul>

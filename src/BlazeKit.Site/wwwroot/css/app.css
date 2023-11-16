@@ -26,6 +26,39 @@
     filter: invert(1);
 }
 
+.github-logo {
+    height: 32px;
+    width: 32px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .github-logo {
+      filter:invert(1);
+    }
+  }
+
+.callout {
+    display: flex;
+    align-items: center;
+}
+
+.callout > div:first-of-type {
+    font-size: xx-large;
+    margin-right: 5px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 h1:focus {
     outline: none;
 }

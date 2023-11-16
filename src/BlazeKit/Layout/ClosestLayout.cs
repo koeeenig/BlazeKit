@@ -7,8 +7,6 @@ namespace BlazeKit
 {
     public sealed class ClosestLayout : Lazy<string>
     {
-        // Regex pattern
-        private static string namespacePattern = @"@namespace\s+(\S+)";
         public ClosestLayout(string file, Action<string> log, bool skipSameDirectory = false, string root = "pages") : base(() =>
         {
             var rootFolder = file.ToLower().Substring(0, file.ToLower().IndexOf(root) + root.Length);

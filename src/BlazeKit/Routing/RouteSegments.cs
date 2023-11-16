@@ -11,7 +11,7 @@ namespace BlazeKit
         {
             var structure = path.Substring(path.ToLower().IndexOf(root) + root.Length);
             var segments =
-                structure.Split(new char[] { System.IO.Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
+                structure.Split(new char[] { System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
                 .Reverse() // reverse
                 .Skip(1) // skip Page.razor
                 .Reverse(); // reverse again
@@ -37,7 +37,7 @@ namespace BlazeKit
                     }
                 }
             }
-            
+
             return new List<string>(routeSegments);
         })
         { }

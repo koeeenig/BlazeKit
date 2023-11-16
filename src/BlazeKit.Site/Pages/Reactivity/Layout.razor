@@ -1,13 +1,4 @@
 @inherits LayoutComponentBase
-
-@code {
-    [Inject]
-    public IJSRuntime JSRuntime { get; set; }
-    protected override void OnAfterRender(bool firstRender)
-    {
-        JSRuntime.InvokeVoidAsync("highlight");
-    }
-}
 <PageTitle>BlazeKit - ⚡ Reactivity</PageTitle>
 <h2>⚡ Reactivity</h2>
 <nav>

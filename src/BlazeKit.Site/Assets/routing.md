@@ -1,4 +1,4 @@
-## 🪧 File-based Routing
+# 🪧 File-based Routing
 The routing in BlazeKit is based on the filesystem. Each route is represented by a folder which contains a `Page.razor` file.
 The folder structure is used to define the route of the page. For example the following folder structure:
 ```
@@ -11,7 +11,7 @@ will result in the following routes:
 - `/`
 - `/about`
 
-### Route Parameters
+## Route Parameters
 Route parameters can be defined by adding a file with the name of the parameter to the folder.
 For example the following folder structure:
 ```

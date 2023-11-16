@@ -11,11 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Commands\New\Assets\TPL_NEW_PROJECT.zip" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Commands\New\Assets\TPL_NEW_PROJECT.zip" />
+    <EmbeddedResource Include="Commands\New\Assets\TPL_NEW_PROJECT_SERVER.zip" />
   </ItemGroup>
 
   <ItemGroup>

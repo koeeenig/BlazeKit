@@ -28,6 +28,7 @@
     <EmbeddedResource Include="Assets\layouts.md" />
     <EmbeddedResource Include="Assets\todos.md" />
     <EmbeddedResource Include="Assets\routing.md" />
+    <EmbeddedResource Include="Assets\but-why.md" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,9 +39,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!--<PackageReference Include="BlazeKit" Version="1.0.0" />-->
     <PackageReference Include="Markdig" Version="0.33.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.10" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.13" PrivateAssets="all" />
     <PackageReference Include="Yaapii.Atoms" Version="3.0.0" />
   </ItemGroup>
 
@@ -51,6 +53,8 @@
     <ProjectReference Include="..\..\src\BlazeKit\BlazeKit.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\BlazeKit.Deployment.Vercel\BlazeKit.Deployment.Vercel.csproj" />
   </ItemGroup>
+
+
   <Target Name="DeployToVercel" AfterTargets="Publish">
     <Exec Command="echo Prepare Deployment for Vercel..." />
     <PropertyGroup>

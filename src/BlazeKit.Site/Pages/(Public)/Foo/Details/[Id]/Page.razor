@@ -1,9 +1,56 @@
+@using BlazeKit.Reactive.Signals;
+@using BlazeKit.Reactive;
+@using BlazeKit.Reactive.Blazor;
+@using System.Text.Json.Nodes;
+
 @code {
-    protected override void OnInitialized()
+
+    // Defice a record type for the api response
+    record Person(string name);
+
+    private ISignal<Person> person;
+    private ISignal<int> computed;
+    private ISignal<bool> loading;
+    public Page()
     {
+
+    }
+    protected async override Task OnInitializedAsync()
+    {
+        this.loading = State.New(true, this);
+        person = Signal.New(new Person(""));
+        computed = Derived.New(() =>
+        {
+            Console.WriteLine($"Persons Name: {person.Value.name}");
+            return this.person.Value.name.Length;
+        },this);
+
         Console.WriteLine($"Hello Param: '{Id}'");
+
+        using (var http = new HttpClient()) {
+            var response = await http.GetStringAsync($"https://swapi.dev/api/people/2");
+            var person = System.Text.Json.JsonSerializer.Deserialize<Person>(response);
+            Console.WriteLine($"Fetched Person: {person.name}");
+            this.person.Value = person;
+        }
+
+        this.loading.Value = false;
     }
 }
 
 
 <h3>Param Id: @Id</h3>
+
+<When Condition="@(() => !loading.Value)">
+    <ChildContent>
+        <pre>@person.Value.name</pre>
+        <p>Length: @computed.Value</p>
+    </ChildContent>    
+    <Else>
+        <p>Loading....</p>
+    </Else>
+</When>
+
+
+
+

@@ -1,19 +1,18 @@
 using Spectre.Console;
 using Spectre.Console.Cli;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using Yaapii.Atoms.IO;
 
 namespace BlazeKit.CLI.Commands.New
 {
-    public sealed class NewCommand : Command<NewSettings>
+    public sealed class NewCommand : AsyncCommand<NewSettings>
     {
         public NewCommand()
-        {
-                
-        }
+        { }
 
-        public override int Execute([NotNull] CommandContext context, [NotNull] NewSettings settings)
+        public override async Task<int> ExecuteAsync([NotNull] CommandContext context, [NotNull] NewSettings settings)
         {
             var projectDir = Path.Combine(Directory.GetCurrentDirectory(), settings.Name);
             if(Directory.Exists(projectDir))
@@ -24,14 +23,35 @@ namespace BlazeKit.CLI.Commands.New
 
             Directory.CreateDirectory(projectDir);
 
-            using (var zip = new ZipArchive(new ResourceOf("Commands/New/Assets/TPL_NEW_PROJECT.zip", this.GetType()).Stream()))
+            // Ask for the user which template to use
+            var blazorAppType = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Hosting model?")
+                    .PageSize(10)
+                    .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+                    .AddChoices(new[] {
+                        "Blazor WebAssembly",
+                        "Blazor Server"
+                    }));
+
+            var template = "TPL_NEW_PROJECT.zip";
+            switch (blazorAppType) {
+                case "Blazor WebAssembly":
+                    template = "TPL_NEW_PROJECT.zip";
+                    break;
+                case "Blazor Server":
+                    template = "TPL_NEW_PROJECT_SERVER.zip";
+                    break;
+            }
+
+            using (var zip = new ZipArchive(new ResourceOf($"Commands/New/Assets/{template}", this.GetType()).Stream()))
             {
                 zip.ExtractToDirectory(projectDir);
             }
 
             foreach (var file in Directory.GetFiles(projectDir, "*.*",SearchOption.AllDirectories))
             {
-                File.WriteAllText(file, File.ReadAllText(file).Replace("[PROJECTNAME]", settings.Name));   
+                File.WriteAllText(file, File.ReadAllText(file).Replace("[PROJECTNAME]", settings.Name));
             }
             // rename the csproj file
             var csproj = Directory.GetFiles(projectDir, "*.csproj", SearchOption.TopDirectoryOnly);

@@ -19,7 +19,7 @@ namespace BlazerKit.SourceGenerators
             {
                 throw new InvalidOperationException($"Cannot determine project directory");
             }
-            
+
             var blazeKitDirectory = EnsureBlazeKitDirectory(projectRoot);
 
             // read blazekit config
@@ -31,16 +31,15 @@ namespace BlazerKit.SourceGenerators
 
             LogHead(log);
 
-            //if (!RoutesChanged(projectRoot, "pages", blazeKitDirectory))
-            //{
-            //    log.Info("🚧 No changes in routes detected. Skipping code generation.");
-            //    return;
-            //}
+            // remove generated folder
+            if(Directory.Exists(Path.Combine(blazeKitDirectory.FullName, output)))
+            {
+                log.Info($"🗑️ Removing {Path.Combine(blazeKitDirectory.FullName, output)}");
+                Directory.Delete(Path.Combine(blazeKitDirectory.FullName, output), recursive: true);
+            }
 
-            log.Info($"Routes have been modified.. generating Source Files");
-
-            // remove generated classes
-            //new DirectoryInfo(Path.Combine(blazeKitDirectory.FullName,"generated")).Delete(recursive: true);
+            //log.Info($"Routes have been modified.. generating Source Files");
+            log.Info($"Generating Source Files");
 
             var razorFiles = context.AdditionalFiles.Where(file => file.Path.EndsWith(".razor"));
             foreach (var razorFile in razorFiles)
@@ -55,10 +54,11 @@ namespace BlazerKit.SourceGenerators
                         log.Info($"📄 {razorFile.Path} is a layout file.");
                         var layout = new ClosestLayout(razorFile.Path, msg => log.Debug(msg), skipSameDirectory: true, root: "pages").Value;
                         var className = "";
-                        if(string.IsNullOrEmpty(layout))
+                        if (string.IsNullOrEmpty(layout))
                         {
                             log.Error($"Could not find a layout file for {razorFile.Path}");
-                        } else
+                        }
+                        else
                         {
                             log.Debug($"Found LayoutComponentBase: {namespaceSegments}.{name} for: {layout}");
                             className = $"{rootNamespace}.{layout}";
@@ -98,11 +98,13 @@ namespace BlazerKit.SourceGenerators
                 }
             }
             //);
+
+            //ProcessMarkdownFiles(context);
         }
 
         public void Initialize(GeneratorInitializationContext context)
         {
-            //Debugger.Launch();
+            // Debugger.Launch();
         }
 
         private DirectoryInfo EnsureBlazeKitDirectory(string projectRoot)
@@ -137,8 +139,8 @@ namespace BlazerKit.SourceGenerators
             if (hashFile.Exists)
             {
                 //read the content of the hash file
-               var hash = File.ReadAllText(hashFile.FullName);
-                if (!hash.Equals(fileHash,StringComparison.InvariantCultureIgnoreCase))
+                var hash = File.ReadAllText(hashFile.FullName);
+                if (!hash.Equals(fileHash, StringComparison.InvariantCultureIgnoreCase))
                 {
                     changed = true;
                 }
@@ -151,7 +153,7 @@ namespace BlazerKit.SourceGenerators
             File.WriteAllText(Path.Combine(blazeKitDirectory.FullName, ".hash"), fileHash.ToString());
             return changed;
         }
-        public static string MD5Hash(string input)
+        public string MD5Hash(string input)
         {
             StringBuilder hash = new StringBuilder();
             MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
@@ -163,5 +165,59 @@ namespace BlazerKit.SourceGenerators
             }
             return hash.ToString();
         }
+
+        //TODO: Stablize markdown support
+        //public void ProcessMarkdownFiles(GeneratorExecutionContext context)
+        //{
+        //    if (!context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.projectdir", out var projectRoot))
+        //    {
+        //        throw new InvalidOperationException($"Cannot determine project directory");
+        //    }
+
+        //    var blazeKitDirectory = EnsureBlazeKitDirectory(projectRoot);
+
+        //    // read blazekit config
+        //    context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace);
+        //    var config = new Config(Path.Combine(projectRoot, "config.blazekit"));
+        //    var routeParamsRegex = config.Value("routeparams", @"\[\w+\]");
+        //    var output = config.Value("output", fallback: "generated");
+        //    var log = new Log(projectRoot, Boolean.Parse(config.Value("log", "true")));
+
+        //    var markdownFiles = new DirectoryInfo(Path.Combine(projectRoot, "Pages")).GetFiles("*.md", SearchOption.AllDirectories);
+        //    //var markdownFiles = context.AdditionalFiles.Where(file => file.Path.EndsWith(".md"));
+
+        //    foreach (var markdownFile in markdownFiles)
+        //    {
+        //        if (new IsUnderRoot(markdownFile.FullName, root: "pages").Value)
+        //        {
+        //            var namespaceSegments = rootNamespace + "." + new NamespaceSegments(markdownFile.FullName, root: "pages").Value;
+        //            var name = new SanititizedNamespace(Path.GetFileName(markdownFile.FullName).Replace(".md", "")).Value;
+        //            log.Debug($"📄 {markdownFile.FullName} is a markdown file.");
+        //            var routeSegments = new RouteSegments(markdownFile.FullName, (msg) => log.Debug(msg), root: "pages", paramRegex: routeParamsRegex).Value;
+        //            var route = string.Join("/", routeSegments);
+        //            var parameters = new RouteParameters(routeSegments);
+        //            // find closest layout
+        //            var layout = new ClosestLayout(markdownFile.FullName, msg => log.Debug(msg), skipSameDirectory: false, root: "pages").Value;
+        //            var className = "";
+        //            if (string.IsNullOrEmpty(layout))
+        //            {
+        //                log.Error($"Could not find a layout file for {markdownFile.FullName}");
+        //            }
+        //            else
+        //            {
+        //                log.Debug($"Found LayoutComponentBase: {namespaceSegments}.{name} for: {layout}");
+        //                className = $"{rootNamespace}.{layout}";
+        //            }
+        //            // read the markdown file and convert it to html
+        //            var markdownAsHtml = Markdig.Markdown.ToHtml(File.ReadAllText(markdownFile.FullName) ?? "", new MarkdownPipelineBuilder().UseAdvancedExtensions().UseEmojiAndSmiley().Build());
+        //            markdownAsHtml = markdownAsHtml.Replace("\"", "\"\"");
+        //            var generatedPage = new PageFromMarkdownClassSource(namespaceSegments, name, route, className, markdownAsHtml);
+        //            // write file to blazekit directory
+        //            var path = new FileInfo(Path.Combine(blazeKitDirectory?.FullName, output, $"{namespaceSegments}.{name}.g.cs"));
+        //            path.Directory.Create();
+        //            File.WriteAllText(path.FullName, generatedPage.Value);
+        //        }
+        //    }
+        //}
     }
 }

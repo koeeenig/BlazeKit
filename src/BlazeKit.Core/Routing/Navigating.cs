@@ -10,9 +10,9 @@ namespace BlazeKit.Core.Routing
         private readonly NavigationManager router;
         private readonly IJSRuntime jsRuntime;
 
-        public Navigating() : base(true, _ => { })
+        public Navigating() : base(true)
         { }
-        public Navigating(NavigationManager router, IJSRuntime jsRuntime, Action<bool> subscribe) : base(false, subscribe)
+        public Navigating(NavigationManager router, IJSRuntime jsRuntime) : base(false)
         {
             scrollPositions = new Dictionary<string, ScrollPosition>();
             if(router != null)

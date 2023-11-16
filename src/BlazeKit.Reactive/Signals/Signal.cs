@@ -1,29 +1,26 @@
 using System;
+using System.Net.Http.Headers;
 
-namespace BlazeKit.Reactive.Signals
+namespace BlazeKit.Reactive.Signals;
+
+/// <summary>
+/// A <see cref="ISignal{T}"/>
+/// </summary>
+
+public sealed class Signal<T> : SignalEnvelope<T>
 {
-    public sealed class Signal<T> : SignalEnvelope<T>
-    {
-        public Signal(T initialValue, Action<T> subscriber) : this(
-            () => initialValue,
-            subscriber
-        )
-        { }
-
-        public Signal(T initialValue) : this(
-            () => initialValue,
-            _ => { }
-        )
-        { }
-
-        public Signal(Func<T> initialValue) : this(
-            initialValue,
-            _ => { }
-
-        )
-        { }
-
-        public Signal(Func<T> initialValue, Action<T> subscriber) : base(initialValue, subscriber)
-        { }
-    }
+    /// <summary>
+    /// A <see cref="ISignal{T}"/>
+    /// </summary>
+    public Signal(T initialValue) : base(initialValue)
+    { }
 }
+
+public sealed class Signal
+{
+    /// <summary>
+    /// Create a new <see cref="ISignal{T}"/>
+    /// </summary>
+    public static ISignal<TValue> New<TValue>(TValue value) => new Signal<TValue>(value);
+}
+

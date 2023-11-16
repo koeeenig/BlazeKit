@@ -1,0 +1,10 @@
+﻿@inherits LayoutComponentBase
+@code {
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        JSRuntime.InvokeVoidAsync("highlight");
+    }
+}
+@Body

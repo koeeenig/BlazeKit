@@ -24,13 +24,13 @@ namespace BlazeKit
                 text.AppendLine($"[Layout(typeof({layout}))]");
             }
 
-            text.AppendLine($"public partial class {className} : {nameof(IReactiveComponent)} {{");
+            text.AppendLine($"public partial class {className} : LayoutComponentBase, {nameof(IReactiveComponent)} {{");
             text.AppendLine("\tpublic void Update() => InvokeAsync(StateHasChanged);");
             text.AppendLine("}");
             return text.ToString();
         })
         {
-            
+
         }
     }
 }

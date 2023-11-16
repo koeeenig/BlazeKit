@@ -1,66 +1,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BlazeKit.Reactive.Signals
+namespace BlazeKit.Reactive.Signals;
+
+/// <summary>
+/// An envelope for a <see cref="ISignal{T}"/>
+/// </summary>
+public abstract class SignalEnvelope<T> : ISignal<T>
 {
-
-    public abstract partial class SignalEnvelope<T> : ISignal<T>
+    private T value;
+    private HashSet<ReactiveContext.Running> subscriptions = new HashSet<ReactiveContext.Running>();
+    public SignalEnvelope(T initialValue)
     {
-        private T current;
-        private readonly Lazy<IDictionary<Subscription, Action<T>>> subscribers;
-        public T Value
+        this.value = initialValue;
+    }
+
+    /// <inheritdoc/>
+    public T Value
+    {
+        get
         {
-            get
+            if (ReactiveContext.Stack.TryPeek(out var running))
             {
-                return current;
+                Track(running, subscriptions);
             }
-            set
+
+            return this.value;
+        }
+        set
+        {
+            this.value = value;
+            foreach (var subscription in subscriptions)
             {
-                if (current == null || !current.Equals(value))
-                {
-                    current = value;
-                    Notify(current);
-                }
+                subscription.Execute();
             }
         }
+    }
 
-        public SignalEnvelope(T initialValue, Action<T> subscriber) : this(
-            () => initialValue,
-            subscriber
-        )
-        { }
-
-        public SignalEnvelope(Func<T> initialValue, Action<T> subscriber)
+    /// <inheritdoc/>
+    public void Subscribe(Action<T> subscriber)
+    {
+        this.subscriptions.Add(new ReactiveContext.Running(() => subscriber(this.value)));
+    }
+    private void Track(ReactiveContext.Running running, HashSet<ReactiveContext.Running> subscriptions)
+    {
+        subscriptions.Add(running);
+        foreach (var subscription in subscriptions)
         {
-            subscribers = 
-                new Lazy<IDictionary<Subscription,Action<T>>>(() =>
-                   new Dictionary<Subscription, Action<T>>() {
-                       { new Subscription(), subscriber }
-                   }
-                );
-            current = initialValue();
-        }
-
-        public IDisposable Subscribe(Action<T> subscriber)
-        {
-            var sub = new Subscription();
-            subscribers.Value.Add(sub, subscriber);
-            return sub;
-        }
-
-        private void Notify(T value)
-        {
-            foreach (var subscriber in subscribers.Value)
-            {
-                if (subscriber.Key.IsDisposed())
-                {
-                    subscribers.Value.Remove(subscriber);
-                }
-                else
-                {
-                    subscriber.Value(value);
-                }
-            }
+            running.Dependencies.Add(subscription);
         }
     }
 }

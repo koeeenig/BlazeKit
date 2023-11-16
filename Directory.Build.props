@@ -1,0 +1,11 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Author>Andreas König</Author>
+    <Company>BlazeKit</Company>
+    <Description>BlazeKit is a Meta-Framework for Blazor</Description>
+    <Product>BlazeKit</Product>
+    <RepositoryUrl>https://github.com/koeeenig/BlazeKit</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+</Project>

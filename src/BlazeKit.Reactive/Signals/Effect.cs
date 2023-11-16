@@ -1,48 +1,47 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace BlazeKit.Reactive.Signals
+namespace BlazeKit.Reactive.Signals;
+
+/// <summary>
+/// An effect that is triggered by one ore more <see cref="ISignal{T}"/>s
+/// </summary>
+public sealed class Effect
 {
-    public sealed class Effect<T> /* : IEffect<T> */
+    private readonly Action execute;
+    private ReactiveContext.Running running;
+
+    /// <summary>
+    /// An effect that is triggered by one ore more <see cref="ISignal{T}"/>s
+    /// </summary>
+    public Effect(Action fn)
     {
-        private readonly List<IDisposable> subs;
-        private readonly Action start;
-        private readonly Action effect;
-
-        public Effect(Action effect, params ISignal<T>[] from) : this(effect, () => new List<ISignal<T>>(from))
-        { }
-
-        public Effect(Action effect, Func<IEnumerable<ISignal<T>>> from)
+        this.execute = () =>
         {
-            subs = new List<IDisposable>();
-            foreach (var signal in from())
+            Cleanup(running);
+            ReactiveContext.Stack.Push(running);
+            try
             {
-                subs.Add(signal.Subscribe((_) => effect()));
+                fn();
             }
-            //start = () =>
-            //{
-            //    foreach (var signal in from())
-            //    {
-            //        subs.Add(signal.Subscribe((_) => effect()));
-            //    }
-            //};
-            this.effect = effect;
-        }
-
-        public void Dispose()
-        {
-            foreach (var sub in subs)
+            finally
             {
-                sub.Dispose();
+                ReactiveContext.Stack.Pop();
             }
-        }
+        };
 
-        public void Start()
+        this.running = new ReactiveContext.Running(execute);
+
+        this.execute();
+    }
+
+    private void Cleanup(ReactiveContext.Running running)
+    {
+        foreach (var dependency in running.Dependencies)
         {
-            effect();
-            start();
-
+            dependency.Dependencies.Remove(running);
         }
+
+        running.Dependencies.Clear();
     }
 }
+

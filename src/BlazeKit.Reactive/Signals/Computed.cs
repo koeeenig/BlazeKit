@@ -1,72 +1,35 @@
 using System;
 using System.Collections.Generic;
 
-namespace BlazeKit.Reactive.Signals
+namespace BlazeKit.Reactive.Signals;
+
+/// <summary>
+/// A computed value from on ore more <see cref="ISignal{T}"/>s
+/// </summary>
+public sealed class Computed<T> : ISignal<T>
 {
-    public class Computed<TValue, TSignal> : ISignal<TValue>
+    private readonly Signal<T> signal;
+    private readonly Effect effect;
+
+    /// <summary>
+    /// A computed value from on ore more <see cref="ISignal{T}"/>s
+    /// </summary>
+    public Computed(Func<T> fn)
     {
-        private readonly List<IDisposable> subs;
-        private readonly Lazy<ISignal<TValue>> signal;
+        this.signal = new Signal<T>(default(T));
+        this.effect = new Effect(() => signal.Value = fn());
+    }
 
-        public Computed(ISignal<TSignal> signal1, ISignal<TSignal> signal2, ISignal<TSignal> signal3, ISignal<TSignal> signal4, Func<TValue> compute, Action<TValue> subscriber) : this(
-           compute,
-           subscriber,
-           signal1, signal2, signal3, signal4
-        )
-        { }
+    /// <inheritdoc/>
+    public T Value
+    {
+        get => signal.Value;
+        set => throw new InvalidOperationException($"Computed Signals are readonly");
+    }
 
-        public Computed(ISignal<TSignal> signal1, ISignal<TSignal> signal2, ISignal<TSignal> signal3, Func<TValue> compute, Action<TValue> subscriber) : this(
-           compute,
-           subscriber,
-           signal1, signal2, signal3
-        )
-        { }
-        public Computed(ISignal<TSignal> signal1, ISignal<TSignal> signal2, Func<TValue> compute, Action<TValue> subscriber) : this(
-           compute,
-           subscriber,
-           signal1, signal2
-        )
-        { }
-        public Computed(ISignal<TSignal> signal, Func<TValue> compute, Action<TValue> subscriber) : this(
-            compute,
-            subscriber,
-            signal
-        )
-        { }
-
-        public Computed(Func<TValue> compute, Action<TValue> subscriber, params ISignal<TSignal>[] from)
-        {
-            subs = new List<IDisposable>();
-            this.signal =
-                new Lazy<ISignal<TValue>>(() =>
-                    new Signal<TValue>(compute(), val => {
-                        subscriber(val);
-                    })
-                );
-            
-            foreach (var dependingSignal in from)
-            {
-                // call compute if a depending signal changes
-                subs
-                    .Add(dependingSignal
-                            .Subscribe((_) => this.signal.Value.Value = compute()) 
-                    );
-            }
-        }
-
-        public TValue Value
-        {
-            get
-            {
-                return this.signal.Value.Value;
-            }
-            set => throw new InvalidOperationException("Derived signals are read-only");
-
-        }
-
-        public IDisposable Subscribe(Action<TValue> subscriber)
-        {
-            return signal.Value.Subscribe(subscriber);
-        }
+    /// <inheritdoc/>
+    public void Subscribe(Action<T> subscriber)
+    {
+        this.signal.Subscribe(subscriber);
     }
 }

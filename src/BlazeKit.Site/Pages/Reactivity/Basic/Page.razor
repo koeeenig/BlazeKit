@@ -5,47 +5,83 @@
 @using System.ComponentModel;
 @using Yaapii.Atoms.IO;
 @using Yaapii.Atoms.Text;
+@implements IDisposable
+
 @code {
+    private ISignal<string> text;
     private ISignal<int> counter;
     private ISignal<int> doubled;
-    private Effect<int> sideEffect;
+    private Effect sideEffect;
+
+    private Effect ereaseText;
     private bool started = false;
 
+    private CancellationTokenSource cancel = new CancellationTokenSource();
     private int booms;
     public Page()
     {
         booms = 0;
-        counter = new State<int>(0, this);
-        doubled =
-            new Derived<int, int>(
-                counter,
+    }
+
+    protected override void OnInitialized()
+    {
+        this.counter = new State<int>(0, this);
+        this.text = new State<string>("", this);
+        this.ereaseText =
+            new Effect(() =>
+            {
+                if (text.Value.Length >= 10)
+                {
+                    Console.WriteLine("Erease Text");
+                    text.Value = "";
+                }
+            });
+        this.doubled =
+            new Derived<int>(
                 () => counter.Value * 2,
                 this
             );
-        sideEffect =
-            new Effect<int>(() =>
+        this.sideEffect =
+            new Effect(() =>
                 {
-                    if(counter.Value > 0 && counter.Value % 2 == 0)
+                    Console.WriteLine("Side Effect");
+                    if (counter.Value > 0 && counter.Value % 2 == 0)
                     {
                         booms++;
                     }
-                },
-                counter
+                }
             );
+    }
+
+    public void StopBackgroundTask()
+    {
+        this.cancel.Cancel();
+        this.started = false;
     }
 
     public void StartBackgroundTask()
     {
-        if(!started)
+        if (!started)
         {
+            if(this.cancel.IsCancellationRequested)
+            {
+                this.cancel = new CancellationTokenSource();
+            }
+
             Task.Run(async () =>
             {
                 while (true)
                 {
+                    if(this.cancel.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     counter.Value++;
                     await Task.Delay(1000);
                 }
-            });
+            },
+            this.cancel.Token
+            );
             started = true;
         }
     }
@@ -54,17 +90,32 @@
     {
         return new MarkupString(code);
     }
+
+    public void Dispose()
+    {
+        this.cancel.Cancel();
+    }
 }
+<h1>Basic</h1>
 <article>
+    <p><strong>General Usage</strong></p>
     <p>Counter: @counter.Value</p>
     <p>Doubled Counter: @doubled.Value</p>
     <p>Triggered <strong>Is Even</strong>-Side Effects <code>(counter.Value % 2 == 0)</code>: @booms</p>
-
     @* Display the Value *@
-    <a href="#" role="button" @onclick="() => counter.Value++" @onclick:preventDefault="true">Increment</a>
-    <a href="#" role="button" @onclick="() => counter.Value--" @onclick:preventDefault="true">Decrement</a>
-    <a href="#" role="button" @onclick="StartBackgroundTask" @onclick:preventDefault="true" disabled="@started">Update Counter in Background Task</a>
+    <button href="#" role="button" @onclick="() => counter.Value++" @onclick:preventDefault="true">Increment</button>
+    <button href="#" role="button" @onclick="() => counter.Value--" @onclick:preventDefault="true">Decrement</button>
+    <button href="#" role="button" @onclick="StartBackgroundTask" @onclick:preventDefault="true" disabled="@started">Start Background Task</button>
+    <button href="#" role="button" @onclick="StopBackgroundTask" @onclick:preventDefault="true" disabled="@(!started)">Stop Background Task</button>
 </article>
+
+<article>
+    <p><strong>Two-Way Binding</strong></p>
+    <input @bind-value="@text.Value" placeholder="Typ in some text" @bind-value:event="oninput" />
+    <small>Text will be ereased if length >= 10</small>
+    <p>Text: @text.Value</p>
+</article>
+
 <h4>Code Example</h4>
 <pre>
 <code class="language-cshtml-razor">

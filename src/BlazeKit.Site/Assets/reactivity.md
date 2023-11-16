@@ -1,10 +1,11 @@
+# Overview
 BlazeKit provides a set of reactive primitives which are inspired by the signals pattern.
 All primitives are based on the `ISignal<T>` interface which is defined as follows:
 ```csharp
 public interface ISignal<T>
 {
     T Value { get; set; }
-    IDisposable Subscribe(Action<T> subscriber);
+    void Subscribe(Action<T> subscriber);
 }
 ```
 
@@ -27,8 +28,7 @@ counter.Subscribe((value) => {
 This class is used to derive a new value from one or more other signals.
 ```csharp
  var doubled =
-        new Computed<int, int>(
-            Counter,
+        new Computed<int>(
             () => {
                 // side-effect free -> do not change the state in derived states
                 var doubled = Counter.Value * 2;
@@ -48,15 +48,14 @@ doubled.Subscribe((value) => {
 ### `Effect`
 An effect is used to execute a side-effect when signals change.
 ```csharp
-new Effect<int>(
-    Counter,
-    (counter) => {
+new Effect(() => {
         Debug.WriteLine($"Counter is: {counter}");
     }
-).Start();
+);
 ```
-
+## Blazor specific Signals
 These primitives can be used to build reactive components which are updated when the state changes.
+Have you ever forget the `StateHasChanged` call after updating a value? We bet you did. With the Blazor specific `Signals` this will not happen again. The call to `StateHasChanged` will be handled for you when ever the value of the `Signal` changes. 🎉
 
 ### `State`
 For your convenience BlazeKit provides a `State` class which invokes `StateHasChanged` when the value has changed.
@@ -71,7 +70,7 @@ Just like `State`, `Derived` is a convenience class which invokes `StateHasChang
 
 ```csharp
 var derived =
-    new Derived<int>(Counter, () => {
+    new Derived<int>(() => {
         // side-effect free -> do not change the state in derived states
         var doubled = Counter.Value * 2;
         Debug.WriteLine($"Doubled is: {doubled}");

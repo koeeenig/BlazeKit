@@ -29,7 +29,7 @@ namespace BlazeKit
 
             if (parameters.Count() > 0)
             {
-                text.AppendLine($"public partial class {className} : {nameof(IReactiveComponent)} {{");
+                text.AppendLine($"public partial class {className} : ComponentBase, {nameof(IReactiveComponent)} {{");
                 text.AppendLine("\t// Route Params");
                 foreach (var parameter in parameters)
                 {
@@ -41,7 +41,7 @@ namespace BlazeKit
             }
             else
             {
-                text.AppendLine($"public partial class {className} : {nameof(IReactiveComponent)} {{");
+                text.AppendLine($"public partial class {className} : ComponentBase, {nameof(IReactiveComponent)} {{");
                 text.AppendLine("\tpublic void Update() => InvokeAsync(StateHasChanged);");
                 text.AppendLine("}");
             }
@@ -50,7 +50,7 @@ namespace BlazeKit
             return text.ToString();
         })
         {
-            
+
         }
     }
 }

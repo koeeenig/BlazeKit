@@ -11,14 +11,12 @@
         return new MarkupString(code);
     }
 }
-
-
-<p>You can even use the good old MVVM pattern if you like 👍</p>
+<h1>MVVM</h1>
+<p>You can even use a MVVM pattern if you like 👍</p>
 <article>
     <p>Counter: @ViewModel.Counter.Value</p>
-    <a href="#" role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Increment()">Increment</a>
-    <a href="#" role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Decrement()">Decrement</a>
-    <a href="#" role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.StartBackgroundTask()" disabled="@ViewModel.Started">Update Counter in Background Task</a>
+    <button role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Increment()">Increment</button>
+    <button role="button" @onclick:preventDefault="true" @onclick="() => ViewModel.Decrement()">Decrement</button>
 </article>
 <h3>Code Example</h3>
 <pre>
@@ -43,7 +41,7 @@ public class VMCounter
 
     public VMCounter(IReactiveComponent component)
     {
-        this.Counter = new BlzState<int>(0, component);
+        this.Counter = new State<int>(0, component);
     }
 
     /// <summary>
