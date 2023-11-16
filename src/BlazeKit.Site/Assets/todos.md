@@ -1,8 +1,6 @@
-- [x] Remove Reflection in Signals
-- [x] Breaking out of layouts
 - [ ] Add CLI to scaffold new projects
 - [ ] Deploy to Vercel
+- [ ] Publish NuGet Packages
+- [ ] Improve Documentation
 - [ ] Deploy to Netlify
 - [ ] Deploy to Azure Static WebApps
-- [ ] Code Analyzers
-    - [ ] No Side-Effects in computed functions

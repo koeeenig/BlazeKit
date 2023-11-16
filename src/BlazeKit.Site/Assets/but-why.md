@@ -12,6 +12,3 @@ Back in my day job, i missed these simple features in Blazor. So i sad down and 
 **Are more features coming to BlazeKit?**
 
 I am certainly like to keep working on BlazeKit since i see some oppertunities with the release of .NET 8. Yes, i am looking at you Server-Side-Rendering.
-However, the next phase will be focused on the deployment of a Blazor app. There are many Hosting providers like Azure, Vercel, Cloudflare, Netlify just to name a few.
-These Hosting Platforms integrate super nicely with meta-frameworks based on the JS/TS ecosystem and provide a realy good developer expirience.
-The goal: Deploy a Blazor app by adding a NuGet Package for the specififc platform. 🚀

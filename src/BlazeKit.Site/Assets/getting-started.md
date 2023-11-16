@@ -1,4 +1,4 @@
-# Getting Started
+# 🚀 Getting Started
 ## ☝️ Requirements
 Before creating your first BlazeKit project, you should ensure that your local machine has:
 - .NET 6+ - you can find the download [here](https://dotnet.microsoft.com/en-us/download){target="_blank"}

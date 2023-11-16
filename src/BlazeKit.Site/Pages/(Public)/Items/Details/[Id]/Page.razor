@@ -25,10 +25,10 @@
             return this.person.Value.name.Length;
         },this);
 
-        Console.WriteLine($"Hello Param: '{Id}'");
+        Console.WriteLine($"Param: '{Id}'");
 
         using (var http = new HttpClient()) {
-            var response = await http.GetStringAsync($"https://swapi.dev/api/people/2");
+            var response = await http.GetStringAsync($"https://swapi.dev/api/people/{Id}");
             var person = System.Text.Json.JsonSerializer.Deserialize<Person>(response);
             Console.WriteLine($"Fetched Person: {person.name}");
             this.person.Value = person;
