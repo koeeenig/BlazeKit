@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Abstraction", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Core", "src\BlazeKit.Core\BlazeKit.Core.csproj", "{8D1E30BA-1E58-4910-B23F-A78991A37231}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{952B525D-297C-4F66-85E2-967C9982771F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{952B525D-297C-4F66-85E2-967C9982771F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Tests", "tests\BlazeKit.Tests\BlazeKit.Tests.csproj", "{D466841A-00F1-4E37-BEB3-F7DEAF7EABB1}"
 EndProject
