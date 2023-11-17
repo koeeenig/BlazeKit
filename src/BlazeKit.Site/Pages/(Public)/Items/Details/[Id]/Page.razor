@@ -8,6 +8,9 @@
     // Defice a record type for the api response
     record Person(string name);
 
+    [Inject]
+    public NavigationManager Router { get; set; }
+
     private ISignal<Person> person;
     private ISignal<int> computed;
     private ISignal<bool> loading;
@@ -36,9 +39,20 @@
 
         this.loading.Value = false;
     }
+
+    private void Go()
+    {
+        Router.NavigateTo($"/items/details/{Id}", forceLoad: true);
+    }
 }
 <p>This route uses nested layouts and route parameters.</p>
-<p>The layout for <i>/Page.razor</i> is composed from <i>Details/Layout.razor</i>, Items/Layout.razor, <i>/Layout.razor</i> and <i>Pages/Layout.razor</i>.</p>
+<p>The layout for <strong>Pages/(Public)/Items/Details/[Id]/Page.razor</strong> is composed from:</p>
+    <ul>
+    <li><i>Pages/(Public)/Items/Details/Layout.razor</i></li>
+    <li><i>Pages/(Public)/Items/Layout.razor</i></li>
+    <li><i>Pages/(Public)/Layout.razor</i></li>
+    <li><i>Pages/Layout.razor</i></li>
+</ul>
 <pre>
     <code>
     Pages/
@@ -55,17 +69,22 @@
     </code>
 </pre>
 
-<h3>Param Id: @Id</h3>
+<p>Route Param Id: @Id</p>
 
+<article>
+    <input type="number" Placeholder="" @bind-value="@Id" @bind-value:event="oninput" />
+    <button @onclick="Go">Go</button>
+    <small>Navigation is done with <code>forceLoad</code> option from <code>NavigationManager</code></small>
 <When Condition="@(() => !loading.Value)">
     <ChildContent>
-        <pre>@person.Value.name</pre>
-        <p>Length: @computed.Value</p>
+            <p>Name: @person.Value.name</p>
+            <p>Name length: @computed.Value</p>
     </ChildContent>    
     <Else>
-        <p>Loading....</p>
+        <p>Fetching <i>https://swapi.dev/api/people/<span>@Id</span> </i> .... Please wait 🕐</p>
     </Else>
 </When>
+</article>
 
 
 
