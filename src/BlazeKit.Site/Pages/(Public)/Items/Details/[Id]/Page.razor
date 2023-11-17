@@ -37,7 +37,23 @@
         this.loading.Value = false;
     }
 }
-
+<p>This route uses nested layouts and route parameters.</p>
+<p>The layout for <i>/Page.razor</i> is composed from <i>Details/Layout.razor</i>, Items/Layout.razor, <i>/Layout.razor</i> and <i>Pages/Layout.razor</i>.</p>
+<pre>
+    <code>
+    Pages/
+    │ (Public)/
+    │ ├ Items/
+    │ │ ├ Details/
+    │ │ │  ├ [Id]
+    │ │ │  │ └ Page.razor
+    │ │ │  └ Layout.razor
+    │ │ └ Layout.razor
+    │ └ Layout.razor
+    ├ Page.razor
+    └ Layout.razor
+    </code>
+</pre>
 
 <h3>Param Id: @Id</h3>
 

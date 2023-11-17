@@ -12,7 +12,7 @@ will result in the following routes:
 - `/about`
 
 ## Route Parameters
-Route parameters can be defined by adding a file with the name of the parameter to the folder.
+Route parameters can be defined by adding a folder with the name of the parameter surrounded by square brakets <strong>[Param]</strong>.
 For example the following folder structure:
 ```
 Pages/
