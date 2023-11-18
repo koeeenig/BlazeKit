@@ -25,12 +25,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Reactive.Tests", "tests\BlazeKit.Reactive.Tests\BlazeKit.Reactive.Tests.csproj", "{4D98C97D-CFCC-4473-BFD8-B28DA3199EF6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{6B6EFC67-31B4-4D2E-98D5-1A731AF98B0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B6EFC67-31B4-4D2E-98D5-1A731AF98B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B6EFC67-31B4-4D2E-98D5-1A731AF98B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93775A2B-DB61-4195-9A38-D0C6BEF80267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93775A2B-DB61-4195-9A38-D0C6BEF80267}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93775A2B-DB61-4195-9A38-D0C6BEF80267}.Release|Any CPU.ActiveCfg = Release|Any CPU
