@@ -126,8 +126,20 @@ class Build : NukeBuild
 
     Target Publish => _ => _
         .DependsOn(Pack)
-        .OnlyWhenDynamic(() => IsServerBuild)
+        .OnlyWhenDynamic(() => IsServerBuild && Repository.IsOnMainBranch())
         .Executes(() => {
+
+            // get all nupkg files in output folder
+            var packages = OutputDirectory.GetFiles("*.nupkg");
+            // push each package to nuget.org
+            packages.ForEach(package => {
+                DotNetTasks
+                    .DotNetNuGetPush(s => s
+                        .SetSource("https://api.nuget.org/v3/index.json")
+                        .SetApiKey(NuGetApiKey)
+                        .SetTargetPath(package)
+                    );
+            });
 
         });
 }
