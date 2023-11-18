@@ -20,6 +20,7 @@ using static Nuke.Common.IO.PathConstruction;
     "build",
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
+    ImportSecrets = new[] { nameof(NuGetApiKey) },
     InvokedTargets = new[] { nameof(Publish) })]
 class Build : NukeBuild
 {
@@ -35,6 +36,8 @@ class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [GitRepository] readonly GitRepository Repository;
+
+    [Parameter] [Secret] readonly string NuGetApiKey;
 
     readonly AbsolutePath SourceDirectory = RootDirectory / "src";
     readonly AbsolutePath TestsDirectory = RootDirectory / "tests";
@@ -66,7 +69,14 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-             foreach (var project in Solution.GetAllProjects("BlazeKit.*"))
+            var projectsToBuild =
+                new List<Nuke.Common.ProjectModel.Project>() {
+                    Solution.GetProject("BlazeKit"),
+                    Solution.GetProject("BlazeKit.Reactive"),
+                    Solution.GetProject("BlazeKit.CLI"),
+                    Solution.GetProject("BlazeKit.Deployment.Vercel")
+                };
+             foreach (var project in projectsToBuild)
             {
                 DotNetTasks
                     .DotNetBuild(s => s
@@ -85,7 +95,6 @@ class Build : NukeBuild
                 DotNetTasks
                     .DotNetTest(s => s
                         .SetProjectFile(project)
-                        .SetNoBuild(true)
                         .SetConfiguration(Configuration)
                     );
             }
@@ -93,6 +102,7 @@ class Build : NukeBuild
 
     Target Pack => _ => _
         .DependsOn(Test)
+        .Produces(OutputDirectory / "*.nupkg")
         .Executes(() =>
         {
             var projectsToPack =

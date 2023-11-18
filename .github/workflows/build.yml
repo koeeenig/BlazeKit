@@ -33,3 +33,10 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
       - name: 'Run: Publish'
         run: ./build.cmd Publish
+        env:
+          NuGetApiKey: ${{ secrets.NUGET_API_KEY }}
+      - name: 'Publish: artifacts'
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: artifacts
