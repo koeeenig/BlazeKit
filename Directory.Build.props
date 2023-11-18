@@ -1,11 +1,15 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha.1</VersionSuffix>
     <Author>Andreas König</Author>
     <Company>BlazeKit</Company>
     <Description>BlazeKit is a Meta-Framework for Blazor</Description>
     <Product>BlazeKit</Product>
-    <RepositoryUrl>https://github.com/koeeenig/BlazeKit</RepositoryUrl>
+    <ProjectUrl>https://blazekit.dev</ProjectUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/koeeenig/BlazeKit</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 </Project>
