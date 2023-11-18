@@ -73,8 +73,8 @@ class Build : NukeBuild
                 new List<Nuke.Common.ProjectModel.Project>() {
                     Solution.GetProject("BlazeKit"),
                     Solution.GetProject("BlazeKit.Reactive"),
-                    Solution.GetProject("BlazeKit.CLI"),
-                    Solution.GetProject("BlazeKit.Deployment.Vercel")
+                    Solution.GetProject("BlazeKit.CLI")
+                    // Solution.GetProject("BlazeKit.Deployment.Vercel")
                 };
              foreach (var project in projectsToBuild)
             {
