@@ -7,7 +7,7 @@
     <Description>BlazeKit is a Meta-Framework for Blazor</Description>
     <Product>BlazeKit</Product>
     <ProjectUrl>https://blazekit.dev</ProjectUrl>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/koeeenig/BlazeKit</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
