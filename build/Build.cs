@@ -129,17 +129,26 @@ class Build : NukeBuild
         .OnlyWhenDynamic(() => IsServerBuild && Repository.IsOnMainBranch())
         .Executes(() => {
 
-            // get all nupkg files in output folder
-            var packages = OutputDirectory.GetFiles("*.nupkg");
-            // push each package to nuget.org
-            packages.ForEach(package => {
-                DotNetTasks
-                    .DotNetNuGetPush(s => s
-                        .SetSource("https://api.nuget.org/v3/index.json")
-                        .SetApiKey(NuGetApiKey)
-                        .SetTargetPath(package)
-                    );
-            });
+            // extract the version from a single project and check if it is part of the repository tags
+            // if so, publish the packages to nuget.org
+            var version = Solution.GetProject("BlazeKit").GetProperty("Version");
 
+            if(!Repository.Tags.Contains(version, StringComparer.OrdinalIgnoreCase)) {
+                Serilog.Log.Warning($"Version {version} is not a tag in the repository. Skipping publish.");
+                return;
+            } else {
+                Serilog.Log.Information($"Version {version} is a tag in the repository. Publishing.");
+                // get all nupkg files in output folder
+                var packages = OutputDirectory.GetFiles("*.nupkg");
+                // push each package to nuget.org
+                packages.ForEach(package => {
+                    DotNetTasks
+                        .DotNetNuGetPush(s => s
+                            .SetSource("https://api.nuget.org/v3/index.json")
+                            .SetApiKey(NuGetApiKey)
+                            .SetTargetPath(package)
+                        );
+                });
+            }
         });
 }
