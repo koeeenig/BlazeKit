@@ -45,9 +45,9 @@
         Router.NavigateTo($"/items/details/{Id}", forceLoad: true);
     }
 }
-<p>This route uses nested layouts and route parameters.</p>
+<p>This route uses nested layouts and a aut-generated route parameter.</p>
 <p>The layout for <strong>Pages/(Public)/Items/Details/[Id]/Page.razor</strong> is composed from:</p>
-    <ul>
+<ul>
     <li><i>Pages/(Public)/Items/Details/Layout.razor</i></li>
     <li><i>Pages/(Public)/Items/Layout.razor</i></li>
     <li><i>Pages/(Public)/Layout.razor</i></li>
@@ -79,7 +79,7 @@
     <ChildContent>
             <p>Name: @person.Value.name</p>
             <p>Name length: @computed.Value</p>
-    </ChildContent>    
+    </ChildContent>
     <Else>
         <p>Fetching <i>https://swapi.dev/api/people/<span>@Id</span> </i> .... Please wait 🕐</p>
     </Else>

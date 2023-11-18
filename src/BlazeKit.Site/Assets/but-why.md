@@ -7,7 +7,7 @@ However, in my spear time i am playing around with the JavaScript/TypeScript eco
 
 I used [SvelteKit](https://kit.svelte.dev/){target="_blank"} in a side project and fell in love with the file-based routing and the reactivity implemented by Svelte.
 
-Back in my day job, i missed these simple features in Blazor. So i sad down and thought how i could address features like file-bases routing and reactivity in the Blazor ecosystem. And here it is ... **BlazeKit** ✨
+Back in my day job, i missed these simple features in Blazor. So i sad down and thought how i could address features like file-based routing, file-based layouts and reactivity in the Blazor ecosystem. And here it is ... **BlazeKit** ✨
 
 **Are more features coming to BlazeKit?**
 
