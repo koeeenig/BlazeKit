@@ -10,10 +10,10 @@ public interface ISignal<T>
 ```
 
 ### `Signal`
-A Signal ecapsulates a value of type `T` and notifies all subscribers when the value changes.
+A Signal encapsulates a value of type `T` and notifies all subscribers when the value changes.
 
 ```csharp
-var counter = new State<int>(0,_ => InvokeAsync(StateHasChanged));
+var counter = new Signal<int>(0);
 ```
 When ever the value of `counter` changes, the component will be re-rendered.
 A signal can be subscribed by calling the `Subscribe` method.
@@ -34,8 +34,7 @@ This class is used to derive a new value from one or more other signals.
                 var doubled = Counter.Value * 2;
                 Debug.WriteLine($"Doubled is: {doubled}");
                 return doubled;
-            },
-            (_) => InvokeAsync(StateHasChanged)
+            }
         );
 ```
 Since the `Computed` class is a `ISignal<T>` it can be subscribed as well.
@@ -55,7 +54,7 @@ new Effect(() => {
 ```
 ## Blazor specific Signals
 These primitives can be used to build reactive components which are updated when the state changes.
-Have you ever forget the `StateHasChanged` call after updating a value? We bet you did. With the Blazor specific `Signals` this will not happen again. The call to `StateHasChanged` will be handled for you when ever the value of the `Signal` changes. 🎉
+Have you ever forget the `StateHasChanged` call after updating a value? I bet you did. With the Blazor specific `Signals` this will not happen again. The call to `StateHasChanged` will be handled for you when ever the value of the `Signal` changes. 🎉
 
 ### `State`
 For your convenience BlazeKit provides a `State` class which invokes `StateHasChanged` when the value has changed.
