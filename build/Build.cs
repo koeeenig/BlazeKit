@@ -126,7 +126,7 @@ class Build : NukeBuild
 
     Target Publish => _ => _
         .DependsOn(Pack)
-        .OnlyWhenDynamic(() => IsServerBuild && Repository.IsOnMainBranch())
+        .OnlyWhenDynamic(() => IsServerBuild)
         .Executes(() => {
 
             // extract the version from a single project and check if it is part of the repository tags
