@@ -1,5 +1,5 @@
 {
   "buildCommand": "dotnet build ; dotnet publish ./src/BlazeKit.Site",
-  "installCommand": "rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm ; yum -y install dotnet-sdk-7.0 ; dotnet --version",
+  "installCommand": "rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm ; yum -y install dotnet-sdk-8.0 ; dotnet --version",
   "outputDirectory": ".vercel/output/static"
 }
