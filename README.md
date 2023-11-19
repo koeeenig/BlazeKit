@@ -8,5 +8,4 @@ BlazeKit aims to provide Meta-framework-like Features for Blazor which has been 
 - 🖼️ File-based Layout Inheritance
 - 🪄 Auto-Generated Route Parameters
 
-Some more infos can be found at [blazekit.vercel.app](https://blazekit.vercel.app) but keep in mind BlazeKit is work in progress.
-
+Some more infos can be found at [blazekit.dev](https://blazekit.dev) but keep in mind BlazeKit is work in progress.
