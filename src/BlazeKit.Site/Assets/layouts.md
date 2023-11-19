@@ -35,14 +35,13 @@ Pages/
 └ Layout.razor
 ```
 
-## Breaking out of Layouts
-Breaking out of layoutspermalink
-The root layout applies to every page of your app — if omitted, it defaults to <slot />. If you want some pages to have a different layout hierarchy than the rest, then you can put your entire app inside one or more groups except the routes that should not inherit the common layouts.
+## Breaking out of layouts
+The root layout applies to every page of your app. If you want some pages to have a different layout hierarchy than the rest, then you can put your entire app inside one or more groups except the routes that should not inherit the common layouts.
 
-In the example above, the /admin route does not inherit either the (app) or (marketing) layouts.
+In the example above, the /Admin route does not inherit either the (App) or (Marketing) layouts.
 
-+page@permalink
-Pages can break out of the current layout hierarchy on a route-by-route basis. Suppose we have an /item/[id]/embed route inside the (app) group from the previous example:
+### Page@
+Pages can break out of the current layout hierarchy on a route-by-route basis. Suppose we have an /Item/[id]/Embed route inside the (App) group from the previous example:
 ```none
 Pages/
 ├ (App)/
@@ -55,11 +54,11 @@ Pages/
 │ └ Layout.razor
 └ Layout.razor
 ```
-Ordinarily, this would inherit the root layout, the (app) layout, the item layout and the [id] layout. We can reset to one of those layouts by appending @ followed by the segment name — or, for the root layout, the empty string. In this example, we can choose from the following options:
+Ordinarily, this would inherit the root layout, the **(App) layout**, the **item layout** and the **[Id] layout**. We can reset to one of those layouts by appending @ followed by the segment name — or, for the root layout, the empty string. In this example, we can choose from the following options:
 
-- Page@[id].razor - inherits from Pages/(App)/Item/[id]/Layout.razor
-- Page@item.razor - inherits from Pages/(App)/Item/Layout.razor
-- Page@(app).razor - inherits from Pages/(App)/Layout.razor
+- Page@[Id].razor - inherits from Pages/(App)/Item/[id]/Layout.razor
+- Page@Item.razor - inherits from Pages/(App)/Item/Layout.razor
+- Page@(App).razor - inherits from Pages/(App)/Layout.razor
 - Page@.razor - inherits from Pages/Layout.razor
 
 ```none
@@ -74,7 +73,9 @@ Pages/
 │ └ Layout.razor
 └ Layout.razor
 ```
-Like pages, layouts can themselves break out of their parent layout hierarchy, using the same technique. For example, a +layout@.svelte component would reset the hierarchy for all its child routes.
+## Layout@
+
+Like pages, layouts can themselves break out of their parent layout hierarchy, using the same technique. For example, a Layout@.razor component would reset the hierarchy for all its child routes.
 ```none
 Pages/
 ├ (App)/
@@ -84,7 +85,7 @@ Pages/
 │ │ │ │ └ Page.razor  // uses (App)/Item/[Id]/Layout.razor
 │ │ │ ├ Layout.razor  // inherits from (App)/Item/Layout@.razor
 │ │ │ └ Page.razor    // uses (App)/Item/Layout@.razor
-│ │ └ Layout.razor   // inherits from root layout, skipping (App)/Layout.razor
+│ │ └ Layout@.razor   // inherits from root layout, skipping (App)/Layout.razor
 │ └ Layout.razor
 └ Layout.razor
 ```

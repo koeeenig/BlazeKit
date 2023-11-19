@@ -48,6 +48,9 @@
                     if (counter.Value > 0 && counter.Value % 2 == 0)
                     {
                         booms++;
+                        // since booms in not a signal, we need to notify the UI manually
+                        // this is required if the counter updates in background task
+                        InvokeAsync(StateHasChanged);
                     }
                 }
             );
@@ -124,19 +127,19 @@
     @AsHtml("ISignal<int> counter = new BlzState<int>(0, this)").Value
     @AsHtml(@"// Create a derived State
     ISignal<int> doubled =
-        new BlzComputed<int, int>(
-            counter,
+        new Derived<int>(
             () => counter.Value * 2,
             this
         );").Value
     @AsHtml(@"// Create an Effect
-    new Effect<int>(() => {
+    new Effect(() => {
             if(counter.Value > 0 && counter.Value % 5 == 0)
             {
+                // since booms in not a signal, we need to notify the UI manually
+                // this is required if the counter updates in background task
                 booms++;
             }
-        },
-        counter
+        }
     );").Value
 }
 
