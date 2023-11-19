@@ -123,24 +123,30 @@
 <pre>
 <code class="language-cshtml-razor">
 @@code {
-    // Create a Signal
-    @AsHtml("ISignal<int> counter = new BlzState<int>(0, this)").Value
-    @AsHtml(@"// Create a derived State
-    ISignal<int> doubled =
-        new Derived<int>(
-            () => counter.Value * 2,
-            this
-        );").Value
-    @AsHtml(@"// Create an Effect
-    new Effect(() => {
-            if(counter.Value > 0 && counter.Value % 5 == 0)
-            {
-                // since booms in not a signal, we need to notify the UI manually
-                // this is required if the counter updates in background task
-                booms++;
-            }
-        }
-    );").Value
+    @AsHtml(@"protected override void OnInitialized()
+    {
+        // Create a Signal
+        this.counter = new State<int>(0, this);
+        // Create a derived State
+        this.doubled =
+            new Derived<int>(
+                () => counter.Value * 2,
+                this
+            );
+        // Create an Effect
+        this.sideEffect =
+            new Effect(() =>
+                {
+                    if(counter.Value > 0 && counter.Value % 2 == 0)
+                    {
+                        // since booms in not a signal, we need to notify the UI manually
+                        // this is required if the counter updates in background task
+                        booms++;
+                        InvokeAsync(StateHasChanged);
+                    }
+                }
+            );
+    }").Value
 }
 
 @AsHtml("<p>@counter.Value</p>").Value
