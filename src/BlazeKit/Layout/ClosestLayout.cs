@@ -1,4 +1,3 @@
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.IO;
 using System.Linq;
@@ -9,39 +8,71 @@ namespace BlazeKit
     {
         public ClosestLayout(string file, Action<string> log, bool skipSameDirectory = false, string root = "pages") : base(() =>
         {
-            var rootFolder = file.ToLower().Substring(0, file.ToLower().IndexOf(root) + root.Length);
-            rootFolder = file.Substring(0, rootFolder.Length);
-            var name = "";
-            var fi = new FileInfo(file);
-            if (IsBreakout(fi)) {
-                log($"The layout file '{fi.Name}' breaks out of the inheritence chain");
-                // find breakout layout
-                var breakoutLayout = Path.GetFileNameWithoutExtension(fi.FullName).Split('@')[1];
-                var layoutPath = SegmentFolder(breakoutLayout, rootFolder);
-                //var layoutPath = fi.FullName.Substring(0,fi.FullName.IndexOf(breakoutLayout));
-                if(string.IsNullOrEmpty(layoutPath.Name))
-                {
+            try {
+                var rootFolder = file.ToLower().Substring(0, file.ToLower().IndexOf(root) + root.Length);
+                rootFolder = file.Substring(0, rootFolder.Length);
+
+                var name = "";
+                var fi = new FileInfo(file);
+                if (IsBreakout(fi)) {
+                    log($"The Page/Layout '{fi.Name}' breaks out of the inheritence chain");
+                    // find breakout layout
+                    var breakoutLayout = Path.GetFileNameWithoutExtension(fi.FullName).Split('@')[1];
+
                     // sreach for layout at root
-                    layoutPath = new FileInfo(file.ToLower().Substring(0, file.ToLower().IndexOf(root) + root.Length));
+                    var layoutPath = new FileInfo(file.ToLower().Substring(0, file.ToLower().IndexOf(root) + root.Length));
                     layoutPath = new FileInfo(file.Substring(0, layoutPath.FullName.Length));
+
+                    if(!string.IsNullOrEmpty(breakoutLayout))
+                    {
+                        layoutPath = SegmentFolder(breakoutLayout, rootFolder);
+                        //var layoutPath = fi.FullName.Substring(0,fi.FullName.IndexOf(breakoutLayout));
+                        if(string.IsNullOrEmpty(layoutPath.Name))
+                        {
+                            // sreach for layout at root
+                            layoutPath = new FileInfo(file.ToLower().Substring(0, file.ToLower().IndexOf(root) + root.Length));
+                            layoutPath = new FileInfo(file.Substring(0, layoutPath.FullName.Length));
+                        } else
+                        {
+                            layoutPath = SegmentFolder(breakoutLayout, rootFolder);
+                        }
+                        log($"Searching for breakout layout in: {layoutPath}");
+                        if(HasLayout(layoutPath.DirectoryName))
+                        {
+                            name = LayoutOf(layoutPath.DirectoryName).FullName;
+                        } else
+                        {
+                            log($"Could not find breakout layout in: {layoutPath}");
+                            var dir = fi.Directory;
+
+                            if (skipSameDirectory && !IsRoot(dir.Name, root))
+                            {
+                                dir = dir.Parent;
+                            }
+                            else if (skipSameDirectory && IsRoot(dir.Name, root))
+                            {
+                                return "";
+                            }
+
+                            // check if the directory contains a Layout file
+                            while (!HasLayout(dir.FullName))
+                            {
+                                dir = dir.Parent;
+                            }
+                            // we found a layout file
+                            name = LayoutOf(dir.FullName).FullName;
+                        }
+                    } else {
+                        name = LayoutOf(rootFolder).FullName;
+                    }
                 } else
                 {
-                    layoutPath = SegmentFolder(breakoutLayout, rootFolder);
-                }
-                log($"Searching for breakout layout in: {layoutPath}");
-                if(HasLayout(layoutPath.DirectoryName))
-                {
-                    name = LayoutOf(layoutPath.DirectoryName).FullName;
-                } else
-                {
-                    log($"Could not find breakout layout in: {layoutPath}");
                     var dir = fi.Directory;
 
-                    if (skipSameDirectory && !IsRoot(dir.Name, root))
+                    if(skipSameDirectory && !IsRoot(dir.Name,root))
                     {
                         dir = dir.Parent;
-                    }
-                    else if (skipSameDirectory && IsRoot(dir.Name, root))
+                    } else if(skipSameDirectory && IsRoot(dir.Name,root))
                     {
                         return "";
                     }
@@ -54,31 +85,17 @@ namespace BlazeKit
                     // we found a layout file
                     name = LayoutOf(dir.FullName).FullName;
                 }
-            } else
+
+                log($"Found layout file: {name}");
+                //var className = $"{new NamespaceSegments(name,root).Value}.{new SanititizedNamespace(Path.GetFileNameWithoutExtension(name)).Value}";
+                var className = new SanititizedNamespace($"{new NamespaceSegments(name, root).Value}.{Path.GetFileNameWithoutExtension(name)}").Value;
+                return className;
+            } catch(Exception ex)
             {
-                var dir = fi.Directory;
-
-                if(skipSameDirectory && !IsRoot(dir.Name,root))
-                {
-                    dir = dir.Parent;
-                } else if(skipSameDirectory && IsRoot(dir.Name,root))
-                {
-                    return "";
-                }
-
-                // check if the directory contains a Layout file
-                while (!HasLayout(dir.FullName))
-                {
-                    dir = dir.Parent;
-                }
-                // we found a layout file
-                name = LayoutOf(dir.FullName).FullName;
+                log(ex.ToString());
+                throw new InvalidOperationException($"Could not find layout for {file}");
             }
 
-            log($"Found layout file: {name}");
-            //var className = $"{new NamespaceSegments(name,root).Value}.{new SanititizedNamespace(Path.GetFileNameWithoutExtension(name)).Value}";
-            var className = new SanititizedNamespace($"{new NamespaceSegments(name, root).Value}.{Path.GetFileNameWithoutExtension(name)}").Value;
-            return className;
         })
         { }
 
