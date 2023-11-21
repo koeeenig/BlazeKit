@@ -1,6 +1,6 @@
 {
-  "buildCommand": "dotnet build ; dotnet publish ./src/BlazeKit.Site",
-  "installCommand": "rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm ; yum -y install dotnet-sdk-8.0 ; dotnet --version",
+  "buildCommand": "dotnet build ./src/BlazeKit.Site ; dotnet publish ./src/BlazeKit.Site",
+  "installCommand": "yum -y install wget tar gzip libicu ; wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh ; chmod +x ./dotnet-install.sh ; ./dotnet-install.sh --version latest; export DOTNET_ROOT=$HOME/.dotnet ; export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools ; dotnet --version",
   "outputDirectory": ".vercel/output/static",
   "rewrites": [
     {
