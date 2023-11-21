@@ -1,6 +1,6 @@
 {
   "buildCommand": "dotnet build ./src/BlazeKit.Site -c Release ; dotnet publish ./src/BlazeKit.Site -c Release",
-  "installCommand": "./install.sh",
+  "installCommand": "chmod +x ./install.sh ; ./install.sh",
   "outputDirectory": ".vercel/output/static",
   "rewrites": [
     {
