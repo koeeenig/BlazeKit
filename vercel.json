@@ -1,6 +1,6 @@
 {
-  "buildCommand": "dotnet build ./src/BlazeKit.Site -c Release ; dotnet publish ./src/BlazeKit.Site -c Release",
-  "installCommand": "chmod +x ./install.sh ; ./install.sh; export DOTNET_ROOT=$HOME/.dotnet ; export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools ; dotnet --version",
+  "buildCommand": "/vercel/.dotnet/dotnet build ./src/BlazeKit.Site -c Release ; /vercel/.dotnet/dotnet publish ./src/BlazeKit.Site -c Release",
+  "installCommand": "chmod +x ./install.sh ; ./install.sh; export DOTNET_ROOT=$HOME/.dotnet ; export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools ; /vercel/.dotnet/dotnet --version",
   "outputDirectory": ".vercel/output/static",
   "rewrites": [
     {
