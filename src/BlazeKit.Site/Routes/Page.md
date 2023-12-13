@@ -12,7 +12,7 @@
 
 <blockquote class="callout">
 <div>💡</div>
-    <div>BlazeKit is unopinionated about the Blazor Hosting Model. BlazeKit works with either <strong>Blazor Server</strong>,<strong>Blazor WebAssembly</strong> or the new <strong>Blazor Server-Side Rendering</strong> Model.</div>
+    <div>BlazeKit is unopinionated about the Blazor Hosting Model. BlazeKit works with either <strong>Blazor WebApp</strong> or <strong>Blazor WebAssembly</strong> Model.</div>
 </blockquote>
 
 Want to get started with BlazeKit? Head over to [Getting Started](/create-a-project) to create your first Blazekit app.
