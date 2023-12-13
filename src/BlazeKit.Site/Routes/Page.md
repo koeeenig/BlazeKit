@@ -1,6 +1,6 @@
 # Welcome to BlazeKit! <span class="wave">👋</span>
 
-**BlazeKit** aims to provide Meta-framework-like Features for Blazor which has been inspired by [SvelteKit](https://kit.svelte.dev/){target="_blank"}. BlazeKit currently supports the following features:
+**BlazeKit** provides Meta-framework-like features for Blazor which has been inspired by [SvelteKit](https://kit.svelte.dev/){target="_blank"}. BlazeKit currently supports the following set of features:
 
 - 🪧 File-based Routing
 - 🖼️ File-based Layouts
