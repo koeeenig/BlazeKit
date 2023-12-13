@@ -1,6 +1,6 @@
 # BlazeKit - A Meta-Framework for Blazor .NET
 
-**BlazeKit** provides Meta-framework-like features for Blazor which has been inspired by [SvelteKit](https://kit.svelte.dev/){target="_blank"}. BlazeKit currently supports the following set of features:
+**BlazeKit** provides Meta-framework-like features for Blazor which has been inspired by [SvelteKit](https://kit.svelte.dev/). BlazeKit currently supports the following set of features:
 
 - 🪧 File-based Routing
 - 🖼️ File-based Layouts
@@ -14,7 +14,7 @@
 # 🚀 Getting Started
 ## ☝️ Requirements
 Before creating your first BlazeKit project, you should ensure that your local machine has:
-- .NET 8 - you can find the download [here](https://dotnet.microsoft.com/en-us/download){target="_blank"}
+- .NET 8 - you can find the download [here](https://dotnet.microsoft.com/en-us/download)
 
 That's it 👍
 
