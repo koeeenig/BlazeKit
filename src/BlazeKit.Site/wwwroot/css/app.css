@@ -1,3 +1,9 @@
+html {
+    scroll-behavior: smooth;
+}
+:root {
+    --spacing: 0.5rem;
+}
 .logo-wrapper {
     display: inline-flex;
     align-items: center;

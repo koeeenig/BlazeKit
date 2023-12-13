@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
@@ -11,27 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".blazekit/generated/**/*.cs"></Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Assets\getting-started.md" />
-    <None Remove="Assets\layouts.md" />
-    <None Remove="Assets\reactivity.md" />
-    <None Remove="Assets\routing.md" />
-    <None Remove="Assets\todos.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\getting-started.md" />
-    <EmbeddedResource Include="Assets\reactivity.md" />
-    <EmbeddedResource Include="Assets\layouts.md" />
-    <EmbeddedResource Include="Assets\todos.md" />
-    <EmbeddedResource Include="Assets\routing.md" />
-    <EmbeddedResource Include="Assets\but-why.md" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\scripts\highlight.min.js" />
     <None Include="wwwroot\scripts\languages\csharp.min.js" />
     <None Include="wwwroot\scripts\languages\javascript.min.js" />
@@ -39,19 +18,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="BlazeKit" Version="1.0.0" />-->
     <PackageReference Include="Markdig" Version="0.33.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.13" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
     <PackageReference Include="Yaapii.Atoms" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\..\src\BlazeKit.Deployment.Vercel\BlazeKit.Deployment.Vercel.csproj" />-->
-    <ProjectReference Include="..\..\src\BlazeKit.Core\BlazeKit.Core.csproj" />
-    <ProjectReference Include="..\..\src\BlazeKit.Reactive\BlazeKit.Reactive.csproj" />
-    <ProjectReference Include="..\..\src\BlazeKit\BlazeKit.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\BlazeKit.Deployment.Vercel\BlazeKit.Deployment.Vercel.csproj" />
+    <ProjectReference Include="..\..\src\BlazeKit.Reactivity\BlazeKit.Reactivity.csproj" />
+    <ProjectReference Include="..\BlazeKit\BlazeKit.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Routes/**/*.md" />
+    <Watch Include="Routes/**/*.md" />
   </ItemGroup>
 
 

@@ -1,6 +1,6 @@
 {
-  "buildCommand": "dotnet build ; dotnet publish ./src/BlazeKit.Site",
-  "installCommand": "rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm ; yum -y install dotnet-sdk-7.0 ; dotnet --version",
+  "buildCommand": "/vercel/.dotnet/dotnet publish ./src/BlazeKit.Site -c Release",
+  "installCommand": "chmod +x ./install.sh ; ./install.sh; export DOTNET_ROOT=$HOME/.dotnet ; export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools ; /vercel/.dotnet/dotnet --version",
   "outputDirectory": ".vercel/output/static",
   "rewrites": [
     {

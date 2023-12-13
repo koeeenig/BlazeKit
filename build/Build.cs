@@ -72,7 +72,7 @@ class Build : NukeBuild
             var projectsToBuild =
                 new List<Nuke.Common.ProjectModel.Project>() {
                     Solution.GetProject("BlazeKit"),
-                    Solution.GetProject("BlazeKit.Reactive"),
+                    Solution.GetProject("BlazeKit.Reactivity"),
                     Solution.GetProject("BlazeKit.CLI")
                     // Solution.GetProject("BlazeKit.Deployment.Vercel")
                 };
@@ -108,7 +108,7 @@ class Build : NukeBuild
             var projectsToPack =
                 new List<Nuke.Common.ProjectModel.Project>() {
                     Solution.GetProject("BlazeKit"),
-                    Solution.GetProject("BlazeKit.Reactive"),
+                    Solution.GetProject("BlazeKit.Reactivity"),
                     Solution.GetProject("BlazeKit.CLI")
                     // Solution.GetProject("BlazeKit.Deployment.Vercel")
                 };

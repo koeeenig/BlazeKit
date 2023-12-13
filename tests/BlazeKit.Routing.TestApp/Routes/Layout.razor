@@ -1,0 +1,28 @@
+﻿@inherits LayoutComponentBase
+<header>
+    <nav>
+        <a href="/"><img alt="Logo" src="/images/blazekit-logo.svg" height="70"></a>
+        <ul>
+            <li><a href="contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="#">Dropdown Menu Item</a>
+                <ul>
+                    <li><a href="#">Sublink with a long name</a></li>
+                    <li><a href="#">Short sublink</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+@Body
+</main>
+<footer>
+    @* <hr /> *@
+    <a href="terms">Terms</a>
+</footer>
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

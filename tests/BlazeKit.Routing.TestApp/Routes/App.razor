@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="BlazeKit.Routing.TestApp.styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@picocss/pico@1/css/pico.classless.min.css"> *@
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@@gh-pages/tacit-css-1.6.0.min.css"/> *@
+    <HeadOutlet />
+</head>
+
+<body>
+    <Routes />
+    <script src="_framework/blazor.web.js"></script>
+    <script>
+        Blazor.addEventListener("enhancedload", () => {
+            console.debug('enhancedload event fired');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Include=".blazekit/generated/**/*.cs"></Compile>
+    <AdditionalFiles Include="Routes/**/*.md" />
+    <Watch Include="Routes/**/*.md" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
+    <PackageTags>Blazor, Reactivity, Signals</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\"></None>
+    <None Include="../../LICENSE" Pack="true" PackagePath="\"></None>
+    <Content Include="icon.png" PackagePath="."></Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.13" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\BlazeKit.Abstraction\**\*.cs" Exclude="..\BlazeKit.Abstraction\obj\**\*.cs;">
+      <Link>BlazeKit.Abstraction\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+</Project>
