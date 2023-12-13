@@ -5,7 +5,7 @@ namespace BlazeKit.Routes.Pages.SourceTemplates;
 /// <summary>
     /// A generated source code of a route class
     /// </summary>
-    internal class MarkdownRouteClassSource : Lazy<string>
+    public class MarkdownRouteClassSource : Lazy<string>
     {
         /// <summary>
         /// A generated source code of a route class

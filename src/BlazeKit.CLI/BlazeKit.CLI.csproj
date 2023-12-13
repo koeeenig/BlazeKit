@@ -10,8 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Commands\New\Assets\TPL_NEW_PROJECT.zip" />
-    <EmbeddedResource Include="Commands\New\Assets\TPL_NEW_PROJECT_SERVER.zip" />
     <None Include="../../README.md" Pack="true" PackagePath="\"></None>
     <None Include="../../LICENSE" Pack="true" PackagePath="\"></None>
     <Content Include="icon.png" PackagePath="."></Content>

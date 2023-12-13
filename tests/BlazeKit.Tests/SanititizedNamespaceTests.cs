@@ -1,3 +1,5 @@
+using BlazeKit.Utils;
+
 namespace BlazeKit.Tests
 {
     public class SanititizedNamespaceTests

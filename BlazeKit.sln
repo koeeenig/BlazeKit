@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.CLI", "src\BlazeKi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{B5C21DC5-2745-4530-A317-F4CD52DBE22E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Reactive.Tests", "tests\BlazeKit.Reactive.Tests\BlazeKit.Reactive.Tests.csproj", "{4D98C97D-CFCC-4473-BFD8-B28DA3199EF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Reactivity.Tests", "tests\BlazeKit.Reactivity.Tests\BlazeKit.Reactivity.Tests.csproj", "{4D98C97D-CFCC-4473-BFD8-B28DA3199EF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{6B6EFC67-31B4-4D2E-98D5-1A731AF98B0B}"
 EndProject
