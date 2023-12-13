@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace BlazeKit
+namespace BlazeKit.Layout
 {
     /// <summary>
     /// Checks if the file is a layout file

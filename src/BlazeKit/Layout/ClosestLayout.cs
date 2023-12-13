@@ -1,8 +1,6 @@
-using System;
-using System.IO;
-using System.Linq;
+using BlazeKit.Utils;
 
-namespace BlazeKit
+namespace BlazeKit.Layout
 {
     public sealed class ClosestLayout : Lazy<string>
     {
@@ -135,25 +133,31 @@ namespace BlazeKit
 
             if(!skipSameDirectory)
             {
+#pragma warning disable RS1035 // Do not use APIs banned for analyzers
                 if (File.Exists(filePath))
                 {
                     return filePath;
                 }
+#pragma warning restore RS1035 // Do not use APIs banned for analyzers
             }
 
+#pragma warning disable RS1035 // Do not use APIs banned for analyzers
             string parentDirectory = Directory.GetParent(currentDirectory)?.FullName;
+#pragma warning restore RS1035 // Do not use APIs banned for analyzers
 
             // If there is no parent directory, we have reached the root, and the file is not found.
             if (parentDirectory == null || new DirectoryInfo(parentDirectory).Name.Equals(root,StringComparison.InvariantCultureIgnoreCase))
             {
                 // we are in the root dirtectory.. we cannot go up further but there might be a layout file
                 filePath = Path.Combine(parentDirectory, fileName);
+#pragma warning disable RS1035 // Do not use APIs banned for analyzers
                 if (File.Exists(filePath))
                 {
                     return filePath;
                 } else {
                     return "";
                 }
+#pragma warning restore RS1035 // Do not use APIs banned for analyzers
             }
 
             // Recursively search in the parent directory.
