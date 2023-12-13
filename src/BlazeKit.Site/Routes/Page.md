@@ -6,7 +6,7 @@
 - 🖼️ File-based Layouts
 - 🤝 File-based API Routes
 - 🪄 Auto-Generated Route Parameters
-- 📝  Build in Markdown Support for Page Routesa
+- 📝  Build in Markdown Support for Page Routes
 - ⚡ Reactive primitives inspired by the signals pattern.
 
 
