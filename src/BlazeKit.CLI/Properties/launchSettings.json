@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "BlazeKit.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "run dev -l",
+      "workingDirectory": "D:\\GitHub\\BlazeKit\\src\\BlazeKit.CLI\\bin\\Debug\\net8.0\\Final"
+    }
+  }
+}

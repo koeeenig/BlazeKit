@@ -16,8 +16,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.47.0" />
-    <PackageReference Include="Spectre.Console.Cli" Version="0.47.0" />
+    <Compile Include="..\BlazeKit.Abstraction\**\*.cs" Exclude="..\BlazeKit.Abstraction\obj\**\*.cs;">
+      <Link>BlazeKit.Abstraction\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\tailwind.config.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\tailwind.config.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.48.0" />
+    <PackageReference Include="Spectre.Console.Analyzer" Version="0.48.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Spectre.Console.Cli" Version="0.48.0" />
     <PackageReference Include="Yaapii.Atoms" Version="3.0.0" />
   </ItemGroup>
 
