@@ -1,0 +1,14 @@
+@using BlazeKit.Site;
+@using BlazeKit.Site.Pages;
+<Router AppAssembly="@typeof(Index).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Routes.Layout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>BlazeKit - Not found</PageTitle>
+        <LayoutView Layout="@typeof(Routes.Layout)">
+            <h1>🤷 <small>Sorry, there's nothing at this address.</small></h1>
+        </LayoutView>
+    </NotFound>
+</Router>

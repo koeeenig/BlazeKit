@@ -1,0 +1,11 @@
+﻿@inherits LayoutComponentBase
+@code {
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        JSRuntime.InvokeVoidAsync("highlight");
+    }
+}
+<PageTitle>BlazeKit - 🚀 Getting Started</PageTitle>
+@Body

@@ -1,0 +1,19 @@
+@using Markdig;
+@* convertedMarkdown is a MarkupString so it won't be encoded *@
+@convertedMarkdown
+
+@code {
+    // Use MarkupString type to prevent Blazor from using HtmlEncoder.Encode
+    private MarkupString convertedMarkdown;
+
+    [Parameter]
+    [EditorRequired]
+    public string Text { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        // Required Markdig https://www.nuget.org/packages/Markdig/
+        var html = Markdig.Markdown.ToHtml(Text ?? "", new MarkdownPipelineBuilder().UseAdvancedExtensions().Build());
+        convertedMarkdown = (MarkupString)html; // or new MarkupString(html)
+    }
+}

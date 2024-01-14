@@ -19,6 +19,9 @@
   <ItemGroup>
       <Watch Include="Routes/**/*.md" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BlazeKit.Static\BlazeKit.Static.csproj" />
+  </ItemGroup>
 
 
 </Project>

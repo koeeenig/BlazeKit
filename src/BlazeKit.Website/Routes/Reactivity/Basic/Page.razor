@@ -1,0 +1,54 @@
+@using BlazeKit.Reactivity;
+@using BlazeKit.Reactivity.Blazor;
+@using BlazeKit.Reactivity.Signals;
+@using System.ComponentModel;
+
+@code {
+    private MarkupString AsHtml(string code)
+    {
+        return new MarkupString(code);
+    }
+}
+<h1>Basic</h1>
+<BlzIsland ComponentType="@(typeof(Counter))">
+    <Counter />
+</BlzIsland>
+
+
+<h4>Code Example</h4>
+<pre>
+<code class="language-cshtml-razor">
+@@code {
+    @AsHtml(@"protected override void OnInitialized()
+    {
+        // Create a Signal
+        this.counter = new State<int>(0, this);
+        // Create a derived State
+        this.doubled =
+            new Derived<int>(
+                () => counter.Value * 2,
+                this
+            );
+        // Create an Effect
+        this.sideEffect =
+            new Effect(() =>
+                {
+                    if(counter.Value > 0 && counter.Value % 2 == 0)
+                    {
+                        // since booms in not a signal, we need to notify the UI manually
+                        // this is required if the counter updates in background task
+                        booms++;
+                        InvokeAsync(StateHasChanged);
+                    }
+                }
+            );
+    }").Value
+}
+
+@AsHtml("<p>@counter.Value</p>").Value
+@AsHtml("<p>Doubled Counter: @doubled.Value</p>").Value
+@AsHtml(@"<p>Triggered Side Effects <code>(counter.Value % 5 == 0)</code>: @booms</p>").Value
+@AsHtml("<button @onclick=\"() => counter.Value++\">Increment</button>").Value
+@AsHtml("<button @onclick=\"() => counter.Value--\">Decrement</button>").Value
+</code>
+</pre>

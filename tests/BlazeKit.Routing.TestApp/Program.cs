@@ -8,8 +8,15 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
+if(args.Length > 0)
+{
+    Console.WriteLine("Building static site");
+    new BlazeKit.Static.StaticSiteGenerator(".blazekit/build",builder.Environment.WebRootPath,typeof(Program).Assembly).Build(typeof(App));
+    return;
+}
 // Add services to the container.
 builder.Services.AddRazorComponents();
     // .AddInteractiveWebAssemblyComponents();

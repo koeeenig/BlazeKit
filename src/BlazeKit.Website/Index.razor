@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image:src" content="https://blazekit.dev/images/blazekit-social-preview-image.png" />
+    <meta name="twitter:description" content="BlazeKit - A Meta-Framework for Blazor .NET" />
+    <meta property="og:image" content="https://blazekit.dev/images/blazekit-social-preview-image.png" />
+    <meta property="og:image:alt" content="BlazeKit - A Meta-Framework for Blazor .NET" />
+    <meta property="og:type" content="object" />
+    <meta property="og:title" content="BlazeKit - A Meta-Framework for Blazor .NET" />
+    <meta property="og:url" content="https://blazekit.dev" />
+    <meta property="og:description" content="BlazeKit - A Meta-Framework for Blazor .NET" />
+
+    @* <title>BlazeKit - A Meta-Framework for Blazor .NET</title> *@
+    <base href="/" />
+    <link rel="icon" href="images/blazekit-logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/pico.classless.min.css">
+    <link href="css/app.css" rel="stylesheet" />
+    <!--If you add any scoped CSS files, uncomment the following to load them-->
+    <!--<link href="BlazeKit.Sample.styles.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="css/highlightjs/default.min.css">
+    <HeadOutlet />
+    <script src="_framework/blazor.web.js" autostart="true"></script>
+</head>
+<body>
+    <AppRouter />
+    <script src="scripts/highlight.min.js"></script>
+    <script src="scripts/languages/xml.min.js"></script>
+    <script src="scripts/languages/csharp.min.js"></script>
+    <script src="scripts/languages/cshtml-razor.min.js"></script>
+    <script src="scripts/languages/shell.min.js"></script>
+    <script>
+        window.highlight = () => {
+            hljs.highlightAll();
+        }
+
+        window.getScrollPosition = () => {
+            return {
+                X: window.scrollX, Y: window.scrollY
+            }
+        }
+        window.setScrollPosition = (x, y) => {
+            //console.log("Setting scroll position to " + x + ", " + y);
+            window.scrollTo(x, y);
+        }
+
+        addEventListener('hashchange', event => {
+            console.log('Fragment identifier or URL changed');
+        });
+    </script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
+
+</html>
+

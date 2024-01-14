@@ -1,0 +1,28 @@
+@code {
+    [Parameter]
+    [EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public Type ComponentType { get; set; }
+
+    private MarkupString beginBlazorWasmMarker;
+    private MarkupString endBlazorWasmMarker;
+    private IList<KeyValuePair<string,object>> load = new List<KeyValuePair<string, object>>();
+
+    private string prerenderId = Guid.NewGuid().ToString();
+    private string locationhash = Guid.NewGuid().ToString();
+    protected override void OnParametersSet() {
+        var typeName = ComponentType.FullName;
+        var assemblyName = ComponentType.Assembly.GetName().Name;
+        beginBlazorWasmMarker = new MarkupString(@$"<!--Blazor:{{""type"":""webassembly"",""prerenderId"":""{prerenderId}"",""key"":{{""locationHash"":""{locationhash}"",""formattedComponentKey"":""""}},""assembly"":""{assemblyName}"",""typeName"":""{typeName}"",""parameterDefinitions"":""W10="",""parameterValues"":""W10=""}}-->");
+        endBlazorWasmMarker = new MarkupString(@$"<!--Blazor:{{""prerenderId"":""{prerenderId}""}}-->");
+    }
+}
+@if(ChildContent != null)
+{
+    @beginBlazorWasmMarker
+        @ChildContent
+    @endBlazorWasmMarker
+}

@@ -1,0 +1,19 @@
+@code {
+    [Parameter]
+    public Func<bool>  Condition { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+
+    [Parameter]
+    public RenderFragment Else { get; set; }
+}
+
+@if(Condition())
+{
+    @ChildContent
+} else
+{
+  @Else
+}

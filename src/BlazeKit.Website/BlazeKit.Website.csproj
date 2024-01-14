@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>.blazekit</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
+    <PackageReference Include="Markdig" Version="0.33.0" />
+    <ProjectReference Include="..\..\src\BlazeKit.Reactivity\BlazeKit.Reactivity.csproj" />
+    <ProjectReference Include="..\BlazeKit\BlazeKit.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\BlazeKit.Website.Islands\Components\**\*.razor" Exclude="..\BlazeKit.Website.Islands\obj\**\*.razor;..\BlazeKit.Website.Islands\bin\**\*.razor;">
+      <Link>Components\Islands\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AdditionalFiles Include="Routes/**/*.md" />
+    <Watch Include="Routes/**/*.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazeKit.Website.Islands\BlazeKit.Website.Islands.csproj" />
+    <ProjectReference Include="..\BlazeKit.Static\BlazeKit.Static.csproj" />
+  </ItemGroup>
+
+  <Target Name="SSG" AfterTargets="AfterPublish">
+    <PropertyGroup>
+      <SourceFolder>$(PublishDir)wwwroot</SourceFolder>
+      <DestinationFolder>$(PublishDir)..\ssg</DestinationFolder>
+    </PropertyGroup>
+    <ItemGroup>
+      <FilesToCopy Include="$([MSBuild]::EnsureTrailingSlash('$(SourceFolder)'))**\*.*"/>
+    </ItemGroup>
+    <MakeDir Directories="$(PublishDir)..\ssg" />
+    <Message Text="Copying files from $(SourceFolder) to $(DestinationFolder)" Importance="high" />
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$([MSBuild]::EnsureTrailingSlash('$(DestinationFolder)'))%(RecursiveDir)"/>
+
+    <Exec Command="$(PublishDir)$(AssemblyName).$(OutputType) ssg" />
+   </Target>
+   <Target Name="DeployToVercel" AfterTargets="SSG">
+    <Exec Command="echo Prepare Deployment for Vercel..." />
+    <PropertyGroup>
+      <RepoRoot>$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('.gitignore', '$(MSBuildThisFileDirectory)'))))</RepoRoot>
+      <VercelOutput>$(RepoRoot)/.vercel/</VercelOutput>
+    </PropertyGroup>
+    <Exec Command="echo Repository Root: $(RepoRoot)"></Exec>
+    <RemoveDir Directories="$(RepoRoot)/.vercel"></RemoveDir>
+    <ItemGroup>
+      <VercelOutputApiVersion Include="{ &quot;version&quot;: 3 }" />
+      <FilesToCopy Include="$([MSBuild]::EnsureTrailingSlash('.blazekit/build/ssg'))\**\*.*" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(VercelOutput)config.json" Lines="@(VercelOutputApiVersion)" Overwrite="true"></WriteLinesToFile>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(VercelOutput)output/static/%(RecursiveDir)" />
+    <Exec Command="echo Deployment for Vercel finished" />
+  </Target>
+
+</Project>
