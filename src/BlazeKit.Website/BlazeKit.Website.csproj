@@ -50,7 +50,8 @@
     <Message Text="Copying files from $(SourceFolder) to $(DestinationFolder)" Importance="high" />
     <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$([MSBuild]::EnsureTrailingSlash('$(DestinationFolder)'))%(RecursiveDir)"/>
 
-    <Exec Command="$(PublishDir)$(AssemblyName).$(OutputType) ssg" />
+    <Exec Condition=" '$(OS)' == 'Windows_NT' " Command="$(PublishDir)$(AssemblyName).$(OutputType) ssg" />
+    <Exec Condition=" '$(OS)' != 'Windows_NT' " Command="$(PublishDir)$(AssemblyName) ssg" />
    </Target>
    <Target Name="DeployToVercel" AfterTargets="SSG">
     <Exec Command="echo Prepare Deployment for Vercel..." />
