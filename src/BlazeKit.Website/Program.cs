@@ -7,8 +7,8 @@ using Microsoft.Extensions.Hosting;
 if (args.Count() > 0 && args[0] == "ssg") {
     Console.WriteLine("Building Static Site");
     new BlazeKit.Static.StaticSiteGenerator(
-        ".blazekit/build/ssg",
-        ".blazekit/build/tmp/wwwroot",
+        Path.Combine(".blazekit","build","ssg"),
+        Path.Combine(".blazekit","build","tmp","wwwroot"),
         typeof(BlazeKit.Website.Index).Assembly
     ).Build();
     Console.WriteLine("Static Site Built");

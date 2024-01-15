@@ -68,6 +68,11 @@ public class StaticSiteGenerator
 
     public async void Build(Type rootComponent)
     {
+        // copy wwwroot
+        var source = Path.Combine(this.wwwrootContent);
+        var destination = Path.Combine(this.outputDirectory);
+        Console.WriteLine($"Copying wwwroot from {source} to {destination}");
+        CopyDirectory(source, destination);
         var serviceCollection = new ServiceCollection();
 
         var routeManager = new StaticNavigationManager();
@@ -104,10 +109,6 @@ public class StaticSiteGenerator
                 throw;
             }
         }
-        // copy wwwroot
-        var source = Path.Combine(this.wwwrootContent);
-        var destination = Path.Combine(this.outputDirectory);
-        CopyDirectory(source, destination);
     }
 
     private void GeneratePage(string directory, string htmlContent)

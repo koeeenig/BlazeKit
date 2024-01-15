@@ -38,7 +38,7 @@
     <ProjectReference Include="..\BlazeKit.Static\BlazeKit.Static.csproj" />
   </ItemGroup>
 
-  <Target Name="SSG" AfterTargets="AfterPublish">
+  <!-- <Target Name="SSG" AfterTargets="AfterPublish">
     <PropertyGroup>
       <SourceFolder>$(PublishDir)wwwroot</SourceFolder>
       <DestinationFolder>$(PublishDir)..\ssg</DestinationFolder>
@@ -68,6 +68,6 @@
     <WriteLinesToFile File="$(VercelOutput)config.json" Lines="@(VercelOutputApiVersion)" Overwrite="true"></WriteLinesToFile>
     <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(VercelOutput)output/static/%(RecursiveDir)" />
     <Exec Command="echo Deployment for Vercel finished" />
-  </Target>
+  </Target> -->
 
 </Project>
