@@ -100,7 +100,7 @@ public class StaticSiteGenerator
                             serviceCollection.BuildServiceProvider()
                         )
                         .RenderComponent(rootComponent);
-                var directory = Path.Combine(new List<string>() {this.outputDirectory}.Concat(route.Split('/')).ToArray());
+                var directory = Path.Combine(new List<string>() {this.outputDirectory}.Concat(route.Split('/')).ToArray()).ToLower();
                 GeneratePage(directory, html);
             }
             catch (System.Exception ex)
