@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ./src/BlazeKit.Website ; /vercel/.dotnet/dotnet publish -o .blazekit/build/tmp ; /vercel/.dotnet/dotnet run ssg ; mkdir -p /.vercel/output/static ; cp -r .blazekit/build/ssg /.vercel/output/static",
+  "buildCommand": "cd ./src/BlazeKit.Website ; /vercel/.dotnet/dotnet publish -o .blazekit/build/tmp ; /vercel/.dotnet/dotnet run ssg ; mkdir -p .vercel/output/static ; cp -r .blazekit/build/ssg .vercel/output/static",
   "installCommand": "chmod +x ./install.sh ; ./install.sh; export DOTNET_ROOT=$HOME/.dotnet ; export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools ; /vercel/.dotnet/dotnet --version",
   "outputDirectory": ".vercel/output/static",
   "headers": [
