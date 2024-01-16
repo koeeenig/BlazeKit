@@ -8,17 +8,14 @@
     <CompilerGeneratedFilesOutputPath>.blazekit</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+    <!-- <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" /> -->
     <PackageReference Include="Markdig" Version="0.33.0" />
     <ProjectReference Include="..\..\src\BlazeKit.Reactivity\BlazeKit.Reactivity.csproj" />
     <ProjectReference Include="..\BlazeKit\BlazeKit.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\BlazeKit.Website.Islands\BlazeKit.Website.Islands.csproj" />
+    <ProjectReference Include="..\BlazeKit.Static\BlazeKit.Static.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,10 +30,6 @@
     <Watch Include="Routes/**/*.md" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BlazeKit.Website.Islands\BlazeKit.Website.Islands.csproj" />
-    <ProjectReference Include="..\BlazeKit.Static\BlazeKit.Static.csproj" />
-  </ItemGroup>
 
   <!-- <Target Name="SSG" AfterTargets="AfterPublish">
     <PropertyGroup>

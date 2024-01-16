@@ -1,0 +1,23 @@
+﻿@code {
+    [Parameter] required public RenderFragment SSG {get;set;}
+    [Parameter] required public RenderFragment CSR {get;set;}
+
+    [Inject] required public IJSRuntime jsRuntime {get;set;}
+
+    @* [Parameter] public BlazeKit.Islands.LoadOn LoadAt {get;set;} = BlazeKit.Islands.LoadOn.Hover; *@
+    private string id = "";
+    protected override async void OnInitialized()
+    {
+        if(!OperatingSystem.IsBrowser()) {
+            // generate SSG id for compoennt
+            id = Guid.NewGuid().ToString();
+        }
+    }
+
+}
+@if(!OperatingSystem.IsBrowser()) {
+    @* <div load-on="@LoadAt.ToString().ToLower()" blazekit-id="@id"> *@
+        @SSG
+    @* </div> *@
+}
+@CSR

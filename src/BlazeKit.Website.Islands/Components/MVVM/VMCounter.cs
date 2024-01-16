@@ -2,7 +2,7 @@ using BlazeKit.Abstraction;
 using BlazeKit.Reactivity;
 using BlazeKit.Reactivity.Blazor;
 
-namespace BlazeKit.Site.Pages.Reactivity.MVVM
+namespace BlazeKit.Website.Islands.Components.MVVM
 {
     public sealed class VMCounter
     {

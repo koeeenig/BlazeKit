@@ -1,14 +1,6 @@
 # 🖼️ File-based Layouts
 **BlazeKit** uses a file-based layout convention which is inspired by [SvelteKit](https/kit.svelte.dev). Again a huge shoutout to the svelte Team for the inspiration.
 
-<div>
-<!--Blazor:{"type":"webassembly","prerenderId":"a6352c03-e287-4367-b7b0-3252740b1477","key":{"locationHash":"cf243a98-9ca6-450a-8723-f31a73a08cc5","formattedComponentKey":""},"assembly":"BlazeKit.Website.Islands","typeName":"BlazeKit.Website.Islands.Components.Counter","parameterDefinitions":"W10=","parameterValues":"W10="}-->
-<BlazeKit.Website.Islands.Components.BlzIsland ComponentType="@(typeof(BlazeKit.Website.Islands.Components.Counter))">
-    <BlazeKit.Website.Islands.Components.Counter />
-</BlazeKit.Website.Islands.Components.BlzIsland>
-<!--Blazor:{"prerenderId":"a6352c03-e287-4367-b7b0-3252740b1477"}-->
-</div>
-
 ## Layout nesting
 Similar to the file-based routing, a layout can be defined in a folder by adding `Layout.razor` file.
 This file **needs to inherit** from **`LayoutComopentBase`**
