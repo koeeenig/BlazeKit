@@ -31,5 +31,4 @@ Are more features coming to BlazeKit?
 I am certainly like to keep working on BlazeKit since i see some oppertunities with the release of .NET 8. Yes, i am looking at you Server-Side-Rendering.
 
 ## Links to Examples
-- [Nested Layouts Demo with Route Params](/items/details/2?foo=bar)
 - [Breaking out of layouts Demo](/items/details)

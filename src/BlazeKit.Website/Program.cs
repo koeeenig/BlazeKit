@@ -6,8 +6,15 @@ using Microsoft.Extensions.Hosting;
 
 if (args.Count() > 0 && args[0] == "ssg") {
     Console.WriteLine("Building Static Site");
+
+    if(args.Count() < 2) {
+        Console.WriteLine("SSG Error: No output path provided");
+        return;
+    }
+    Console.WriteLine($"SSG OUtput: {args[1]}");
+
     new BlazeKit.Static.StaticSiteGenerator(
-        Path.Combine(".blazekit","build","ssg"),
+        args[1],
         Path.Combine(".blazekit","build","tmp","wwwroot"),
         typeof(BlazeKit.Website.Index).Assembly
     ).Build();
