@@ -1,6 +1,31 @@
 html {
     scroll-behavior: smooth;
 }
+
+.linear-progress {
+    margin: 1rem 1rem;
+    height: 0.5rem;
+    border-radius: 10rem;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 70%;
+    z-index: 10;
+    right: 0;
+}
+
+.linear-progress:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* background: blue; */
+    background: var(--primary);
+    scale: var(--blazor-load-percentage, 0%) 100%;
+    transform-origin: left top;
+    transition: scale ease-out 0.5s;
+    height: calc(var(--blazor-load-percentage) - 100);
+}
+
 :root {
     --spacing: 0.5rem;
 }

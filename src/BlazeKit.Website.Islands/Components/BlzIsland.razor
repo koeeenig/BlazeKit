@@ -7,6 +7,9 @@
     [EditorRequired]
     public Type ComponentType { get; set; }
 
+    [Parameter]
+    public WASMIsland.ClientLoadMode Client { get; set; } = WASMIsland.ClientLoadMode.Idle;
+
     private MarkupString beginBlazorWasmMarker;
     private MarkupString endBlazorWasmMarker;
     private IList<KeyValuePair<string,object>> load = new List<KeyValuePair<string, object>>();
@@ -22,7 +25,13 @@
 }
 @if(ChildContent != null)
 {
-    @beginBlazorWasmMarker
+    @if(Client != None) {
+        @(new MarkupString(@$"<div client={Client.ToString().ToLower()} blazekit-id=""{prerenderId}"">"));
+        @beginBlazorWasmMarker
+            @ChildContent
+        @endBlazorWasmMarker
+        @(new MarkupString($"</div>"));
+    } else {
         @ChildContent
-    @endBlazorWasmMarker
+    }
 }

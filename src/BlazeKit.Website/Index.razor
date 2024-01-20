@@ -23,7 +23,15 @@
     <!--<link href="BlazeKit.Sample.styles.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="css/highlightjs/default.min.css">
     <HeadOutlet />
-    <script src="_framework/blazor.web.js" autostart="true"></script>
+    @* <script src="_framework/blazor.web.js" autostart="true"></script> *@
+    <script src="_framework/blazekit.web.js" autostart="false"></script>
+    <script>
+         Blazor.start({
+                logLevel: 0
+            }).then((e) => {
+                console.log('Blazor started');
+            });
+    </script>
 </head>
 <body>
     <AppRouter />
@@ -33,6 +41,7 @@
     <script src="scripts/languages/cshtml-razor.min.js"></script>
     <script src="scripts/languages/shell.min.js"></script>
     <script>
+
         window.highlight = () => {
             hljs.highlightAll();
         }
@@ -46,7 +55,6 @@
             //console.log("Setting scroll position to " + x + ", " + y);
             window.scrollTo(x, y);
         }
-
         addEventListener('hashchange', event => {
             console.log('Fragment identifier or URL changed');
         });

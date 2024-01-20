@@ -1,8 +1,13 @@
-﻿@* @inherits BlzInteractive *@
+﻿@* @inherits WASMIsland *@
 @code {
     [Parameter] public int CurrentCount { get; set; }
 
-     private void IncrementCount()
+    public MyCounter()
+    {
+
+    }
+
+    private void IncrementCount()
     {
         CurrentCount++;
     }

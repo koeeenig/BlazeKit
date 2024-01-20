@@ -1,0 +1,7 @@
+{
+  "Routes": "./Routes",
+  "Tailwindcss": {
+    "Input": "./app.css",
+    "Output": "./wwwroot/css/app.css"
+  }
+}

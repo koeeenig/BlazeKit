@@ -114,6 +114,6 @@ BlazeKit uses **Minimal API** for defining API routes. For further informations 
 
 
 ## Known Issues
-Blazor in SSR mode maps an `Get-API-Route` for each component defining a route with `@page`. BlazeKit uses a file-based router and applies these `@page` attribute at compile time. Therefore a custom API Route representing a `GetRequest` cannot be co-located in the folder containing the `Page.razor file.
+Blazor in SSR mode maps an `Get-API-Route` for each component defining a route with `@page`. BlazeKit uses a file-based router and applies these `@page` attribute at compile time. Therefore a custom API Route representing a `GetRequest` cannot be co-located in the folder containing the `Page.razor` file.
 
 

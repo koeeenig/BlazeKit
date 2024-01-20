@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\BlazeKit.Website.Islands\Components\**\*.razor" Exclude="..\BlazeKit.Website.Islands\obj\**\*.razor;..\BlazeKit.Website.Islands\bin\**\*.razor;">
+    <None Include="..\BlazeKit.Website.Islands\Components\**\*.razor;..\BlazeKit.Website.Islands\Components\**\*.razor.cs" Exclude="..\BlazeKit.Website.Islands\obj\**\*.razor;..\BlazeKit.Website.Islands\bin\**\*.razor;">
       <Link>Components\Islands\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </None>
   </ItemGroup>

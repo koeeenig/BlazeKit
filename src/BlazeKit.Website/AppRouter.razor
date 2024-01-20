@@ -1,3 +1,14 @@
+@code  {
+    [Inject]
+    public IHostEnvironment HostEnvironment { get; set; }
+}
+<WebAssemblyLoadProgress />
+@if(HostEnvironment.IsDevelopment())
+{
+    <BlzIsland Client="@(None)" ComponentType="@(typeof(DevTools))">
+        <DevTools />
+    </BlzIsland>
+}
 <Router AppAssembly="@typeof(Index).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(Routes.Layout)" />
