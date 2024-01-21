@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
@@ -77,6 +78,7 @@ public class StaticSiteGenerator
 
         var routeManager = new StaticNavigationManager();
         serviceCollection.AddLogging();
+        serviceCollection.AddSingleton<IHostEnvironment>(new BKitHostEnvironment("Production"));
         serviceCollection.AddSingleton<NavigationManager>(routeManager);
         serviceCollection.AddSingleton<IJSRuntime>(new FkJsRuntime());
         serviceCollection.AddSingleton<INavigationInterception>(new FkNavigationInterception());
