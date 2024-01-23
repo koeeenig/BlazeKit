@@ -11,7 +11,8 @@ namespace BlazeKit.CLI.Tasks.Tools
                 new CancableProcess(
                     new ExecCliCommand(
                         "dotnet", (msg) => output(msg),
-                        "watch", settings.Dotnet ?? "--non-interactive"
+                        // "watch", settings.Dotnet ?? "--non-interactive"
+                        "watch", settings.Dotnet ?? ""
                     ),
                     cancel.Token
                 ).Invoke();

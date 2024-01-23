@@ -1,11 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using BlazeKit.Tools;
-using BlazeKit.Website;
-using BlazeKit.Website.Islands.Components;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 if (args.Count() > 0 && args[0] == "ssg") {
     Console.WriteLine("Building Static Site");

@@ -1,0 +1,16 @@
+@inherits LayoutComponentBase
+<HeadContent>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
+</HeadContent>
+<div class="flex-col lg:flex-row flex w-full pb-12">
+<aside class="hidden lg:flex flex-col">
+        <BlazeKit.Website.Islands.Components.Sidebar />
+</aside>
+<div class="x-4 sm:px-6 lg:pl-12 lg:pr-12 pt-12 w-full lg:ml-[269px] prose max-w-full flex justify-center">
+    <div class="w-full lg:w-1/2">
+        @Body
+    </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" data-reload></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" data-reload></script>

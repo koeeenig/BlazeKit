@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>BlazeKit.Website.Client</RootNamespace>
     <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>.blazekit</CompilerGeneratedFilesOutputPath>
@@ -15,8 +16,13 @@
     <ProjectReference Include="..\..\src\BlazeKit.Reactivity\BlazeKit.Reactivity.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\MVVM\" />
+    <ItemGroup>
+    <Content Include="..\BlazeKit.Website\Islands\Components\**\*.razor;..\BlazeKit.Website\Islands\Components\**\*.razor.cs;..\BlazeKit.Website\Islands\Components\Islands\**\*.cs">
+      <Link>Components\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Content>
+    <Compile Include="..\BlazeKit.Website\Islands\Components\**\*.cs">
+      <Link>Components\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
   </ItemGroup>
 
 </Project>

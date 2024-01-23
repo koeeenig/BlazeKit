@@ -19,15 +19,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\BlazeKit.Website.Islands\Components\**\*.razor;..\BlazeKit.Website.Islands\Components\**\*.razor.cs" Exclude="..\BlazeKit.Website.Islands\obj\**\*.razor;..\BlazeKit.Website.Islands\bin\**\*.razor;">
-      <Link>Components\Islands\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    <AdditionalFiles Include="Routes/**/*.md" />
+    <Watch Include="Routes/**/*.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Islands\Components\**\*.razor;Islands\Components\**\*.razor.cs;Islands\Components\**\*.cs">
     </None>
   </ItemGroup>
 
 
   <ItemGroup>
-    <AdditionalFiles Include="Routes/**/*.md" />
-    <Watch Include="Routes/**/*.md" />
+    <Folder Include="Islands\" />
+    <Folder Include="Routes\Blog\" />
+    <Folder Include="Routes\Docs\Roadmap\" />
   </ItemGroup>
 
 

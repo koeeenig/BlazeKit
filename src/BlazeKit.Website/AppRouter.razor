@@ -5,8 +5,8 @@
 <WebAssemblyLoadProgress />
 @if(HostEnvironment.IsDevelopment())
 {
-    <BlzIsland Client="@(None)" ComponentType="@(typeof(DevTools))">
-        <DevTools />
+    <BlzIsland Client="@(None)" ComponentType="@(typeof(BlazeKit.Website.Client.Components.DevTools))">
+        <BlazeKit.Website.Client.Components.DevTools />
     </BlzIsland>
 }
 <Router AppAssembly="@typeof(Index).Assembly">

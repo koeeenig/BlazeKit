@@ -1,0 +1,26 @@
+@inherits ReactiveComponentEnvelope
+@code {
+    public BlazeKit.Website.Components.Islands.MVVM.VMCounter ViewModel { get; set; }
+
+    public Counter() { }
+
+    override protected void OnInitialized()
+    {
+        ViewModel = new BlazeKit.Website.Components.Islands.MVVM.VMCounter(this);
+    }
+
+    private MarkupString AsHtml(string code)
+    {
+        return new MarkupString(code);
+    }
+}
+@if(ViewModel == null) {
+    <p>Loading...</p>
+} else {
+    <article>
+        <p>Counter: @ViewModel.Counter.Value</p>
+        <p>Doubled: @ViewModel.Doubled.Value</p>
+        <button class="btn btn-primary" @onclick:preventDefault="true" @onclick="() => ViewModel.Increment()">Increment</button>
+        <button class="btn btn-primary" @onclick:preventDefault="true" @onclick="() => ViewModel.Decrement()">Decrement</button>
+    </article>
+}

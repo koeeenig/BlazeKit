@@ -9,37 +9,17 @@
     }
 }
 <PageTitle>BlazeKit - A Meta-Framework for Blazor .NET</PageTitle>
-<header>
-    <hgroup>
-        <a href="/"><h1 class="logo-wrapper"><span class="logo-panel"><img src="images/blazekit-logo.svg" class="logo" /></span>BlazeKit</h1></a>
-        <h2>A Meta-Framework for Blazor .NET</h2>
-    </hgroup>
-    <nav class="navbar">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/create-a-project">Getting Started</a></li>
-            <li><a href="/reactivity">Reactivity</a></li>
-            <li><a href="/routing">Routing</a></li>
-            <li><a href="/layouts">Layouts</a></li>
-        </ul>
-        <a href="https://github.com/koeeenig/blazekit" target="_blank"><img src="images/github-mark.svg" class="github-logo" alt="github" /></a>
-    </nav>
-    <hr />
-</header>
-<main>
+<Header />
 <ErrorBoundary>
     <ErrorContent>
         <BlazeKit.Site.Components.Error />
     </ErrorContent>
     <ChildContent>
-        @Body
+        <main class="min-h-[calc(100vh-var(--header-height))] mb-16 mt-[80px] pl-3 pr-3">
+            @Body
+        </main>
     </ChildContent>
 </ErrorBoundary>
-</main>
-<footer>
-    <div>Made with ❤️ by <a href="https://github.com/koeeenig" target="_blank">koeeenig</a> with <a href="https://picocss.com/" target="_blank">Picocss</a> and <a href="https://dotnet.microsoft.com/" target="_blank">.NET</a></div>
-    <a href="https://github.com/koeeenig/blazekit" target="_blank"><img src="images/github-mark.svg" class="github-logo" alt="github" /></a
-</footer>
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
