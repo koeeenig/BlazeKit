@@ -4,10 +4,39 @@
 </HeadContent>
 <div class="flex-col lg:flex-row flex w-full pb-12">
 <aside class="hidden lg:flex flex-col">
-        <BlazeKit.Website.Islands.Components.Sidebar />
+        <BlazeKit.Website.Components.Sidebar />
 </aside>
-<div class="x-4 sm:px-6 lg:pl-12 lg:pr-12 pt-12 w-full lg:ml-[269px] prose max-w-full flex justify-center">
+<div class="x-4 sm:px-6 lg:pl-12 lg:pr-12 w-full lg:ml-[269px] prose max-w-full flex justify-center">
     <div class="w-full lg:w-1/2">
+        <div class="docs-menu lg:hidden mb-8">
+            <details class="dropdown">
+                <summary class="m-1 btn btn-outline no-animation">
+                    Documentation Menu
+                    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"></path>
+      </svg>
+                </summary>
+                <div class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 max-h-[400px] overflow-y-auto overflow-x-hidden">
+                    <div class="flex flex-col">
+                        <h2 class="ml-3 font-bold text-sm">Getting Started</h2>
+                        <NavLink href="/docs/introduction" class="w-full text-gray-700 no-underline ml-3 p-2" Match="NavLinkMatch.All">Introduction</NavLink>
+                        <NavLink href="/docs/installation" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Installation</NavLink>
+                        <NavLink href="/docs/directory-structure" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Directory Structure</NavLink>
+                        <NavLink href="/docs/blazekit-cli" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">BlazeKit CLI</NavLink>
+                        <NavLink href="/docs/roadmap" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Roadmap</NavLink>
+                        <h2 class="ml-3 font-bold text-sm">Reactivity</h2>
+                        <NavLink href="/docs/reactivity" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Overview</NavLink>
+                        <NavLink href="/docs/reactivity/basic" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Basic Example</NavLink>
+                        <NavLink href="/docs/reactivity/mvvm" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">MVVM Example</NavLink>
+                        <h2 class="ml-3 font-bold text-sm">Routing</h2>
+                        <NavLink href="/docs/routing" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Overview</NavLink>
+                        <NavLink href="/docs/routing/pages" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Pages</NavLink>
+                        <NavLink href="/docs/routing/layouts" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Layouts</NavLink>
+                        <NavLink href="/docs/routing/endpoints" class="w-full text-gray-700 no-underline link link-hover ml-3 p-2" Match="NavLinkMatch.All">Endpoints (API)</NavLink>
+                    </div>
+                </div>
+            </details>
+        </div>
         @Body
     </div>
 </div>

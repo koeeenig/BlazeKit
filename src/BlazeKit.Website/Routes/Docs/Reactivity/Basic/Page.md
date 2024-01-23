@@ -2,7 +2,8 @@
 
 <div client=idle blazelkit-id="e9c8a553-8213-42f3-8afd-5e4442ffff1a">
 <!--Blazor:{"type":"webassembly","prerenderId":"e9c8a553-8213-42f3-8afd-5e4442ffff1a","key":{"locationHash":"78a4f2be-04b4-4f33-836f-987374068868","formattedComponentKey":""},"assembly":"BlazeKit.Website.Islands","typeName":"BlazeKit.Website.Client.Components.Counter","parameterDefinitions":"W10=","parameterValues":"W10="}-->
-
+<p>Loading Component...</p>
+<progress class="progress"></progress>
 <!--Blazor:{"prerenderId":"e9c8a553-8213-42f3-8afd-5e4442ffff1a"}-->
 </div>
 
@@ -39,4 +40,16 @@ protected override void OnInitialized()
 <p>Triggered Side Effects <code>(counter.Value % 5 == 0)</code>: @booms</p>
 <button @onclick=\"() => counter.Value++\">Increment</button>
 <button @onclick=\"() => counter.Value--\">Decrement</button>
+```
+
+### Conditional CSS Classes
+```razor
+<div class="w-56 h-5 bg-green-300
+    @(
+        new ConditionalClasses()
+            .AddIf("bg-green-500",counter.Value % 2 == 0)
+            .AddIf("bg-red-500",counter.Value % 2 != 0)
+            .Apply()
+    )"
+></div>
 ```

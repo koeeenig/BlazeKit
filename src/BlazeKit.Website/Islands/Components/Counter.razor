@@ -1,4 +1,5 @@
-﻿@inherits ReactiveComponentEnvelope
+﻿@using BlazeKit.Web;
+@inherits ReactiveComponentEnvelope
 
 @code
 {
@@ -108,7 +109,17 @@
         <button href="#" class="btn btn-primary w-full lg:w-auto" @onclick="StopBackgroundTask" @onclick:preventDefault="true" disabled="@(!started)">Stop Background Task</button>
     </div>
 </div>
-
+<div>
+    <p class="font-bold">Conditional CSS Classes</p>
+    <div class="w-56 h-5 bg-green-300
+            @(
+                new ConditionalClasses()
+                    .AddIf("bg-green-500",counter.Value % 2 == 0)
+                    .AddIf("bg-red-500",counter.Value % 2 != 0)
+                    .Apply()
+            )"
+    ></div>
+</div>
 <article>
     <p><strong>Two-Way Binding</strong></p>
     <label class="form-control w-full max-w-xs">
