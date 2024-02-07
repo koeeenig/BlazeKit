@@ -1,4 +1,4 @@
-﻿using BlazeKit.Layout;
+using BlazeKit.Layout;
 using BlazeKit.Routes.Pages.SourceTemplates;
 using BlazeKit.Utils;
 using Microsoft.CodeAnalysis;
@@ -25,13 +25,19 @@ namespace BlazeKit.Routes.Pages
                         });
 
            var pageRoutes = context.AdditionalTextsProvider
-                                .Where(file => new IsUnderRoot(file.Path).Value && file.Path.EndsWith("page.razor",StringComparison.OrdinalIgnoreCase))
+                                .Where(file =>
+                                {
+                                    //Debugger.Launch();
+                                    var fileInfo = new FileInfo(file.Path);
+                                    return new IsUnderRoot(fileInfo.FullName).Value && fileInfo.Name.StartsWith("page", StringComparison.InvariantCultureIgnoreCase) && fileInfo.Name.EndsWith(".razor", StringComparison.InvariantCultureIgnoreCase);
+                                })
                                 .Collect();
             context.RegisterSourceOutput(pageRoutes.Combine(rootNamespace),(spc, values) =>
             {
                 var (routes, rootNS) = values.ToTuple();
                 foreach (var razorFile in routes)
                 {
+                    Log("BKIT001","PageRoutesGenerator", $"Processing '{razorFile.Path}'", spc);
                     var namespaceSegments = rootNS + "." + new NamespaceSegments(razorFile.Path, root: "routes").Value;
                     var name = new SanititizedNamespace(Path.GetFileName(razorFile.Path).Replace(".razor", "")).Value;
                     var routeSegments = new RouteSegments(razorFile.Path, (msg) => Debug.WriteLine(msg), root: "routes").Value;
@@ -41,7 +47,7 @@ namespace BlazeKit.Routes.Pages
                     // find the namespace of the razor file
                     // the namespace is defined by the file path starting at the root "pages" folder
                     // and ending with the last folder were the razor file is located
-                    var layout = new ClosestLayout(razorFile.Path, msg => Debug.WriteLine(msg), skipSameDirectory: false, root: "routes").Value;
+                    var layout = new ClosestLayout(razorFile.Path, msg => Log("BKIT002","Find CLosestLayout", msg, spc), skipSameDirectory: false, root: "routes").Value;
                     var className = "";
                     if(!string.IsNullOrEmpty(layout)) {
                         className = $"{rootNS}.{layout}";
@@ -60,6 +66,20 @@ namespace BlazeKit.Routes.Pages
                     spc.ReportDiagnostic(Diagnostic.Create(desc,Location.None));
                 }
             });
+        }
+
+        private void Log(string id, string title,string message , SourceProductionContext spc)
+        {
+             var desc =
+                new DiagnosticDescriptor(
+                    id,
+                    title,
+                    message,
+                    "Information",
+                    DiagnosticSeverity.Warning,
+                    true
+                );
+            spc.ReportDiagnostic(Diagnostic.Create(desc,Location.None));
         }
     }
 }

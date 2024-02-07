@@ -5,8 +5,11 @@
 @using Microsoft.JSInterop
 @using BlazeKit.Website.Components
 @using BlazeKit.Website
-@using BlazeKit.Website.Islands.Components
-@using static BlazeKit.Islands.ClientLoadMode;
+@using static BlazeKit.Web.Components.ClientHydrateMode;
 @using BlazeKit.Reactivity
 @using BlazeKit.Reactivity.Signals
 @using BlazeKit.Reactivity.Blazor
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using Humanizer;
+@using BlazeKit.Website.Routes.Docs.Blazekit_CLI;
+@using BlazeKit.Hydration;

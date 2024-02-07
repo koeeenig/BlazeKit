@@ -1,0 +1,9 @@
+@inherits LayoutComponentBase
+@using BlazeKit.Website.Routes.Docs.Reactivity
+
+@code {
+    private List<Tuple<string,string>> Sitemap = new global::BlazeKit.Website.Routes.Docs.Reactivity.PageSitemap().Headers;
+
+}
+<Sitemap Items="@Sitemap" />
+@Body

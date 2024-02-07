@@ -1,0 +1,16 @@
+﻿@code {
+    [Inject(Key = NewsCollection.CollectionName)]
+    public NewsCollection collection {get;set;}
+}
+<h1>News</h1>
+<div>
+@foreach (var post in collection.Items.Cast<NewsSchema>())
+{
+    <div class="flex flex-col lg:flex-row lg:justify-between">
+        <h2><a href="@(collection.Route(post))">@post.Title</a></h2>
+        <small>@post.Date.ToOrdinalWords()</small>
+    </div>
+    <p>@post.Description</p>
+    <p>@((MarkupString)post.Content)</p>
+}
+</div>

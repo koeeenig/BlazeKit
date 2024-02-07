@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackAsTool>true</PackAsTool>
+    <VersionPrefix>0.2.1</VersionPrefix>
     <ToolCommandName>bkit</ToolCommandName>
   </PropertyGroup>
 
@@ -37,6 +38,15 @@
     </PackageReference>
     <PackageReference Include="Spectre.Console.Cli" Version="0.48.0" />
     <PackageReference Include="Yaapii.Atoms" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\Run\Dev\" />
+    <Folder Include="Commands\Run\Tailwind\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazeKit.Static\BlazeKit.Static.csproj" />
   </ItemGroup>
 
 </Project>

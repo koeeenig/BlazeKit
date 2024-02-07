@@ -1,3 +1,5 @@
+@using BlazeKit.Web.Components
+@inject BlazeKit.Hydration.DataHydrationContext HydrationContext
 @code  {
     [Inject]
     public IHostEnvironment HostEnvironment { get; set; }
@@ -5,10 +7,10 @@
 <WebAssemblyLoadProgress />
 @if(HostEnvironment.IsDevelopment())
 {
-    <BlzIsland Client="@(None)" ComponentType="@(typeof(BlazeKit.Website.Client.Components.DevTools))">
-        <BlazeKit.Website.Client.Components.DevTools />
-    </BlzIsland>
+    <BlazeKit.Website.Islands.Components.DevTools />
 }
+<BKitData />
+@* <Microsoft.AspNetCore.Components.Sections.SectionOutlet SectionName="blazekit" /> *@
 <Router AppAssembly="@typeof(Index).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(Routes.Layout)" />

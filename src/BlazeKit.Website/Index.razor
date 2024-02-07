@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cmyk">
-
+@* <html lang="en" data-theme="cmyk"> *@
+<html lang="en" data-theme="nord">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,6 +28,12 @@
             }).then((e) => {
                 console.log('Blazor started');
             });
+        window['BlazeKit'] = {
+            loadPageData: function () {
+                var pageData = document.querySelectorAll('[type="blazekit/json"]');
+                return pageData[0].innerHTML;
+            }
+        }
     </script>
 </head>
 <body class="h-screen">

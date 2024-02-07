@@ -1,0 +1,22 @@
+@using BlazeKit.Hydration
+@using BlazeKit.Web.Components
+@inject DataHydrationContext HydrationContext
+@code {
+
+    [Inject(Key = BlogCollection.CollectionName)]
+    public BlogCollection collection {get;set;}
+
+}
+
+<h1>Blog</h1>
+<div>
+@foreach (var post in collection.Items.Cast<BlogSchema>().OrderByDescending(x => x.Date))
+{
+    <div class="flex flex-col lg:flex-row lg:justify-between">
+        <h2><a href="@(collection.Route(post))">@post.Title</a></h2>
+        <small>@post.Date.ToOrdinalWords()</small>
+    </div>
+    <p>@post.Description</p>
+    <p>@((MarkupString)post.Content)</p>
+}
+</div>

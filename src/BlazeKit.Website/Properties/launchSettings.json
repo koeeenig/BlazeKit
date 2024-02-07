@@ -25,7 +25,7 @@
         "launchBrowser": true,
         "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
         "applicationUrl": "http://localhost:5000",
-        "commandLineArgs": "ssg ../../.vercel/output/static",
+        "commandLineArgs": "ssg .blazekit/build/ssg",
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
         }

@@ -1,22 +1,23 @@
-﻿@code {
-
-    [Parameter]
-    public bool Interactive { get; set; } = true;
-
+@inherits BlazeKit.Web.Components.IslandComponentBase
+@code {
     [Inject]
     public Tools.IDevTools DevToolsData { get; set; } = default!;
 
     private string view = "pages";
 
+
+    public DevTools()
+    {
+        Client = Web.Components.ClientHydrateMode.None;
+    }
+
     protected override async void OnInitialized() {
-        Console.WriteLine("DevTools.OnInitialized");
-        Console.WriteLine($"View: {view}");
 
         if(!OperatingSystem.IsBrowser()) {
             @* Routes.Clear(); *@
             @* Routes = FindRoutes(); *@
             @* Components = FindComponentsUsed(); *@
-            await InvokeAsync(StateHasChanged);
+            @* await InvokeAsync(StateHasChanged); *@
         }
 
     }
@@ -24,71 +25,6 @@
     private void SetView(string view) {
         this.view = view;
         @* InvokeAsync(StateHasChanged); *@
-    }
-
-    private IList<string> FindRoutes()
-    {
-        var result = new List<string>();
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(asm => !asm.FullName.StartsWith("Microsoft.") || !asm.FullName.StartsWith("System."));
-        foreach(var asm in assemblies) {
-            result.AddRange(
-            asm.GetExportedTypes()
-                .Select(t => {
-                    Console.WriteLine($"Looking for Routes in {t.Assembly.FullName}");
-                    return t;
-                })
-                .Where(t => t.GetCustomAttributes(typeof(RouteAttribute), true).Count() > 0)
-                .Select(t =>
-                {
-                    var route = t.GetCustomAttributes(typeof(RouteAttribute), true).FirstOrDefault() as RouteAttribute;
-                    return route!.Template;
-                })
-            );
-        }
-
-        return result;
-        @* return AppDomain.CurrentDomain.GetAssemblies()
-                .GetExportedTypes()
-                .Select(t => {
-                    Console.WriteLine($"Looking for Routes in {t.Assembly.FullName}");
-                    return t;
-                })
-                .Where(t => t.GetCustomAttributes(typeof(RouteAttribute), true).Count() > 0)
-                .Select(t =>
-                {
-                    var route = t.GetCustomAttributes(typeof(RouteAttribute), true).FirstOrDefault() as RouteAttribute;
-                    return route!.Template;
-                }).ToList(); *@
-
-    }
-
-    private IList<string> FindComponentsUsed()
-    {
-        var result = new List<string>();
-        @* var assemblies = AppDomain.CurrentDomain.GetAssemblies(); *@
-        var assemblies =
-            new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).GetFiles("*.dll").ToList().Select(file => {
-                // load assembly for reflection only
-                var assembly = System.Reflection.Assembly.LoadFile(file.FullName);
-                return assembly;
-            });
-
-        foreach (var assembly in assemblies)
-        {
-            Console.WriteLine(assembly.FullName);
-            result.AddRange(
-                assembly
-                .GetExportedTypes()
-                .Where(t => t.IsClass)
-                @* .Where(t => t.BaseType.Name == "ComponentBase") *@
-                .Where(t => t.BaseType == (typeof(ComponentBase))  || t.BaseType.Name == "ReactiveComponentEnvelope")
-                .Select(t =>
-                {
-                    return $"{t.FullName}";
-                })
-            );
-        }
-       return result.Distinct().ToList();
     }
 }
 <style>

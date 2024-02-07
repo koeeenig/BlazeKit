@@ -4,21 +4,29 @@ namespace BlazeKit.Hydration;
 public class DataHydrationContext
 {
     private bool initalized = false;
-    public DataHydrationContext(Func<Task<string>> loadData = null)
+    private Action? onUpdate = null;
+    private Dictionary<string, object> hydrationData;
+    private readonly Func<Task<string>>? loadData;
+
+
+    public DataHydrationContext(Func<Task<string>>? loadData = null)
     {
-        _hydrationData = new Dictionary<string, object>();
+        hydrationData = new Dictionary<string, object>();
         this.loadData = loadData;
     }
 
-    private Dictionary<string, object> _hydrationData;
-    private readonly Func<Task<string>> loadData;
 
     public void Add(string key, object value)
     {
-        if(_hydrationData.ContainsKey(key)) {
-            _hydrationData[key] = value;
+        if(hydrationData.ContainsKey(key)) {
+            hydrationData[key] = value;
         } else {
-            _hydrationData.Add(key, value);
+            hydrationData.Add(key, value);
+        }
+
+        if(this.onUpdate != null)
+        {
+            this.onUpdate();
         }
     }
 
@@ -29,9 +37,19 @@ public class DataHydrationContext
            await LoadData();
         }
 
-        if(_hydrationData.TryGetValue(key, out var tmpValue)) {
-            var deserialzed = JsonSerializer.Deserialize<T>(((JsonElement)tmpValue).GetRawText());
-            result = deserialzed;
+        if(OperatingSystem.IsBrowser())
+        {
+            if (hydrationData.TryGetValue(key, out var tmpValue))
+            {
+                var deserialzed = JsonSerializer.Deserialize<T>(((JsonElement)tmpValue).GetRawText(),new JsonSerializerOptions() { IncludeFields = true});
+                result = deserialzed;
+            }
+        } else
+        {
+            if(hydrationData.TryGetValue(key, out var tmpValue)) {
+                //var deserialzed = JsonSerializer.Deserialize<T>(((JsonElement)tmpValue).GetRawText(),new JsonSerializerOptions() { IncludeFields = true});
+                result = (T)tmpValue;
+            }
         }
         return result;
     }
@@ -42,7 +60,7 @@ public class DataHydrationContext
            LoadData();
         }
         value = default;
-        if(_hydrationData.TryGetValue(key, out var tmpValue)) {
+        if(hydrationData.TryGetValue(key, out var tmpValue)) {
             // check if tmpValue is of type T
             if(tmpValue is T) {
                 value = (T)tmpValue;
@@ -57,28 +75,30 @@ public class DataHydrationContext
     }
 
     public string Serialized() {
-        return System.Text.Json.JsonSerializer.Serialize(_hydrationData);
+        return System.Text.Json.JsonSerializer.Serialize(hydrationData);
+    }
+
+
+    internal void OnUpdate(Action onUpdate)
+    {
+        this.onUpdate = onUpdate;
+    }
+
+    internal bool IsEmpty()
+    {
+        return this.hydrationData.Keys.Count == 0;
     }
 
     private async Task<bool> LoadData() {
          // check if initalized if not hydrate data from dom
-        Console.WriteLine("Loading page data");
         var data = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string,object>>(await loadData());
             foreach(var item in data) {
-                if(_hydrationData.ContainsKey(item.Key)) {
-                    _hydrationData[item.Key] = item.Value;
+                if(hydrationData.ContainsKey(item.Key)) {
+                    hydrationData[item.Key] = item.Value;
                 } else {
-                    _hydrationData.Add(item.Key, item.Value);
+                    hydrationData.Add(item.Key, item.Value);
                 }
             }
-        // if(!initalized) {
-        //     var data = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string,object>>(await loadData());
-        //     foreach(var item in data) {
-        //         _hydrationData.Add(item.Key, item.Value);
-        //     }
-        //     initalized = true;
-        // }
-
         return true;
     }
 }

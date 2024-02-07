@@ -1,0 +1,34 @@
+@page "/loadtest"
+@using BlazeKit.Web.Components
+@inherits PageComponentBase<MyCustomPageData>
+@code {
+
+    private const bool prerender = false;
+
+    public PageLoad() : base()
+    { }
+    protected override async Task<MyCustomPageData> ServerLoadAsync()
+    {
+        MyCustomPageData result;
+        using (var http = new HttpClient())
+        {
+            Console.WriteLine($"Load data from SWAPI");
+            http.BaseAddress = new Uri("https://swapi.dev/api/");
+            var response = await http.GetAsync("people/1");
+            response.EnsureSuccessStatusCode();
+            var json = System.Text.Json.JsonSerializer.Deserialize<Person>(await response.Content.ReadAsStringAsync());
+            // var json = System.Text.Json.JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+            Console.WriteLine($"Got response");
+            // result = new MyCustomPageData(json.RootElement.GetRawText(), DateTime.Now);
+            result = new MyCustomPageData(json, DateTime.Now);
+        }
+        // return Task.FromResult(new MyResult("John Doe", DateTime.Now));
+        return result;
+    }
+
+
+}
+
+<h3>PageLoad</h3>
+<BlazeKit.Website.Islands.Components.LoadTest Client="@(Load)"></BlazeKit.Website.Islands.Components.LoadTest>
+<BlazeKit.Website.Islands.Components.NewCounter Client="@Hover" />

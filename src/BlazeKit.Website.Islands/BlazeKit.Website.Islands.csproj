@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>BlazeKit.Website.Client</RootNamespace>
     <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>.blazekit</CompilerGeneratedFilesOutputPath>
@@ -13,16 +12,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.CustomElements" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <ProjectReference Include="..\..\src\BlazeKit.Reactivity\BlazeKit.Reactivity.csproj" />
   </ItemGroup>
-
     <ItemGroup>
-    <Content Include="..\BlazeKit.Website\Islands\Components\**\*.razor;..\BlazeKit.Website\Islands\Components\**\*.razor.cs;..\BlazeKit.Website\Islands\Components\Islands\**\*.cs">
-      <Link>Components\%(RecursiveDir)/%(FileName)%(Extension)</Link>
-    </Content>
-    <Compile Include="..\BlazeKit.Website\Islands\Components\**\*.cs">
-      <Link>Components\%(RecursiveDir)/%(FileName)%(Extension)</Link>
-    </Compile>
-  </ItemGroup>
+      <ProjectReference Include="..\BlazeKit.Web\BlazeKit.Web.csproj" />
+    </ItemGroup>
 
 </Project>

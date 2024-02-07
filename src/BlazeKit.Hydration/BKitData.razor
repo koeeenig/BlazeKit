@@ -1,0 +1,18 @@
+@code {
+    [Inject]
+    private DataHydrationContext HydrationContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // set update callback to render the component when data has been added to the data hydration context
+        HydrationContext.OnUpdate(() =>
+        {
+            Console.WriteLine("Data has changed -> rerender");
+            InvokeAsync(this.StateHasChanged);
+        });
+    }
+}
+@if(!HydrationContext.IsEmpty())
+{
+    @(new MarkupString($"<script type=\"blazekit/json\">{HydrationContext.Serialized()}</script>"))
+}

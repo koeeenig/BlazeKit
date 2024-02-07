@@ -1,0 +1,31 @@
+@inherits BlazeKit.Web.Components.IslandComponent<MyCustomPageData>
+@* @inherits BlazeKit.Web.Components.IslandComponentBase2<MyCustomPageData> *@
+@code {
+
+    public LoadTest() : base()
+    {
+
+    }
+    /// <summary>
+    /// The data which has been loaded with LoadAsync.
+    /// If the method is not overwritten by the derived class the
+    /// page data will be null.
+    /// </summary>
+    // protected override void OnMount()
+    // {
+    //     // LoadAsync has been called due to Component Lifecycle
+    //     // we can safely access the page data
+    //     Console.WriteLine($"Hello Browser: {PageData.Person.name}");
+    // }
+}
+<h3>LoadTest</h3>
+<pre>
+@PageData?.Person.name
+@PageData.Person.height
+@PageData.Person.mass
+</pre>
+<StateTest />
+<input class="input input-bordered" @bind-value="@PageData.Person.mass" placeholder="Insert some text" @bind-value:event="oninput" />
+@PageData.Person.mass
+<button @onclick="@(() => PageData.Person.mass  = "")">Reset</button>
+

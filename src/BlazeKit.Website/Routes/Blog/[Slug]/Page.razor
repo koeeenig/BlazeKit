@@ -1,0 +1,16 @@
+﻿@code {
+
+    [Inject(Key = BlogCollection.CollectionName)]
+    public BlogCollection collection {get;set;}
+
+    private BlogSchema post;
+    protected override void OnInitialized()
+    {
+        this.post =
+            collection.Items.Cast<BlogSchema>().FirstOrDefault(
+                item => item.Slug.Equals(Slug, StringComparison.InvariantCultureIgnoreCase)
+            );
+    }
+}
+<BlogPost Metadata="@post" />
+

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Spectre.Console;
 using Yaapii.Atoms;
 using Yaapii.Atoms.Scalar;
 
@@ -20,19 +21,21 @@ public sealed class ExecCliCommand : IProcess
     {
         process = ScalarOf.New(() =>
         {
+            var args = string.Join(" ", arguments);
+            AnsiConsole.Console.Debug($"Execute {command} {args}");
             var process =
                    new Process
                    {
                        StartInfo =
                        {
                             FileName = command,
-                            Arguments = string.Join(" ", arguments),
+                            Arguments = args,
                             RedirectStandardOutput = true,
                             RedirectStandardError = true,
                             RedirectStandardInput = true,
                             UseShellExecute = false,
                             CreateNoWindow = true,
-                            WorkingDirectory = Directory.GetCurrentDirectory()
+                            WorkingDirectory = Directory.GetCurrentDirectory(),
                        },
                        EnableRaisingEvents = true
                    };
@@ -55,9 +58,17 @@ public sealed class ExecCliCommand : IProcess
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
+
+
             return process;
         });
 
+    }
+
+    public void Input<T>(T cmd)
+    {
+        AnsiConsole.Console.Debug($"Call Input with Command '{cmd}'");
+        process.Value(). StandardInput.WriteLine(cmd);
     }
 
     public Process Run()

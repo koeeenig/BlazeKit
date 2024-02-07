@@ -13,6 +13,7 @@ internal class BkConfig
     public string Routes { get; set; }
     public TailwindcssConfig Tailwindcss { get; set; }
 
+    public bool PreRender { get; set; } = false;
 
     public static bool TryLoad(out BkConfig config)
     {

@@ -1,0 +1,136 @@
+
+@using BlazeKit.Web.Utils
+@inherits BlazeKit.Web.Components.IslandComponent
+@implements IDisposable
+@code
+{
+    private ISignal<string> text;
+    private ISignal<int> counter;
+    private ISignal<int> doubled;
+    private Effect sideEffect;
+
+    private Effect ereaseText;
+    private bool started = false;
+
+    private CancellationTokenSource cancel = new CancellationTokenSource();
+    private int booms;
+
+    public NewCounter()
+    {
+        booms = 0;
+        this.counter = Signal.New(0);
+        this.text = Signal.New("");
+        this.doubled =
+            new BlazeKit.Reactivity.Signals.Computed<int>(
+                () => counter.Value * 2
+            );
+    }
+    protected override void OnMount()
+    {
+        this.counter = new State<int>(0, this);
+        this.text = new State<string>("", this);
+        this.ereaseText =
+            new Effect(() =>
+            {
+                if (text.Value.Length >= 10)
+                {
+                    Console.WriteLine("Erease Text");
+                    text.Value = "";
+                }
+            });
+        this.doubled =
+            new Derived<int>(
+                () => counter.Value * 2,
+                this
+            );
+
+        this.sideEffect =
+            new Effect(() =>
+                {
+                    Console.WriteLine("Side Effect");
+                    if (counter.Value > 0 && counter.Value % 2 == 0)
+                    {
+                        booms++;
+                        // since booms in not a signal, we need to notify the UI manually
+                        // this is required if the counter updates in background task
+                        // InvokeAsync(StateHasChanged);
+                        Update();
+                    }
+                }
+            );
+    }
+
+    public void StopBackgroundTask()
+    {
+        this.cancel.Cancel();
+        this.started = false;
+    }
+
+    public void StartBackgroundTask()
+    {
+        if (!started)
+        {
+            if(this.cancel.IsCancellationRequested)
+            {
+                this.cancel = new CancellationTokenSource();
+            }
+
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    if(this.cancel.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    counter.Value++;
+                    await Task.Delay(1000);
+                }
+            },
+            this.cancel.Token
+            );
+            started = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        this.cancel.Cancel();
+    }
+
+    
+}
+
+<div>
+    <p><strong>General Usage</strong></p>
+    <p>Counter: @counter.Value</p>
+    <p>Doubled Counter: @doubled.Value</p>
+    <p>Triggered <strong>Is Even</strong>-Side Effects <code>(counter.Value % 2 == 0)</code>: @booms</p>
+    <div class="flex flex-col gap-2">
+        <button href="#" class="btn btn-primary w-full lg:w-auto" @onclick="() => counter.Value++" @onclick:preventDefault="true">Increment</button>
+        <button href="#" class="btn btn-primary w-full lg:w-auto" @onclick="() => counter.Value--" @onclick:preventDefault="true">Decrement</button>
+        <button href="#" class="btn btn-primary w-full lg:w-auto" @onclick="StartBackgroundTask" @onclick:preventDefault="true" disabled="@started">Start Background Task</button>
+        <button href="#" class="btn btn-primary w-full lg:w-auto" @onclick="StopBackgroundTask" @onclick:preventDefault="true" disabled="@(!started)">Stop Background Task</button>
+    </div>
+</div>
+<div>
+    <p class="font-bold">Conditional CSS Classes</p>
+    <div class="w-56 h-5 bg-green-300
+            @(
+                new CssClass()
+                    .AddIf("bg-green-500",counter.Value % 2 == 0)
+                    .AddIf("bg-red-500",counter.Value % 2 != 0)
+                    .Apply()
+            )"
+    ></div>
+</div>
+<article>
+    <p><strong>Two-Way Binding</strong></p>
+    <label class="form-control w-full max-w-xs">
+        <input class="input input-bordered" @bind-value="@text.Value" placeholder="Insert some text" @bind-value:event="oninput" />
+        <div class="label">
+            <span class="label-text-alt">Text will be erased if length >= 10</span>
+        </div>
+    </label>
+    <p>Text: @text.Value</p>
+</article>

@@ -12,6 +12,7 @@ namespace BlazeKit.Layout
 
                 var name = "";
                 var fi = new FileInfo(file);
+                log($"Finding closest layout for {fi.Name} [{fi.FullName}]");
                 if (IsBreakout(fi)) {
                     log($"The Page/Layout '{fi.Name}' breaks out of the inheritence chain");
                     // find breakout layout

@@ -1,0 +1,19 @@
+﻿@code {
+    [Parameter]
+    public BlogSchema Metadata {get;set;}
+
+    private RenderFragment content;
+
+    protected override void OnInitialized()
+    {
+        content = builder =>
+        {
+            builder.AddMarkupContent(0, Metadata.Content);
+        };
+    }
+}
+<h1>@Metadata.Title</h1>
+<p>@Metadata.Author published on @Metadata.Date.ToOrdinalWords()</p>
+@((MarkupString)Metadata.Content)
+
+

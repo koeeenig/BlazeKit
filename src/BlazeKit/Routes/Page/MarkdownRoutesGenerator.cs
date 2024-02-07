@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
+using System.Text;
+using System.Text.RegularExpressions;
 using BlazeKit.Layout;
 using BlazeKit.Routes.Pages.SourceTemplates;
 using BlazeKit.Utils;
@@ -12,18 +14,21 @@ public class MarkdownRoutesGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-         var rootNamespace =
-                context.AnalyzerConfigOptionsProvider
-                        .Select((options, _) =>
-                        {
-                            if(!options.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNS)) {
-                                rootNS = "";
-                            }
-                            return rootNS;
-                        });
+        var rootNamespace =
+               context.AnalyzerConfigOptionsProvider
+                       .Select((options, _) =>
+                       {
+                           if (!options.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNS)) {
+                               rootNS = "";
+                           }
+                           return rootNS;
+                       });
 
         var markdownRoutes = context.AdditionalTextsProvider
-                                .Where(file => new IsUnderRoot(file.Path).Value && file.Path.EndsWith("page.md",StringComparison.OrdinalIgnoreCase))
+                                .Where(file => {
+                                    var fileInfo = new FileInfo(file.Path);
+                                    return new IsUnderRoot(fileInfo.FullName).Value && fileInfo.Name.StartsWith("page", StringComparison.InvariantCultureIgnoreCase) && fileInfo.Name.EndsWith(".md", StringComparison.InvariantCultureIgnoreCase);
+                                })
                                 .Collect();
 
 
@@ -46,6 +51,7 @@ public class MarkdownRoutesGenerator : IIncrementalGenerator
                 {
                     var content = markdownFile.GetText()?.ToString();
                     var htmlContent = Markdig.Markdown.ToHtml(content ?? "", new MarkdownPipelineBuilder().UseAdvancedExtensions().Build());
+
                     var namespaceSegments = rootNS + "." + new NamespaceSegments(markdownFile.Path, root: "routes").Value;
                     var name = new SanititizedNamespace(Path.GetFileName(markdownFile.Path).Replace(".md", "")).Value;
                     var routeSegments = new RouteSegments(markdownFile.Path, (msg) => Debug.WriteLine(msg), root: "routes").Value;
@@ -62,6 +68,17 @@ public class MarkdownRoutesGenerator : IIncrementalGenerator
                     }
                     var generatedRouteClass = new MarkdownRouteClassSource(namespaceSegments, name, combinedRoute, className,htmlContent.Replace("\"", "\"\""), parameters.Value.ToArray());
                     spc.AddSource($"{namespaceSegments}.{name}.g.cs", generatedRouteClass.Value);
+
+                    // generate sitemap component
+                    // extract all header tags width the id attribute
+                    var headers = Regex.Matches(htmlContent, "<h[1-6] id=\"([^\"]*)\">([^<]*)</h[1-6]>");
+                    var headerMap = new List<Tuple<string, string>>();
+                    foreach (Match match in headers) {
+                        headerMap.Add(Tuple.Create(match.Groups[2].Value, $"{combinedRoute}#{match.Groups[1].Value}".ToLower()));
+                    }
+                    
+                    var generatedSitemapClass = new SitemapClassSource(namespaceSegments, $"{name}Sitemap", headerMap);
+                    spc.AddSource($"{namespaceSegments}.{name}Sitemap.g.cs", generatedSitemapClass.Value);
 
                     spc.ReportDiagnostic(Diagnostic.Create(
                         new DiagnosticDescriptor(

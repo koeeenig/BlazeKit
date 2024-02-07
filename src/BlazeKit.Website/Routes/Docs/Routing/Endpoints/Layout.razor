@@ -1,0 +1,7 @@
+﻿@inherits LayoutComponentBase
+@code {
+    private List<Tuple<string,string>> Sitemap = new global::BlazeKit.Website.Routes.Docs.Routing.Endpoints.PageSitemap().Headers;
+
+}
+<Sitemap Items="@Sitemap" />
+@Body

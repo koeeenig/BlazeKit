@@ -1,0 +1,8 @@
+@inherits BlazeKit.Web.Components.IslandComponent<MyCustomPageData>
+@code {
+    protected override void OnMount()
+    {
+        Console.WriteLine($"The component {this.GetType().Name} has been mounted in the DOM");
+    }
+}
+<p>The time the data has been fetched is: @PageData.Date</p>

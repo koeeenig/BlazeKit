@@ -14,7 +14,7 @@ dotnet tool uninstall -g BlazeKit.CLI
 dotnet tool install -g BlazeKit.CLI
 ```
 ## Create a Project
-```shell
+```sh
 bkit new NextUnicorn
 ```
 You will be prompted to choose one of the Blazor Hosting Models such as **Blazor WebAssembly** or **Blazor WebApp**.
@@ -25,6 +25,18 @@ cd NextUnicorn
 bkit run dev
 ```
 And here it is, your first BalzeKit project 🎉
+
+## Build
+Building the is handled by the CLI as well.
+```sh
+bkit build
+```
+The default build output directoy is `.blazekit/build`. You can customize the ouput with the `-o` option.
+```sh
+bkit build -o ./artifacts/static
+```
+This will build the app into the `./artifacts/static` directory
+
 ## Integrations
 ### TailwindCSS
 ```sh

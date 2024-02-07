@@ -5,13 +5,13 @@ namespace BlazeKit.CLI.Tasks.Tasks
 {
     internal class TskTailwindCss : TskEnveleope
     {
-        public TskTailwindCss(RunSettings settings, Action<string> output, CancellationTokenSource cancel) : base(() =>
+        public TskTailwindCss(Action<string> output, CancellationTokenSource cancel, params string[] arguments) : base(() =>
         {
             return
                 new CancableProcess(
                     new ExecCliCommand(
                         "tailwindcss", (msg) => output(msg),
-                        string.IsNullOrEmpty(settings.Tailwindcss) ? "-i app.css -o wwwroot/css/app.css --watch" : settings.Tailwindcss
+                        arguments
                     ),
                     cancel.Token
                 ).Invoke();

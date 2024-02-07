@@ -25,19 +25,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Reactivity.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{6B6EFC67-31B4-4D2E-98D5-1A731AF98B0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazeKit.Reactivity", "src\BlazeKit.Reactivity\BlazeKit.Reactivity.csproj", "{3CD31A61-9A86-4D79-A7A6-B6A4AD0BF7D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Reactivity", "src\BlazeKit.Reactivity\BlazeKit.Reactivity.csproj", "{3CD31A61-9A86-4D79-A7A6-B6A4AD0BF7D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazeKit.Routing.TestApp", "tests\BlazeKit.Routing.TestApp\BlazeKit.Routing.TestApp.csproj", "{196C36B5-D580-4C2D-BDFF-AFD530255F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Routing.TestApp", "tests\BlazeKit.Routing.TestApp\BlazeKit.Routing.TestApp.csproj", "{196C36B5-D580-4C2D-BDFF-AFD530255F2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{98E8084D-CE3D-429D-97B4-A7E41EDF1431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazeKit.Static", "src\BlazeKit.Static\BlazeKit.Static.csproj", "{B28BBCD3-5A90-447E-8BAD-D78D7517AAD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Static", "src\BlazeKit.Static\BlazeKit.Static.csproj", "{B28BBCD3-5A90-447E-8BAD-D78D7517AAD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazeKit.Site.Static", "src\BlazeKit.Site.Static\BlazeKit.Site.Static.csproj", "{FB0F7358-8500-46DF-B213-3E8980F70856}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Website", "src\BlazeKit.Website\BlazeKit.Website.csproj", "{AB38EF74-D766-4A77-A7F2-EA8B74AEA495}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazeKit.Website", "src\BlazeKit.Website\BlazeKit.Website.csproj", "{AB38EF74-D766-4A77-A7F2-EA8B74AEA495}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Website.Islands", "src\BlazeKit.Website.Islands\BlazeKit.Website.Islands.csproj", "{1C224EA5-8DE8-46E4-A0BE-20AEDB8ACB1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazeKit.Website.Islands", "src\BlazeKit.Website.Islands\BlazeKit.Website.Islands.csproj", "{1C224EA5-8DE8-46E4-A0BE-20AEDB8ACB1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Web", "src\BlazeKit.Web\BlazeKit.Web.csproj", "{788D739C-CA07-4E74-9F13-F3DA1A49C3A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeKit.Hydration", "src\BlazeKit.Hydration\BlazeKit.Hydration.csproj", "{90DC8A52-7AD7-4C60-AEE8-5E1F11C1F4AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,10 +93,6 @@ Global
 		{B28BBCD3-5A90-447E-8BAD-D78D7517AAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B28BBCD3-5A90-447E-8BAD-D78D7517AAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B28BBCD3-5A90-447E-8BAD-D78D7517AAD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB0F7358-8500-46DF-B213-3E8980F70856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB0F7358-8500-46DF-B213-3E8980F70856}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB0F7358-8500-46DF-B213-3E8980F70856}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB0F7358-8500-46DF-B213-3E8980F70856}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB38EF74-D766-4A77-A7F2-EA8B74AEA495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB38EF74-D766-4A77-A7F2-EA8B74AEA495}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB38EF74-D766-4A77-A7F2-EA8B74AEA495}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -103,6 +101,14 @@ Global
 		{1C224EA5-8DE8-46E4-A0BE-20AEDB8ACB1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C224EA5-8DE8-46E4-A0BE-20AEDB8ACB1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C224EA5-8DE8-46E4-A0BE-20AEDB8ACB1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788D739C-CA07-4E74-9F13-F3DA1A49C3A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788D739C-CA07-4E74-9F13-F3DA1A49C3A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788D739C-CA07-4E74-9F13-F3DA1A49C3A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788D739C-CA07-4E74-9F13-F3DA1A49C3A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90DC8A52-7AD7-4C60-AEE8-5E1F11C1F4AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90DC8A52-7AD7-4C60-AEE8-5E1F11C1F4AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90DC8A52-7AD7-4C60-AEE8-5E1F11C1F4AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90DC8A52-7AD7-4C60-AEE8-5E1F11C1F4AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,9 +119,9 @@ Global
 		{4D98C97D-CFCC-4473-BFD8-B28DA3199EF6} = {952B525D-297C-4F66-85E2-967C9982771F}
 		{196C36B5-D580-4C2D-BDFF-AFD530255F2E} = {952B525D-297C-4F66-85E2-967C9982771F}
 		{B28BBCD3-5A90-447E-8BAD-D78D7517AAD7} = {98E8084D-CE3D-429D-97B4-A7E41EDF1431}
-		{FB0F7358-8500-46DF-B213-3E8980F70856} = {98E8084D-CE3D-429D-97B4-A7E41EDF1431}
 		{AB38EF74-D766-4A77-A7F2-EA8B74AEA495} = {98E8084D-CE3D-429D-97B4-A7E41EDF1431}
 		{1C224EA5-8DE8-46E4-A0BE-20AEDB8ACB1D} = {98E8084D-CE3D-429D-97B4-A7E41EDF1431}
+		{788D739C-CA07-4E74-9F13-F3DA1A49C3A5} = {98E8084D-CE3D-429D-97B4-A7E41EDF1431}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F0560BE-EE70-4DE3-8ACA-590A2B56C96A}

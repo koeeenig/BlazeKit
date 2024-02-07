@@ -54,7 +54,6 @@
     <ItemGroup>
       <Folder Include="Layout\" />
       <Folder Include="Routes\Api\" />
-      <Folder Include="Routes\Page\" />
       <Folder Include="Utils\" />
     </ItemGroup>
 
