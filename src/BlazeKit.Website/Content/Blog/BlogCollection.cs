@@ -1,4 +1,4 @@
-﻿using BlazeKit.Static.ContentCollections;
+using BlazeKit.Static.ContentCollections;
 using BlazeKit.Static.Utils;
 using YamlDotNet.Serialization;
 namespace BlazeKit.Website;
@@ -23,10 +23,10 @@ public sealed class BlogSchema : ISchema
 
 public sealed class BlogCollection : ContentCollectionEnvelope
 {
-    public const string CollectionName = "blog";
+    public const string CollectionName = "Blog";
     public BlogCollection() : base(
         CollectionName,
-        Path.Combine("content","blog"),
+        Path.Combine("Content", CollectionName),
         md => md.GetFrontMatter<BlogSchema>(),
         schema => (schema as BlogSchema).IsDraft == false // you can set a filter here to only include certain items
     )

@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using BlazeKit.Static.Utils;
 namespace BlazeKit.Static.ContentCollections;
 
@@ -15,7 +15,7 @@ public abstract class ContentCollectionEnvelope : IContentCollection
     /// </summary>
     public ContentCollectionEnvelope(string collectionName, Func<string, ISchema> cast) : this(
         collectionName,
-        Path.Combine("content", collectionName),
+        Path.Combine("Content", collectionName),
         cast,
         schema => true
     )
@@ -26,7 +26,7 @@ public abstract class ContentCollectionEnvelope : IContentCollection
     /// </summary>
     public ContentCollectionEnvelope(string collectionName, Func<string, ISchema> cast, Func<ISchema, bool> filter) : this(
         collectionName,
-        Path.Combine("content", collectionName),
+        Path.Combine("Content", collectionName),
         cast,
         filter
     )

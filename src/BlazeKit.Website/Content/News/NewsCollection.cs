@@ -1,4 +1,4 @@
-﻿using BlazeKit.Static.ContentCollections;
+using BlazeKit.Static.ContentCollections;
 using BlazeKit.Static.Utils;
 using YamlDotNet.Serialization;
 namespace BlazeKit.Website;
@@ -24,8 +24,8 @@ public class NewsSchema : ISchema
 
 public class NewsCollection : ContentCollectionEnvelope
 {
-    public const string CollectionName = "news";
-    public NewsCollection() : base("news", md => md.GetFrontMatter<NewsSchema>())
+    public const string CollectionName = "News";
+    public NewsCollection() : base(CollectionName, md => md.GetFrontMatter<NewsSchema>())
     { }
 
     public override string Route(ISchema item)
