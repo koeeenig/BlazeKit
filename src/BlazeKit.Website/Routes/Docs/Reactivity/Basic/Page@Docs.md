@@ -1,6 +1,6 @@
 # Basic Example
 
-<div class="w-auto" client="hover" blazelkit-id="e9c8a553-8213-42f3-8afd-5e4442ffff1a">
+<div class="w-auto" client="load" blazelkit-id="e9c8a553-8213-42f3-8afd-5e4442ffff1a">
 <!--Blazor:{"type":"webassembly","prerenderId":"e9c8a553-8213-42f3-8afd-5e4442ffff1a","key":{"locationHash":"78a4f2be-04b4-4f33-836f-987374068868","formattedComponentKey":""},"assembly":"BlazeKit.Website.Islands","typeName":"BlazeKit.Website.Islands.Components.Counter","parameterDefinitions":"W10=","parameterValues":"W10="}-->
 <p>Loading Component...</p>
 <progress class="progress"></progress>
