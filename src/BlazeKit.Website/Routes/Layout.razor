@@ -10,17 +10,9 @@
 }
 <PageTitle>BlazeKit - A Meta-Framework for Blazor .NET</PageTitle>
 <Header />
-<ErrorBoundary>
-    <ErrorContent>
-        <BlazeKit.Site.Components.Error />
-    </ErrorContent>
-    <ChildContent>
-        <main class="min-h-[calc(100vh-var(--header-height))] mb-16 mt-[80px] pl-3 pr-3">
-            @Body
-        </main>
-    </ChildContent>
-</ErrorBoundary>
-@* <Footer /> *@
+<main class="min-h-[calc(100vh-var(--header-height))] mb-16 mt-[80px] pl-3 pr-3">
+    @Body
+</main>
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>

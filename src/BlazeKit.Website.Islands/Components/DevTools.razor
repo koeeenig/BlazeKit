@@ -1,4 +1,4 @@
-@inherits BlazeKit.Web.Components.IslandComponentBase
+@inherits BlazeKit.Web.Components.IslandComponent
 @code {
     [Inject]
     public Tools.IDevTools DevToolsData { get; set; } = default!;
@@ -11,7 +11,7 @@
         Client = Web.Components.ClientHydrateMode.None;
     }
 
-    protected override async void OnInitialized() {
+    protected override async void OnMount() {
 
         if(!OperatingSystem.IsBrowser()) {
             @* Routes.Clear(); *@

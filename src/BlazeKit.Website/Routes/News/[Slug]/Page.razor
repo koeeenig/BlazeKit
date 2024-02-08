@@ -1,0 +1,15 @@
+@code {
+    [Inject(Key = NewsCollection.CollectionName)]
+    public NewsCollection collection { get; set; }
+
+    private NewsSchema news;
+    protected override void OnInitialized()
+    {
+        this.news =
+            collection.Items.Cast<NewsSchema>().FirstOrDefault(
+                item => item.Slug.Equals(Slug, StringComparison.InvariantCultureIgnoreCase)
+            );
+    }
+}
+<h1>@this.news.Title</h1>
+@(new MarkupString(this.news.Content))

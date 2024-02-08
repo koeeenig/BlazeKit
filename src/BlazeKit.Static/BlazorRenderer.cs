@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Web.HtmlRendering;
 using Microsoft.AspNetCore.Html;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Encodings.Web;
 
 namespace BlazeKit.Static;
@@ -37,7 +38,7 @@ public sealed class BlazorRenderer : Renderer
 
     public override Dispatcher Dispatcher => this.htmlRenderer.Value.Dispatcher;
 
-
+    
     /// <summary>
     /// Renders a component T which doesn't require any parameters
     /// </summary>

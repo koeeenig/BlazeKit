@@ -15,6 +15,7 @@ public sealed class State<T> : ISignal<T>
     private readonly Signal<T> signal;
     private readonly Effect effect;
     private readonly IReactiveComponent component;
+    private bool initialCall = false;
 
     /// <summary>
     /// A <see cref="ISignal{T}"/> that can be used in a Blazor component."/>
@@ -24,19 +25,23 @@ public sealed class State<T> : ISignal<T>
     public State(T value, IReactiveComponent component)
     {
         this.signal = new Signal<T>(value);
-        this.effect = new Effect(() =>
-        {
-            // required to keep track of the dependency
-            var _ = signal.Value;
-            component.Update();
-        });
         this.component = component;
     }
 
     public T Value
     {
         get => signal.Value;
-        set => signal.Value = value;
+        set
+        {
+            if(!signal.Value.Equals(value)) {
+                signal.Value = value;
+                if(!initialCall)
+                {
+                    component.Update();
+                    initialCall = true;
+                }
+            }
+        }
     }
 
     public void Subscribe(Action<T> subscriber)

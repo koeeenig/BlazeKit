@@ -32,7 +32,7 @@ html {
     content: '';
     position: absolute;
     inset: 0;
-    /* background: blue; */
+     background: blue; 
     background: #1971c2;
     scale: var(--blazor-load-percentage, 0%) 100%;
     transform-origin: left top;

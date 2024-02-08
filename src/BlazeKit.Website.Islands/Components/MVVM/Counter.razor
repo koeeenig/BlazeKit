@@ -1,10 +1,12 @@
-@inherits BlazeKit.Web.Components.IslandComponentBase
+@inherits BlazeKit.Web.Components.IslandComponent
 @code {
     public BlazeKit.Website.Components.Islands.MVVM.VMCounter ViewModel { get; set; }
 
-    public Counter() { }
-
-    override protected void OnInitialized()
+    public Counter() {
+        ViewModel = new BlazeKit.Website.Components.Islands.MVVM.VMCounter(this);
+    }
+    
+    override protected void OnMount()
     {
         ViewModel = new BlazeKit.Website.Components.Islands.MVVM.VMCounter(this);
     }

@@ -6,8 +6,8 @@ BlazeKit is still in development.  The following list shows the roadmap currentl
 - [x] Add Tailwind CSS `Integration`
 - [x] Delay load of .NET runtime  till it is realy needed (Island) `Core`
 - [x] Basic Frontmatter Support `Content Authoring`
-- [ ] Add Server-side load method for components and hydrate data on client side load. `Core`
-- [ ] Build SSG with CLI `DX`
+- [x] Add Server-side load method for components and hydrate data on client side load. `Core`
+- [x] Build SSG with CLI `DX`
 - [ ] Templates `DX`
 - [ ] Deploy static site to Azure Static Webapps `Integration`
 - [ ] Deploy static site to Vercel `Integration`

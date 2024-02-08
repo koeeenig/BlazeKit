@@ -1,6 +1,6 @@
 
 @using BlazeKit.Web.Utils
-@inherits BlazeKit.Web.Components.IslandComponentBase
+@inherits BlazeKit.Web.Components.IslandComponent
 
 @code
 {
@@ -25,7 +25,7 @@
                 () => counter.Value * 2
             );
     }
-    protected override void OnInitialized()
+    protected override void OnMount()
     {
         this.counter = new State<int>(0, this);
         this.text = new State<string>("", this);
@@ -53,7 +53,8 @@
                         booms++;
                         // since booms in not a signal, we need to notify the UI manually
                         // this is required if the counter updates in background task
-                        InvokeAsync(StateHasChanged);
+                        // InvokeAsync(StateHasChanged);
+                        Update();
                     }
                 }
             );

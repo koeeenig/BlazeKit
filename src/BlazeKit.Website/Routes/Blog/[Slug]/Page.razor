@@ -1,4 +1,4 @@
-﻿@code {
+@code {
 
     [Inject(Key = BlogCollection.CollectionName)]
     public BlogCollection collection {get;set;}
@@ -12,5 +12,6 @@
             );
     }
 }
+<h1>BlazeKit -  @post.Title</h1>
 <BlogPost Metadata="@post" />
 

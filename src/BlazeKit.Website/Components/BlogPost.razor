@@ -1,4 +1,4 @@
-﻿@code {
+@code {
     [Parameter]
     public BlogSchema Metadata {get;set;}
 
@@ -12,7 +12,6 @@
         };
     }
 }
-<h1>@Metadata.Title</h1>
 <p>@Metadata.Author published on @Metadata.Date.ToOrdinalWords()</p>
 @((MarkupString)Metadata.Content)
 

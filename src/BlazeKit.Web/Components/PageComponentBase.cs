@@ -1,10 +1,9 @@
 using BlazeKit.Hydration;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using System.Diagnostics.CodeAnalysis;
 
 namespace BlazeKit.Web.Components;
-public abstract class PageComponentBase<TResult> : IComponent where TResult : PageDataBase
+public abstract class PageComponentBase<TResult> : IComponent, IPageLoad<TResult> where TResult : PageDataBase
 {
     [Inject] required public DataHydrationContext HydrationContext { get; init; }
     
@@ -32,7 +31,15 @@ public abstract class PageComponentBase<TResult> : IComponent where TResult : Pa
     }
     public PageComponentBase()
     {
-        renderFragment = BuildRenderTree;
+        renderFragment = builder =>
+        {
+            // decorate the ChildContent with a CascadingValue contianing the PageData
+            builder.OpenComponent<global::Microsoft.AspNetCore.Components.CascadingValue<TResult>>(0);
+            builder.AddComponentParameter(1, "Value", this.PageData);
+            builder.AddComponentParameter(1, "Name", "PageData");
+            builder.AddComponentParameter(2, "ChildContent", (RenderFragment)BuildRenderTree);
+            builder.CloseComponent();
+        };
         this.data = default(TResult);
         this.dataKey = "pagedata";
     }
@@ -56,7 +63,7 @@ public abstract class PageComponentBase<TResult> : IComponent where TResult : Pa
             }
         }
 
-        renderHandle.Render(Render);
+        renderHandle.Render(renderFragment);
     }
 
     /// <summary>
@@ -97,6 +104,4 @@ public abstract class PageComponentBase<TResult> : IComponent where TResult : Pa
     {
         return !OperatingSystem.IsBrowser();
     }
-
-    
 }

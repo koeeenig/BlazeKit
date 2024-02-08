@@ -102,6 +102,8 @@ public class StaticSiteGenerator
             serviceCollection.AddSingleton<INavigationInterception>(new FkNavigationInterception());
             serviceCollection.AddSingleton<IScrollToLocationHash>(new FkScrollToLocationHash());
             serviceCollection.AddSingleton<IErrorBoundaryLogger>(new StaticErrorBoundaryLogger());
+
+            
             //serviceCollection.AddScoped<DataHydrationContext>();
             foreach (var route in this.routes.Value)
             {
@@ -129,7 +131,7 @@ public class StaticSiteGenerator
                         foreach(var item in contentCollection.Items)
                         {
                             var routeWithParams = contentCollection.Route(item);
-                            Console.WriteLine($"Building route: {routeWithParams}");
+                            Console.WriteLine($"Building route for Content Collection '{contentCollection.Name}': {routeWithParams}");
                             Prerender(routeWithParams, routeManager, rootComponent, serviceCollection);
                         }
 

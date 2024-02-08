@@ -4,11 +4,11 @@
     [Inject]
     public IHostEnvironment HostEnvironment { get; set; }
 }
-<WebAssemblyLoadProgress />
-@if(HostEnvironment.IsDevelopment())
+<WebAssemblyLoadProgress class="linear-progress" />
+@* @if(HostEnvironment.IsDevelopment())
 {
     <BlazeKit.Website.Islands.Components.DevTools />
-}
+} *@
 <BKitData />
 @* <Microsoft.AspNetCore.Components.Sections.SectionOutlet SectionName="blazekit" /> *@
 <Router AppAssembly="@typeof(Index).Assembly">

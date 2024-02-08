@@ -1,0 +1,29 @@
+@using BlazeKit.Web.Components
+@using System.Diagnostics
+@inherits PageComponentBase<SwapiPageData>
+@code {
+
+    private const bool prerender = true;
+
+    protected override async Task<SwapiPageData> ServerLoadAsync()
+    {
+        SwapiPageData result;
+        using (var http = new HttpClient())
+        {
+            Debug.WriteLine($"Load data from SWAPI");
+            http.BaseAddress = new Uri("https://swapi.dev/api/");
+            var response = await http.GetAsync("people/1");
+            response.EnsureSuccessStatusCode();
+            var json = System.Text.Json.JsonSerializer.Deserialize<Person>(await response.Content.ReadAsStringAsync());
+            Debug.WriteLine($"Got response");
+            result = new SwapiPageData(json, DateTime.Now);
+        }
+        return result;
+    }
+
+
+}
+
+<h1>PageLoad</h1>
+<BlazeKit.Website.Islands.Components.LoadTest Client="@(Hover)"></BlazeKit.Website.Islands.Components.LoadTest>
+<BlazeKit.Website.Islands.Components.NewCounter Client="@Hover" InitialCount="1337" />

@@ -1,1 +1,5 @@
-﻿<div id="blazor-loader" class="linear-progress"></div>
+@code {
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? InputAttributes { get; set; }
+}
+<div id="blazor-loader" @attributes="InputAttributes"></div>

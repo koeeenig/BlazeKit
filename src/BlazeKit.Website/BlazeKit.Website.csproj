@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>.blazekit</CompilerGeneratedFilesOutputPath>
+    <NoWarn>$(NoWarn);CS0263</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,25 +30,13 @@
   </ItemGroup>
 
  <ItemGroup>
-    <Content Include="..\BlazeKit.Website.Islands\Components\**\*.razor;..\BlazeKit.Website.Islands\Components\**\*.razor.cs;..\BlazeKit.Website.Islands\Components\Islands\**\*.cs">
+    <None Include="..\BlazeKit.Website.Islands\Components\**\*.razor;..\BlazeKit.Website.Islands\Components\**\*.razor.cs;..\BlazeKit.Website.Islands\Components\Islands\**\*.cs">
       <Link>Components\Client.Islands\%(RecursiveDir)/%(FileName)%(Extension)</Link>
-    </Content>
+    </None>
     <None Include="..\BlazeKit.Website.Islands\Components\**\*.cs">
       <Link>Components\Client.Islands\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </None>
   </ItemGroup>
-
- <ItemGroup>
-   <Compile Remove="Islands\**" />
-   <Content Remove="Islands\**" />
-   <EmbeddedResource Remove="Islands\**" />
-   <None Remove="Islands\**" />
- </ItemGroup>
-
-
- <ItemGroup>
-   <Watch Remove="Routes\Docs\Reactivity\Basic\Page@Docs.md" />
- </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlazeKit.Web\BlazeKit.Web.csproj" />

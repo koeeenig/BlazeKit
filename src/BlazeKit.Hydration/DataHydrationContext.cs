@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace BlazeKit.Hydration;
 public class DataHydrationContext
@@ -74,8 +75,23 @@ public class DataHydrationContext
         }
     }
 
-    public string Serialized() {
+    internal string AsJson() {
         return System.Text.Json.JsonSerializer.Serialize(hydrationData);
+    }
+
+    internal string AsBase64()
+    {
+        return 
+            Convert.ToBase64String(
+                JsonSerializer.SerializeToUtf8Bytes(
+                    System.Text.Json.JsonSerializer.Serialize(hydrationData),
+                    new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        PropertyNameCaseInsensitive = true,
+                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                    })
+            );
     }
 
 

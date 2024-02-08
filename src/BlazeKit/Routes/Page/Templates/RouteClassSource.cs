@@ -29,20 +29,20 @@ namespace BlazeKit.Routes.Pages.SourceTemplates
 
             if (parameters.Count() > 0)
             {
-                text.AppendLine($"public partial class {className} : ComponentBase, {nameof(IReactiveComponent)} {{");
+                text.AppendLine($"public partial class {className} {{");
                 text.AppendLine("\t// Route Params");
                 foreach (var parameter in parameters)
                 {
                     text.AppendLine("\t[Parameter]");
                     text.AppendLine($"\tpublic string {parameter} {{ get; set;}}");
                 }
-                text.AppendLine("\tpublic void Update() => InvokeAsync(StateHasChanged);");
+                //text.AppendLine("\tpublic void Update() => InvokeAsync(StateHasChanged);");
                 text.AppendLine("}");
             }
             else
             {
-                text.AppendLine($"public partial class {className} : ComponentBase, {nameof(IReactiveComponent)} {{");
-                text.AppendLine("\tpublic void Update() => InvokeAsync(StateHasChanged);");
+                text.AppendLine($"public partial class {className} {{");
+                //text.AppendLine("\tpublic void Update() => InvokeAsync(StateHasChanged);");
                 text.AppendLine("}");
             }
 

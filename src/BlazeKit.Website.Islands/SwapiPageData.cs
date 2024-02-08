@@ -10,13 +10,13 @@ namespace BlazeKit.Website
         public string mass { get; set; }
     }
 
-    public class MyCustomPageData : PageDataBase
+    public class SwapiPageData : PageDataBase
     {
-        public MyCustomPageData()
+        public SwapiPageData()
         {
             
         }
-        public MyCustomPageData(Person person, DateTime date)
+        public SwapiPageData(Person person, DateTime date)
         {
             Person = person;
             Date = date;

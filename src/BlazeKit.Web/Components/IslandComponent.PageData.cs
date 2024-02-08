@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace BlazeKit.Web.Components;
 
-//[InteractiveWebAssembly]
-public abstract class IslandComponent : IComponent, IHandleEvent, IClientLoad, IReactiveComponent, IComponentRenderMode
+
+public abstract class IslandComponent<TResult> : IComponent, IHandleEvent, IClientLoad, IReactiveComponent, IComponentRenderMode
 {
     [Parameter] public ClientHydrateMode Client { get; set; } = ClientHydrateMode.None;
 
@@ -15,10 +15,30 @@ public abstract class IslandComponent : IComponent, IHandleEvent, IClientLoad, I
 
     private RenderFragment renderFragment;
     private RenderHandle renderHandle;
+    private TResult data;
+    private TResult clientData;
+    private string dataKey;
     private readonly string id = Guid.NewGuid().ToString();
     private ComponentMarker marker;
 
 
+    /// <summary>
+    /// The data which has been loaded with LoadAsync.
+    /// If the method is not overwritten by the derived class the
+    /// page data will be null.
+    /// </summary>
+    [CascadingParameter(Name = "PageData")]
+    public TResult PageData
+    {
+        get
+        {
+            return data;
+        }
+        set
+        {
+            data = value;
+        }
+    }
 
     public IslandComponent()
     {
@@ -31,9 +51,10 @@ public abstract class IslandComponent : IComponent, IHandleEvent, IClientLoad, I
             builder.AddMarkupContent(4, this.marker.ToStartMarker());
             // render the developer defined markup
             BuildRenderTree(builder);
-            builder.AddMarkupContent(5, this.marker.ToEndMarker());
+            builder.AddMarkupContent(4, this.marker.ToEndMarker());
             builder.CloseElement();
         };
+        this.dataKey = "pagedata";
     }
 
     public void Attach(RenderHandle renderHandle)
@@ -42,17 +63,41 @@ public abstract class IslandComponent : IComponent, IHandleEvent, IClientLoad, I
     }
     public async Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.SetParameterProperties(this);
-
-        this.marker = new ComponentMarker(this.GetType(), parameters);
-
-        if(IsServer())
+        // if we are on the client we do not set the cascading page data value because blazor will complain that cascading parameter can't be set explizitly
+        if(!IsServer())
         {
-            // Call init code for server side only. The code run's before the renderer kicks in.
-            OnServerInit();
+            var filtered =
+                new Dictionary<string,object>(
+                    parameters
+                        .ToDictionary()
+                        .Where(k => !k.Key.Equals("pagedata", StringComparison.InvariantCultureIgnoreCase))
+                );
+            parameters = ParameterView.FromDictionary(filtered);
+
+        }
+        parameters.SetParameterProperties(this);
+        this.marker = new ComponentMarker(this.GetType(),parameters);
+
+        if (IsServer())
+        {
+            // render the component without data hydration because on the server we have a "full-fledged" interactiv component tree
             renderHandle.Render(renderFragment);
-        } else {
+        }
+        else
+        {
+            // on the client side, load the page data from the hydrated data item in the DOM and populate it in the components params
+            var data = await LoadHydratedPageDataAsync(default(TResult));
+            if (data == null)
+            {
+                throw new InvalidOperationException($"Could not load page data for '{this.dataKey}'");
+            }
+            else
+            {
+                this.data = data;
+            }
             renderHandle.Render(renderFragment);
+
+            // call client-side lifcycle hook
             OnMount();
         }
     }
@@ -73,12 +118,19 @@ public abstract class IslandComponent : IComponent, IHandleEvent, IClientLoad, I
     /// <summary>
     /// This method is called slient-side when the component has been mounted/rendered into the DOM
     /// </summary>
-    protected virtual void OnMount()
-    { }
+    protected virtual void OnMount() { }
 
-
+    /// <summary>
+    /// This method get's called server-side after the component received it's initial paramater values and before rendering the component in e.g SSR mode.
+    /// Use this lifecycle hook to set internal values which are dependent on Parameters.
+    /// </summary>
     protected virtual void OnServerInit() { }
 
+    
+    protected Task<T> LoadHydratedPageDataAsync<T>(T fallback)
+    {
+        return HydrationContext.GetAsync<T>(dataKey, fallback);
+    }
 
     private bool IsServer()
     {

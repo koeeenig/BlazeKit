@@ -15,6 +15,7 @@ public sealed class Derived<T> : ISignal<T>
     private HashSet<Action> subscriptions;
     private readonly Effect effect;
     private T value;
+    private bool initialCall = false;
 
     /// <summary>
     /// A derived value as <see cref="ISignal{T}"/> that can be used in a Blazor component."/>
@@ -28,12 +29,20 @@ public sealed class Derived<T> : ISignal<T>
         {
             var derived = fn();
             Console.WriteLine($"{derived}");
-            this.value = derived;
-            foreach (var subscription in subscriptions)
+            if(!this.value.Equals(derived))
             {
-                subscription();
+                this.value = derived;
+                foreach (var subscription in subscriptions)
+                {
+                    subscription();
+                }
+                if(!initialCall)
+                {
+                    component.Update();
+                    initialCall = true;
+                }
+
             }
-            component.Update();
         });
     }
 
