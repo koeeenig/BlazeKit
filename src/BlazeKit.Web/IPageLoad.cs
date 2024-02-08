@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace BlazeKit.Web;
 
 internal interface IPageLoad<TPageData>
 {
-    virtual Task<TPageData> ServerLoadAsync() => Task.FromResult(default(TPageData));
+    virtual Task<TPageData> ServerLoadAsync(Uri route, HttpContext? context) => Task.FromResult(default(TPageData));
 }

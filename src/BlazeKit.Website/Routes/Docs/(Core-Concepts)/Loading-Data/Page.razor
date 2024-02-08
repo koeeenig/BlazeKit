@@ -1,18 +1,28 @@
 @using BlazeKit.Web.Components
 @using System.Diagnostics
+@using BlazeKit.Web.Utils
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
 @inherits PageComponentBase<SwapiPageData>
 @code {
 
     private const bool prerender = true;
 
-    protected override async Task<SwapiPageData> ServerLoadAsync()
+    protected override async Task<SwapiPageData> ServerLoadAsync(Uri route, HttpContext? context)
     {
+        Debug.WriteLine($"Page Load called for '{route}'.");
+        var people = route.Param("people", "1");
+
+        // Modify response headers. This only has effect when SSR is used.
+        // If the app is statically generated, the http context will be null and the code will not be executed.
+        context?.Response.Headers.Add("X-BLAZEKIT-DEBUG", "enabled");
+
         SwapiPageData result;
         using (var http = new HttpClient())
         {
             Debug.WriteLine($"Load data from SWAPI");
             http.BaseAddress = new Uri("https://swapi.dev/api/");
-            var response = await http.GetAsync("people/1");
+            var response = await http.GetAsync($"people/{people}");
             response.EnsureSuccessStatusCode();
             var json = System.Text.Json.JsonSerializer.Deserialize<Person>(await response.Content.ReadAsStringAsync());
             Debug.WriteLine($"Got response");

@@ -1,12 +1,15 @@
 using BlazeKit.Hydration;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Http;
 
 namespace BlazeKit.Web.Components;
 public abstract class PageComponentBase<TResult> : IComponent, IPageLoad<TResult> where TResult : PageDataBase
 {
     [Inject] required public DataHydrationContext HydrationContext { get; init; }
-    
+    [Inject] required public NavigationManager NavigationManager { get; init; }
+    [CascadingParameter] private HttpContext? Context { get; set; }
+
     private RenderFragment renderFragment;
     private readonly string dataKey;
     private RenderHandle renderHandle;
@@ -54,7 +57,8 @@ public abstract class PageComponentBase<TResult> : IComponent, IPageLoad<TResult
 
         if(IsServer())
         {
-            var data = await this.ServerLoadAsync();
+            var route = new Uri(NavigationManager.Uri);
+            var data = await this.ServerLoadAsync(route, Context);
             if(data != null)
             {
                 this.data = data;
@@ -79,26 +83,11 @@ public abstract class PageComponentBase<TResult> : IComponent, IPageLoad<TResult
         // but instead should invoke the _renderFragment field.
     }
 
-    protected virtual Task<TResult> ServerLoadAsync()
+    protected virtual Task<TResult> ServerLoadAsync(Uri route, HttpContext? context)
     {
         return Task.FromResult<TResult>(default(TResult));
     }
 
-
-    void Render(RenderTreeBuilder builder)
-    {
-        // decorate the ChildContent with a CascadingValue contianing the PageData
-        builder.OpenComponent<global::Microsoft.AspNetCore.Components.CascadingValue<TResult>>(0);
-        builder.AddComponentParameter(1, "Value", this.PageData);
-        builder.AddComponentParameter(1, "Name", "PageData");
-        builder.AddComponentParameter(2, "ChildContent", renderFragment);
-        builder.CloseComponent();
-    }
-   
-    protected Task<T> LoadPageDataAsync<T>(T fallback)
-    {
-        return HydrationContext.GetAsync<T>(this.dataKey, fallback);
-    }
 
     private bool IsServer()
     {
