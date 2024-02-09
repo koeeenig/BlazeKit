@@ -55,6 +55,10 @@
   "frontMatter.content.publicFolder": "",
   "frontMatter.content.pageFolders": [
     {
+      "title": "Docs",
+      "path": "[[workspace]]/src/BlazeKit.Website/Content/Docs"
+    },
+    {
       "title": "Blog",
       "path": "[[workspace]]/src/BlazeKit.Website/Content/Blog"
     },

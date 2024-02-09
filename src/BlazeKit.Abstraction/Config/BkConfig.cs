@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace BlazeKit.Abstraction.Config;
 
@@ -13,7 +14,7 @@ internal class BkConfig
     public string Routes { get; set; }
     public TailwindcssConfig Tailwindcss { get; set; }
 
-    public bool PreRender { get; set; } = false;
+    public BuildAdapter Adapter { get; set; } = BuildAdapter.SSG;
 
     public static bool TryLoad(out BkConfig config)
     {
@@ -34,7 +35,11 @@ internal class BkConfig
         if (File.Exists(path))
         {
             exists = true;
-            config = JsonSerializer.Deserialize<BkConfig>(File.ReadAllText("blazekit.config.json"))!;
+            config = JsonSerializer.Deserialize<BkConfig>(File.ReadAllText("blazekit.config.json"), new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            })!;
         }
 
         return exists;
@@ -53,5 +58,11 @@ internal static class BkConfigExtensions
     {
         return config.Tailwindcss != null;
     }
+}
+
+internal enum BuildAdapter
+{
+    SSG,
+    SSR
 }
 

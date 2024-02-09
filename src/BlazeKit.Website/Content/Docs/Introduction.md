@@ -1,3 +1,9 @@
+---
+title: Introduction - Docs - BlazeKit
+category: Getting Started
+draft: false
+slug: introduction
+---
 # Introduction
 
 BlazeKit provides Meta-framework-like features for Blazor which has been inspired by SvelteKit. BlazeKit currently supports the following set of features:

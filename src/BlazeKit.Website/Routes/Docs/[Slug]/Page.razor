@@ -1,0 +1,42 @@
+@using BlazeKit.Web.Components
+@using BlazeKit.Web
+@inherits PageComponentBase<PageDataBase>
+@code {
+
+    [Inject(Key = DocsCollection.CollectionName)]
+    public DocsCollection collection {get;set;}
+
+    private DocsSchema? docItem;
+    protected override Task<PageDataBase> ServerLoadAsync(Uri route, Response response)
+    {
+        this.docItem =
+           collection.Items.Cast<DocsSchema>().FirstOrDefault(
+               item => item.Slug.Equals(Slug, StringComparison.InvariantCultureIgnoreCase)
+           );
+
+        // We handle a page not found here.
+        // We could also do a redirect to 404 page like /not-found.
+        // But this will change the url in the browser which might be intransparent to the user
+        if (this.docItem is null)
+        {
+            response?.SetStatusCode(404);
+        }
+
+        return Task.FromResult(default(PageDataBase));
+    }
+}
+@if(docItem is null) {
+    <PageTitle>Not Found - Docs - BlazeKit</PageTitle>
+    <h1>🫢 Whoooops.... Sorry there is nothing at this address</h1>
+} else
+{
+    <PageTitle>@docItem.Title</PageTitle>
+    <DocsSitemap Schema="@docItem" />
+    @if(!string.IsNullOrEmpty(docItem.Category))
+    {
+        <p class="font-bold text-lg uppercase">@docItem.Category</p>
+    }
+    @((MarkupString)docItem.Content)
+}
+
+

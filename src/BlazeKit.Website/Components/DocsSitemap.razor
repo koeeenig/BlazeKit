@@ -4,10 +4,32 @@
 @using Microsoft.AspNetCore.Components.Routing
 @code {
     [Parameter]
-    public List<Tuple<string,string>> Items { get; set; }
+    public DocsSchema Schema{ get; set; }
+
+    [Inject(Key = DocsCollection.CollectionName)]
+    public DocsCollection Collection { get; set; }
 
     [Parameter]
     public bool Animate { get; set; } = false;
+
+    private string indent = "";
+
+    private string Indentation(DocsSchema.Heading heading)
+    {
+        return
+            new CssBuilder()
+                .AddIf("ml-2", heading.Level == 2)
+                .AddIf("ml-4", heading.Level == 3)
+                .AddIf("ml-6", heading.Level == 4)
+                .AddIf("ml-8", heading.Level == 5)
+                .AddIf("ml-10", heading.Level == 6)
+                .Apply();
+    }
+
+    private string Route(DocsSchema.Heading heading)
+    {
+        return $"{Collection.Route(Schema)}#{heading.Id}";
+    }
 }
 <div class="hidden lg:block lg:fixed top-30 left-[80%] p-5 @(new CssBuilder().AddIf("group",Animate).Apply())">
     <p class="text-sm uppercase text-gray-400">On this Site</p>
@@ -25,10 +47,9 @@
             )
         ">
             <div class="flex flex-col">
-            @foreach (var (title, link) in Items)
+            @foreach (var heading in Schema.Headings)
             {
-                <a class="no-underline text-xs p-1 text-gray-400 hover:text-gray-500 active:bg-sky-200" href="@link">@title</a>
-                @* <BlazeKit.Web.Components.Link2></BlazeKit.Web.Components.Link2> *@
+                <a class="no-underline text-xs p-1 text-gray-400 hover:text-gray-500 active:bg-sky-200 @(Indentation(heading))" href="@Route(heading)">@heading.Title</a>
             }
             </div>
     </div>

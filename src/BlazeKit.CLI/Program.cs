@@ -9,7 +9,7 @@ using Spectre.Console.Cli;
 using System.Diagnostics;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
-//Debugger.Launch();
+Debugger.Launch();
 
 var app = new Spectre.Console.Cli.CommandApp();
 app.Configure(config =>

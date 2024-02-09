@@ -4,6 +4,7 @@ using BlazeKit.Static.ContentCollections;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -102,6 +103,7 @@ public class StaticSiteGenerator
             serviceCollection.AddSingleton<INavigationInterception>(new FkNavigationInterception());
             serviceCollection.AddSingleton<IScrollToLocationHash>(new FkScrollToLocationHash());
             serviceCollection.AddSingleton<IErrorBoundaryLogger>(new StaticErrorBoundaryLogger());
+            serviceCollection.AddSingleton<HttpContext>(sp => new FkHttpContext());
 
             
             //serviceCollection.AddScoped<DataHydrationContext>();
@@ -151,17 +153,6 @@ public class StaticSiteGenerator
 
                     //var route2 = "/loadtest";
                     routeManager.NavigateTo(route, forceLoad: true);
-                    //var html =
-                    //    await
-                    //        new BlazorRenderer(
-                    //            new HtmlRenderer(
-                    //                serviceCollection.BuildServiceProvider(),
-                    //                serviceCollection.BuildServiceProvider()
-                    //                    .GetRequiredService<ILoggerFactory>()
-                    //            ),
-                    //            serviceCollection.BuildServiceProvider()
-                    //        )
-                    //        .RenderComponent(rootComponent);
                     var renderer =
                         new BlazorRenderer(
                                 new HtmlRenderer(

@@ -26,6 +26,7 @@ public sealed class StaticServiceCollection : IStaticServiceCollection
         this.services = () => {
             serviceCollection.AddKeyedSingleton(BlogCollection.CollectionName, new BlogCollection());
             serviceCollection.AddKeyedSingleton(NewsCollection.CollectionName, new NewsCollection());
+            serviceCollection.AddKeyedSingleton(DocsCollection.CollectionName, new DocsCollection());
             serviceCollection.AddScoped<DataHydrationContext>();
             return serviceCollection;
         };

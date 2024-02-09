@@ -1,9 +1,0 @@
-@inherits LayoutComponentBase
-@using BlazeKit.Website.Routes.Docs.Installation
-
-@code {
-    private List<Tuple<string,string>> Sitemap = new global::BlazeKit.Website.Routes.Docs.Installation.PageSitemap().Headers;
-
-}
-<Sitemap Items="@Sitemap" />
-@Body

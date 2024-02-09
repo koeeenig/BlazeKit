@@ -1,6 +1,6 @@
 {
   "Routes": "./Routes",
-  "PreRender": true,
+  "Adapter": "SSG",
   "Tailwindcss": {
     "Input": "./app.css",
     "Output": "./wwwroot/css/app.css"

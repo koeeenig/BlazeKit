@@ -1,3 +1,9 @@
+---
+title: Reactivity - Docs - BlazeKit
+category: Reactivity
+draft: false
+slug: reactivity
+---
 #  Overview
 BlazeKit provides a set of reactive primitives which are inspired by the signals pattern.
 All primitives are based on the `ISignal<T>` interface which is defined as follows:

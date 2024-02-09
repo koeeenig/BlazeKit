@@ -1,9 +1,7 @@
 using BlazeKit.Abstraction.Config;
 using BlazeKit.CLI.Tasks.Utils;
-using Microsoft.AspNetCore.Components;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System.Diagnostics;
 using System.Runtime.Loader;
 
 namespace BlazeKit.CLI.Commands.Build;
@@ -61,7 +59,7 @@ public class BuildCommand : Command<BuildSettings>
         Task.WhenAll(publishTask).Wait();
 
         // var tempOutput = bkConfig.PreRender ? ".blazekit/tmp/" : settings.Output;
-        var tempOutput = bkConfig.PreRender ? Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()) : settings.Output;
+        var tempOutput = bkConfig.Adapter == BuildAdapter.SSG ? Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()) : settings.Output;
         // clean the temp output directory
         if (Directory.Exists(tempOutput))
         {
@@ -76,7 +74,6 @@ public class BuildCommand : Command<BuildSettings>
                         "dotnet",
                         output =>
                         {
-                            //AnsiConsole.MarkupLine($"[purple]{$"[DOTNET PUBLISH]".EscapeMarkup()}[/] {output.EscapeMarkup()}");
                             AnsiConsole.MarkupLine($"{output.EscapeMarkup()}");
                         },
                         info => info.EnvironmentVariables.Add("DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION", "True"),
@@ -99,7 +96,7 @@ public class BuildCommand : Command<BuildSettings>
 
         Task.WhenAll(publishTask).Wait();
         // check if preprender is enabled
-        if(bkConfig.PreRender)
+        if(bkConfig.Adapter == BuildAdapter.SSG)
         {
             // pre-render the app (SSG output)
             AnsiConsole.MarkupLine("[yellow] Pre-rendering app...[/]");
@@ -110,8 +107,6 @@ public class BuildCommand : Command<BuildSettings>
             // get the path to the assembly
             var assemblyPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), tempOutput, assemblyName + ".dll"));
             // use BlazeKit.Static to pre-render the app
-            // var loadCtx = AssemblyLoadContext.Default;
-            
             System.Runtime.Loader.AssemblyLoadContext loadCtx = new AssemblyLoadContext("ssg",isCollectible:true);
             loadCtx.Resolving += (ctx, name) =>
             {

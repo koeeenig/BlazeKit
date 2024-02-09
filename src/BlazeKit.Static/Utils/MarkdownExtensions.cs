@@ -1,4 +1,4 @@
-﻿using Markdig;
+using Markdig;
 using Markdig.Extensions.Yaml;
 using Markdig.Syntax;
 using YamlDotNet.Serialization;
@@ -14,6 +14,7 @@ public static class MarkdownExtensions
 
     private static readonly MarkdownPipeline Pipeline
         = new MarkdownPipelineBuilder()
+        .UseAdvancedExtensions()
         .UseYamlFrontMatter()
         .Build();
 

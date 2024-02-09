@@ -24,11 +24,6 @@
     <Watch Include="Content/**/*.md" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Routes\Docs\Roadmap\" />
-  </ItemGroup>
-
  <ItemGroup>
     <None Include="..\BlazeKit.Website.Islands\Components\**\*.razor;..\BlazeKit.Website.Islands\Components\**\*.razor.cs;..\BlazeKit.Website.Islands\Components\Islands\**\*.cs">
       <Link>Components\Client.Islands\%(RecursiveDir)/%(FileName)%(Extension)</Link>
@@ -38,6 +33,22 @@
     </None>
   </ItemGroup>
 
+ <ItemGroup>
+   <None Remove="Routes\Docs\Reactivity\Basic\Page@Docs.md" />
+ </ItemGroup>
+
+ <ItemGroup>
+   <Watch Remove="content\docs\BlazeKit-CLI.md" />
+   <Watch Remove="content\docs\Content-Collections.md" />
+   <Watch Remove="content\docs\Installation.md" />
+   <Watch Remove="content\docs\Introduction.md" />
+   <Watch Remove="content\docs\Loading-data.md" />
+   <Watch Remove="content\docs\Project-Structure.md" />
+   <Watch Remove="content\docs\Reactivity.md" />
+   <Watch Remove="content\docs\Roadmap.md" />
+   <Watch Remove="Routes\Docs\Reactivity\Basic\Page@Docs.md" />
+ </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\BlazeKit.Web\BlazeKit.Web.csproj" />
   </ItemGroup>

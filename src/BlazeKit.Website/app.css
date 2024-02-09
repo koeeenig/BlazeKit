@@ -7,6 +7,22 @@ html {
 }
 
 
+.tip {
+    @apply border-l-4 border-yellow-500 p-3 bg-yellow-100 rounded mb-2 shadow-lg dark:text-gray-600;
+
+    & p:first-of-type {
+        @apply font-bold;
+    }
+
+    & p:first-of-type::before {
+        content: '💡'
+    }
+
+    & > p {
+        @apply mt-0 mb-0;
+    }
+}
+
 .docs-menu .active:before {
     color: #1b6ec2;
     content: '>';
@@ -32,7 +48,7 @@ html {
     content: '';
     position: absolute;
     inset: 0;
-     background: blue; 
+     background: blue;
     background: #1971c2;
     scale: var(--blazor-load-percentage, 0%) 100%;
     transform-origin: left top;

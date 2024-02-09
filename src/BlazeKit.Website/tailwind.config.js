@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["../BlazeKit.Website.Islands/**/*.razor","Index.razor","Routes/**/*.{html,razor,md}", "Components/**/*.{html,razor,md}","Islands/**/*.{html,razor,md}"],
+    content: [
+        "../BlazeKit.Website.Islands/**/*.razor",
+        "Index.razor","Routes/**/*.{html,razor,md}",
+        "Components/**/*.{html,razor,md}",
+        "Islands/**/*.{html,razor,md}",
+        "Content/**/*.md",
+    ],
     theme: {
         extend: {},
     },

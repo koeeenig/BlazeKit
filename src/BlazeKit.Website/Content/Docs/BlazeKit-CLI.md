@@ -1,3 +1,9 @@
+---
+title: CLI - Docs - BlazeKit
+category: Getting Started
+draft: false
+slug: blazekit-cli
+---
 # BlazeKit CLI
 ## Introduction
 BlazeKit provides a CLI tool to create and build projects.
