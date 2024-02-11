@@ -1,11 +1,19 @@
 ---
-title: Routing - Docs - BlazeKit
+title: Routing
 category: Core Concepts
 draft: false
 slug: routing
 ---
-# File-based Routing
+# Routing
+Routing is a fundamental concept in web apps. It is the mechanism by which users are directed to different parts of your app based on the URL they request.
+
+In a web application, routing plays a crucial role in defining the user experience. It allows users to navigate through the application and access its various features. Without routing, every request would lead to the same place, making the application essentially a single page.
+
+Moreover, routing is important for SEO (Search Engine Optimization). Well-structured URLs and proper routing can help improve the visibility of your web application in search engine results.
+
+# Page Routes
 The routing in BlazeKit is based on the filesystem. Each route is represented by a folder which contains a `Page.razor` or a `Page.md` file.
+In the context of BlazeKit, routing is file-based. This means that the structure of the routes is determined by the filesystem, making it intuitive and easy to manage, even for large applications.
 The folder structure is used to define the route of the page. For example the following folder structure:
 ```none
 Routes/

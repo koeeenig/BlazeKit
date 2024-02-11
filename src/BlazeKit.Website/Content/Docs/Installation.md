@@ -1,17 +1,16 @@
 ---
-title: Installation - Docs - BlazeKit
+title: Installation
 category: Getting Started
 draft: false
 slug: installation
 ---
-# Installation
-## Requirements
+# Requirements
 Before creating your first BlazeKit project, you should ensure that your local machine has:
 - .NET 8 - you can find the download [here](https://dotnet.microsoft.com/en-us/download){target="_blank"}
 
 That's it 👍
 
-## Create an app using the CLI
+# Create an app using the CLI
 After you have installed the required dependencies, the easiest way to get a project up an running is by using the BlazeKit CLI.
 ```shell
 # Install the BlazeKit CLI
@@ -30,7 +29,7 @@ bkit run dev
 ```
 And here it is, your first BalzeKit project 🎉
 
-## Updating the BlazeKit CLI
+# Updating the BlazeKit CLI
 The easiest way to update the BlazeKit CLI is to simply uninstall and reinstall it.
 ```shell
 dotnet tool uninstall -g BlazeKit.CLI

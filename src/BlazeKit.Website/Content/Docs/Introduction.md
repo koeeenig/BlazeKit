@@ -1,5 +1,5 @@
 ---
-title: Introduction - Docs - BlazeKit
+title: Introduction
 category: Getting Started
 draft: false
 slug: introduction

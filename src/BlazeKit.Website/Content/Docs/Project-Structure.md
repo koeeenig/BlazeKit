@@ -1,5 +1,5 @@
 ---
-title: Project Structure - Docs - BlazeKit
+title: Project Structure
 category: Getting Started
 draft: false
 slug: project-structure

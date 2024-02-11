@@ -22,6 +22,9 @@
             response?.SetStatusCode(404);
         }
 
+        // add the title heading to the docITem.HEading
+        @* docItem.Headings.Prepend(new DocsSchema.Heading(1,docItem.Title,"doc-section")); *@
+
         return Task.FromResult(default(PageDataBase));
     }
 }
@@ -30,7 +33,7 @@
     <h1>🫢 Whoooops.... Sorry there is nothing at this address</h1>
 } else
 {
-    <PageTitle>@docItem.Title</PageTitle>
+    <PageTitle>@docItem.Title - Docs - BlazeKit</PageTitle>
     <DocsSitemap Schema="@docItem" />
     @if(!string.IsNullOrEmpty(docItem.Category))
     {

@@ -49,7 +49,7 @@
             <div class="flex flex-col">
             @foreach (var heading in Schema.Headings)
             {
-                <a class="no-underline text-xs p-1 text-gray-400 hover:text-gray-500 active:bg-sky-200 @(Indentation(heading))" href="@Route(heading)">@heading.Title</a>
+                <a class="no-underline text-xs p-1 text-gray-400 hover:text-gray-500 active:bg-sky-200 @(Indentation(heading))" href="@Route(heading)">@heading.Title.Replace("&lt;","<").Replace("&gt;",">")</a>
             }
             </div>
     </div>

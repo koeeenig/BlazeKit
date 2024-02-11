@@ -113,13 +113,10 @@
 </div>
 <div>
     <p class="font-bold">Conditional CSS Classes</p>
-    <div class="w-56 h-5 bg-green-300
-            @(
-                new CssBuilder()
-                    .AddIf("bg-green-500",counter.Value % 2 == 0)
-                    .AddIf("bg-red-500",counter.Value % 2 != 0)
-                    .Apply()
-            )"
+    <div class="w-56 h-5 bg-green-300 @(new CssBuilder()
+                            .AddIf("bg-green-500",counter.Value % 2 == 0)
+                            .AddIf("bg-red-500",counter.Value % 2 != 0)
+                            .Apply())"
     ></div>
 </div>
 <article>
